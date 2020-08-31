@@ -7,6 +7,3 @@ class ImageAnalyzerConfig (
     val faceDetector: Class<FaceDetector>,
     val smileDetector: Class<SmileDetector>
     )
-{
-
-}

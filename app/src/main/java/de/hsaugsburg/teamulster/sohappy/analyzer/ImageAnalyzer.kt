@@ -16,10 +16,12 @@ class ImageAnalyzer {
     }
 
     // NOTE: Do we really want to use android.media.Image ?
+    @Suppress("FunctionOnlyReturningConstant")
     fun computeFaceDetectionResult(img: Image): FaceDetector.Companion.FaceDetectionResult? {
         return null
     }
 
+    @Suppress("FunctionOnlyReturningConstant")
     fun computeSmileDetectionResult(img: Image): SmileDetector.Companion.SmileDetectionResult? {
         return null
     }
