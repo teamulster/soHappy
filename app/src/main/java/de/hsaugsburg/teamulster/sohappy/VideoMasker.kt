@@ -3,11 +3,12 @@ package de.hsaugsburg.teamulster.sohappy
 import jp.co.cyberagent.android.gpuimage.GPUImageView
 import jp.co.cyberagent.android.gpuimage.filter.*
 
-class VideoMasker(private val face: Boolean, private val gpuImageView: GPUImageView) {
+class VideoMasker(private val gpuImageView: GPUImageView) {
 
     private val filterBlue: GPUImageFilter = GPUImageFilterGroup(
         listOf(
-            GPUImageGaussianBlurFilter(20.0f),
+            GPUImagePixelationFilter().apply { setPixel(5F) },
+            GPUImageGaussianBlurFilter(5.0f),
             GPUImageContrastFilter(1f),
             GPUImageSepiaToneFilter(),
             GPUImageHueFilter(210f),
@@ -17,15 +18,17 @@ class VideoMasker(private val face: Boolean, private val gpuImageView: GPUImageV
     )
     private val filterRed: GPUImageFilter = GPUImageFilterGroup(
         listOf(
-            GPUImageGaussianBlurFilter(20.0f),
+            GPUImagePixelationFilter().apply { setPixel(5F) },
+            GPUImageGaussianBlurFilter(5.0f),
+            GPUImageContrastFilter(1f),
             GPUImageSepiaToneFilter(),
             GPUImageHueFilter(330f),
-            GPUImageSaturationFilter(5f),
+            GPUImageSaturationFilter(3f),
             GPUImageBrightnessFilter(-0.2f)
         )
     )
 
-    fun switchColor() {
+    fun switchColor(face: Boolean) {
         if (face) {
             gpuImageView.filter = filterBlue
         } else {
