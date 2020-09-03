@@ -13,7 +13,7 @@ import androidx.core.app.NotificationManagerCompat
 import de.hsaugsburg.teamulster.sohappy.CameraActivity
 import de.hsaugsburg.teamulster.sohappy.R
 
-class NotificationHandler() {
+class NotificationHandler private constructor() {
     companion object {
         fun pushNotification(context: Context) {
             val resultIntent = Intent(context, CameraActivity::class.java)
