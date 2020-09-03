@@ -4,6 +4,7 @@ import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.os.SystemClock
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import de.hsaugsburg.teamulster.sohappy.CameraActivity
@@ -11,7 +12,7 @@ import de.hsaugsburg.teamulster.sohappy.R
 
 class NotificationHandler private constructor() {
     companion object {
-        fun scheduleNotification(context: Context) {
+        fun scheduleNotification(context: Context, delay: Long) {
             val activityIntent = Intent(context, CameraActivity::class.java)
             val activityPendingIntent: PendingIntent? = TaskStackBuilder.create(context).run {
                 addNextIntentWithParentStack(activityIntent)
@@ -29,10 +30,7 @@ class NotificationHandler private constructor() {
                 setPriority(NotificationCompat.PRIORITY_DEFAULT)
             }.build()
 
-            /* with (NotificationManagerCompat.from(context)) {
-                notify(0, builder.build())
-            } */
-
+            val scheduleTime = SystemClock.elapsedRealtime() + delay
             val scheduleIntent = Intent(context, NotificationBroadcastReceiver::class.java)
             scheduleIntent.putExtra(context.getString(R.string.notification_name), notification)
 
@@ -40,13 +38,13 @@ class NotificationHandler private constructor() {
                 context,
                 0,
                 scheduleIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT
+                PendingIntent.FLAG_CANCEL_CURRENT
             )
 
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             alarmManager.set(
                 AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                10000,
+                scheduleTime,
                 schedulePendingIntent
             )
         }
