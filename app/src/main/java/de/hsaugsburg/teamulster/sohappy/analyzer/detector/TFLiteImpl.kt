@@ -7,8 +7,8 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
 // TODO: add self-trained model
-class TFLiteImpl(tfliteModelPath: String, numberOfThreads: Int, activity: Activity) :
-    TFLite(tfliteModelPath, numberOfThreads, activity) {
+class TFLiteImpl(activity: Activity) :
+    TFLite(tfliteModelPath = "model.tflite", numberOfThreads = 1, activity) {
 
     init {
         // TODO: add "labels" based on model
@@ -32,7 +32,7 @@ class TFLiteImpl(tfliteModelPath: String, numberOfThreads: Int, activity: Activi
     }
 
     // Get image ready for prediction
-    override fun prepare(img: Bitmap) : ByteBuffer? {
+    override fun prepare(img: Bitmap): ByteBuffer? {
         val scaledBitmap = Bitmap.createScaledBitmap(img, 48, 48, true)
 
         return getByteBuffer(scaledBitmap)

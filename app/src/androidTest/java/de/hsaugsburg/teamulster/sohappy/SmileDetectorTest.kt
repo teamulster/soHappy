@@ -4,15 +4,12 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.launchActivity
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.TFLiteImpl
-import org.junit.After
-
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-
-import org.junit.Before
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -21,14 +18,15 @@ import org.junit.Before
  */
 @RunWith(AndroidJUnit4::class)
 class SmileDetectorTest {
-    lateinit var tfliteImpl : TFLiteImpl
-    private lateinit var scenario : ActivityScenario<CameraActivity>
-    private val instrumentationContext: Context = InstrumentationRegistry.getInstrumentation().context
+    lateinit var tfliteImpl: TFLiteImpl
+    private lateinit var scenario: ActivityScenario<CameraActivity>
+    private val instrumentationContext: Context =
+        InstrumentationRegistry.getInstrumentation().context
 
     @Before
     fun setUp() {
         scenario = launchActivity<CameraActivity>()
-        scenario.onActivity { tfliteImpl = TFLiteImpl("model.tflite", 1, it) }
+        scenario.onActivity { tfliteImpl = TFLiteImpl(it) }
     }
 
     @Test
