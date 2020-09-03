@@ -4,7 +4,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.Matrix
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +11,7 @@ import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import de.hsaugsburg.teamulster.sohappy.analyzer.BitmapEditor
 import de.hsaugsburg.teamulster.sohappy.util.YuvToRgbConverter
 import jp.co.cyberagent.android.gpuimage.GPUImage
 import jp.co.cyberagent.android.gpuimage.GPUImageView
@@ -66,12 +66,7 @@ class CameraActivity : AppCompatActivity() {
             //TODO: SuppressLint is dependent on it.image!! Why?
             converter.yuvToRgb(it.image!!, bitmap)
 
-            // This code does rotate the bitmap
-            // TODO: Move this to the ImageEditor
-            val matrix = Matrix()
-            matrix.postRotate(-90F)
-            val scaledBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.width, bitmap.height, true)
-            bitmap = Bitmap.createBitmap(scaledBitmap, 0, 0,  scaledBitmap.width, scaledBitmap.height, matrix, true)
+            bitmap = BitmapEditor.rotate(bitmap, -90f)
 
             gpuImageView.post {
                 gpuImageView.setRatio((bitmap.width/ bitmap.height).toFloat())
