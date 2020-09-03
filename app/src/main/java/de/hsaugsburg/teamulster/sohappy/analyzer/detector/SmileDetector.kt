@@ -1,6 +1,6 @@
 package de.hsaugsburg.teamulster.sohappy.analyzer.detector
 
-import android.media.Image
+import android.graphics.Bitmap
 
 interface SmileDetector {
     companion object {
@@ -9,5 +9,5 @@ interface SmileDetector {
 
     val detectorName: String
 
-    fun detect(img: Image) : SmileDetectionResult
+    fun detect(img: Bitmap) : SmileDetectionResult
 }
