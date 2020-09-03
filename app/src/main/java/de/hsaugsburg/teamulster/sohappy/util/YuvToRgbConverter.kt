@@ -162,5 +162,3 @@ class YuvToRgbConverter(context: Context) {
         }
     }
 }
-
-
