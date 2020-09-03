@@ -3,4 +3,5 @@
     <string name="channel_id">soHappy</string>
     <string name="channel_name">soHappy</string>
     <string name="channel_description">soHappy Push Notifications</string>
+    <string name="notification_name">soHappy Notification</string>
 </resources>

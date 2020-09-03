@@ -1,13 +1,9 @@
 package de.hsaugsburg.teamulster.sohappy.notification
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.app.TaskStackBuilder
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.provider.Settings.Global.getString
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import de.hsaugsburg.teamulster.sohappy.CameraActivity
@@ -15,27 +11,44 @@ import de.hsaugsburg.teamulster.sohappy.R
 
 class NotificationHandler private constructor() {
     companion object {
-        fun pushNotification(context: Context) {
-            val resultIntent = Intent(context, CameraActivity::class.java)
-            val resultPendingIntent: PendingIntent? = TaskStackBuilder.create(context).run {
-                addNextIntentWithParentStack(resultIntent)
+        fun scheduleNotification(context: Context) {
+            val activityIntent = Intent(context, CameraActivity::class.java)
+            val activityPendingIntent: PendingIntent? = TaskStackBuilder.create(context).run {
+                addNextIntentWithParentStack(activityIntent)
                 getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
             }
 
-            val builder = NotificationCompat.Builder(
+            val notification = NotificationCompat.Builder(
                 context, context.getString(R.string.channel_id)
             ).apply {
                 setSmallIcon(R.drawable.ic_launcher_background)
                 setContentTitle("Test Title")
                 setContentText("Test Text")
-                setContentIntent(resultPendingIntent)
+                setContentIntent(activityPendingIntent)
                 setAutoCancel(true)
                 setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            }
+            }.build()
 
-            with (NotificationManagerCompat.from(context)) {
+            /* with (NotificationManagerCompat.from(context)) {
                 notify(0, builder.build())
-            }
+            } */
+
+            val scheduleIntent = Intent(context, NotificationBroadcastReceiver::class.java)
+            scheduleIntent.putExtra(context.getString(R.string.notification_name), notification)
+
+            val schedulePendingIntent = PendingIntent.getBroadcast(
+                context,
+                0,
+                scheduleIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
+
+            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            alarmManager.set(
+                AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                10000,
+                schedulePendingIntent
+            )
         }
 
         fun createNotificationChannel(context: Context) {
