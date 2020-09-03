@@ -24,11 +24,6 @@ class HaarCascadeFaceDetectorTest {
         scenario.onActivity { haarCascadeFaceDetector = HaarCascadeFaceDetector(it) }
     }
 
-    @After
-    fun tearDown() {
-
-    }
-
     @Test
     fun detectTest() {
         scenario.onActivity {
