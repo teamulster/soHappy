@@ -16,11 +16,24 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    aaptOptions {
+        noCompress "tflite"
     }
 }
 
@@ -35,5 +48,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'org.tensorflow:tensorflow-lite-task-vision:0.0.0-nightly'
     implementation 'org.tensorflow:tensorflow-lite-task-text:0.0.0-nightly'
+    androidTestImplementation 'androidx.test:core-ktx:1.3.0'
 
 }
