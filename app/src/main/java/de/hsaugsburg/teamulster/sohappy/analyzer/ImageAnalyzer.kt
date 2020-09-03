@@ -1,6 +1,6 @@
 package de.hsaugsburg.teamulster.sohappy.analyzer
 
-import android.media.Image
+import android.graphics.Bitmap
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FaceDetector
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
 import de.hsaugsburg.teamulster.sohappy.config.ImageAnalyzerConfig
@@ -15,14 +15,13 @@ class ImageAnalyzer {
         smileDetector = config.smileDetector.newInstance()
     }
 
-    // NOTE: Do we really want to use android.media.Image ?
     @Suppress("FunctionOnlyReturningConstant")
-    fun computeFaceDetectionResult(img: Image): FaceDetector.Companion.FaceDetectionResult? {
+    fun computeFaceDetectionResult(img: Bitmap): FaceDetector.Companion.FaceDetectionResult? {
         return null
     }
 
     @Suppress("FunctionOnlyReturningConstant")
-    fun computeSmileDetectionResult(img: Image): SmileDetector.Companion.SmileDetectionResult? {
+    fun computeSmileDetectionResult(img: Bitmap): SmileDetector.Companion.SmileDetectionResult? {
         return null
     }
 }
