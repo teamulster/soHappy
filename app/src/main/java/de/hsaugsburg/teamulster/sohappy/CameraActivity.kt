@@ -22,10 +22,10 @@ class CameraActivity : AppCompatActivity() {
         const val REQUEST_CODE_PERMISSIONS = 10
     }
 
-    private var cameraProvider: ProcessCameraProvider? = null
     private val executor = Executors.newSingleThreadExecutor()
+    private var cameraProvider: ProcessCameraProvider? = null
     private var bitmap: Bitmap? = null
-    private lateinit var converter: YuvToRgbConverter
+    private var converter = YuvToRgbConverter(this)
     private lateinit var gpuImageView: GPUImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,11 +35,9 @@ class CameraActivity : AppCompatActivity() {
         gpuImageView = findViewById(R.id.gpu_image_view)
         gpuImageView.setScaleType(GPUImage.ScaleType.CENTER_CROP)
 
-
-        converter = YuvToRgbConverter(this)
-
         requestPermissions(arrayOf(Manifest.permission.CAMERA), REQUEST_CODE_PERMISSIONS)
-
+        // From the processCameraProvider, we can request a Future, which will contain the
+        // camera instance, when its available
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
         cameraProviderFuture.addListener({
             cameraProvider = cameraProviderFuture.get()
@@ -50,12 +48,17 @@ class CameraActivity : AppCompatActivity() {
     @SuppressLint("UnsafeExperimentalUsageError")
     @Suppress("MagicNumber")
     private fun startCameraIfReady() {
+        // We need to build an ImageAnalysis, which will get binded to the cameraProvider.
+        // We can register an Analyzer for the analysis, which is a callback.
+        // This callback will convert the image provided by the analyzer to an Bitmap, and  will
+        // send the image onto the gpuImageView
+        // Then, we can use the bitmap for further processing
         if(isPermissionsGranted() && cameraProvider == null) {
            return
         }
         val imageAnalysis = ImageAnalysis.Builder()
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-            // TODO: take a lot into .setBackgroundExecutor()
+            // TODO: take a look into .setBackgroundExecutor()
             .build()
 
         imageAnalysis.setAnalyzer(executor, {
@@ -63,10 +66,11 @@ class CameraActivity : AppCompatActivity() {
             //TODO: SuppressLint is dependent on it.image!! Why?
             converter.yuvToRgb(it.image!!, bitmap)
 
+            // This code does rotate the bitmap
+            // TODO: Move this to the ImageEditor
             val matrix = Matrix()
             matrix.postRotate(-90F)
             val scaledBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.width, bitmap.height, true)
-
             bitmap = Bitmap.createBitmap(scaledBitmap, 0, 0,  scaledBitmap.width, scaledBitmap.height, matrix, true)
 
             gpuImageView.post {
