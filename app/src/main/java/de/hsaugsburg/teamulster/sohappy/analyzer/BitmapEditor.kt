@@ -2,6 +2,7 @@ package de.hsaugsburg.teamulster.sohappy.analyzer
 
 import android.graphics.*
 
+
 /**
  * provides a toolbox for editing a bitmap, like cropping, rotating, resizing and grey scaling
  */
@@ -22,11 +23,7 @@ class BitmapEditor {
         fun rotate(bitmap: Bitmap, degree: Float): Bitmap {
             val matrix = Matrix()
             matrix.postRotate(degree)
-            val scaledBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.width, bitmap.height, true)
-            return Bitmap.createBitmap(
-                scaledBitmap, 0, 0, scaledBitmap.width,
-                scaledBitmap.height, matrix, true
-            )
+            return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
         }
 
         fun resize(bitmap: Bitmap, width: Int, height: Int): Bitmap {

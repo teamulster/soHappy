@@ -7,8 +7,7 @@ import android.graphics.Rect
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import de.hsaugsburg.teamulster.sohappy.analyzer.BitmapEditor
-import junit.framework.Assert.assertEquals
-import junit.framework.Assert.assertNotSame
+import junit.framework.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -36,18 +35,18 @@ class BitmapEditorTest {
         rect = Rect(3, 5, 20, 25)
         croppedBitmap = BitmapEditor.crop(bitmap, rect)
 
-        assertEquals(20-3, croppedBitmap!!.width)
-        assertEquals(25-5, croppedBitmap.height)
+        assertEquals(20 - 3, croppedBitmap!!.width)
+        assertEquals(25 - 5, croppedBitmap.height)
 
-        assertNotSame(20-1, croppedBitmap.width)
-        assertNotSame(25-1, croppedBitmap.height)
+        assertNotSame(20 - 1, croppedBitmap.width)
+        assertNotSame(25 - 1, croppedBitmap.height)
     }
 
     @Test
     fun testRotate() {
         val height = bitmap.height
         val width = bitmap.width
-
+        // only works if the picture has not the same height and width
         val rotatedBitmap = BitmapEditor.rotate(bitmap, 90f)
 
         assertEquals(height, rotatedBitmap.width)
@@ -72,10 +71,11 @@ class BitmapEditorTest {
         val bitmap = BitmapEditor.greyscale(bitmap)
 
         // for greyscale, rgb values are all equal
-        for (x in 0 until bitmap.height) {
-            for (y in 0 until bitmap.width) {
-                assert(bitmap.getColor(x,y).red() == bitmap.getColor(x,y).green()
-                        && bitmap.getColor(x,y).green() == bitmap.getColor(x,y).blue())
+        for (y in 0 until bitmap.height) {
+            for (x in 0 until bitmap.width) {
+                // for same reason assertEquals and assertNotSame are not working here
+                assertTrue(bitmap.getColor(x, y).red() == bitmap.getColor(x, y).green())
+                assertTrue(bitmap.getColor(x, y).green() == bitmap.getColor(x, y).blue())
             }
         }
     }
