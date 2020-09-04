@@ -2,19 +2,31 @@ package de.hsaugsburg.teamulster.sohappy.analyzer
 
 import android.graphics.*
 
+/**
+ * provides a toolbox for editing a bitmap, like cropping, rotating, resizing and grey scaling
+ */
 class BitmapEditor {
     companion object {
 
-        fun crop (bitmap: Bitmap, frame: Rect): Bitmap? {
-            return Bitmap.createBitmap(bitmap, 0,0, frame.width(), frame.height())
+        fun crop(bitmap: Bitmap, frame: Rect): Bitmap? {
+            /**
+             * @param frame
+             * frame.left is used as the left x coordinate of the cropped bitmap
+             * frame.top -> top y
+             * frame.right -> width x
+             * frame.bottom -> height
+             */
+            return Bitmap.createBitmap(bitmap, frame.left, frame.top, frame.width(), frame.height())
         }
 
-        fun rotate (bitmap: Bitmap, degree: Float): Bitmap {
+        fun rotate(bitmap: Bitmap, degree: Float): Bitmap {
             val matrix = Matrix()
             matrix.postRotate(degree)
             val scaledBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.width, bitmap.height, true)
-            return Bitmap.createBitmap(scaledBitmap, 0, 0,  scaledBitmap.width,
-                scaledBitmap.height, matrix, true)
+            return Bitmap.createBitmap(
+                scaledBitmap, 0, 0, scaledBitmap.width,
+                scaledBitmap.height, matrix, true
+            )
         }
 
         fun resize(bitmap: Bitmap, width: Int, height: Int): Bitmap {
@@ -23,7 +35,8 @@ class BitmapEditor {
 
         fun greyscale(bitmap: Bitmap): Bitmap {
             val bitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true)
-            val bitmapGrayScale = Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
+            val bitmapGrayScale =
+                Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
             val canvas = Canvas(bitmapGrayScale)
             val paint = Paint()
             val colorMatrix = ColorMatrix()

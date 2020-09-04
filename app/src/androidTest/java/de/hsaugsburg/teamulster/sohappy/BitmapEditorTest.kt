@@ -7,6 +7,8 @@ import android.graphics.Rect
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import de.hsaugsburg.teamulster.sohappy.analyzer.BitmapEditor
+import junit.framework.Assert.assertEquals
+import junit.framework.Assert.assertNotSame
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -15,15 +17,30 @@ class BitmapEditorTest {
 
     private val instrumentationContext: Context =
         InstrumentationRegistry.getInstrumentation().context
-    private val inputStream = instrumentationContext.assets.open("test.jpg")
+    private val inputStream = instrumentationContext.assets.open("negative-test.jpg")
     private val bitmap: Bitmap = BitmapFactory.decodeStream(inputStream)
 
     @Test
     fun testCrop() {
-        val rect = Rect(0, 0, 20, 25)
-        val cropedBitmap = BitmapEditor.crop(bitmap, rect)
+        // test whether width and height are changed correctly
+        var rect = Rect(0, 0, 20, 25)
+        var croppedBitmap = BitmapEditor.crop(bitmap, rect)
 
-        assert(cropedBitmap?.width == 20 && cropedBitmap.height == 25)
+        assertEquals(20, croppedBitmap!!.width)
+        assertEquals(25, croppedBitmap.height)
+
+        assertNotSame(1, croppedBitmap.width)
+        assertNotSame(1, croppedBitmap.height)
+
+        // test whether width and height are shifted correctly
+        rect = Rect(3, 5, 20, 25)
+        croppedBitmap = BitmapEditor.crop(bitmap, rect)
+
+        assertEquals(20-3, croppedBitmap!!.width)
+        assertEquals(25-5, croppedBitmap.height)
+
+        assertNotSame(20-1, croppedBitmap.width)
+        assertNotSame(25-1, croppedBitmap.height)
     }
 
     @Test
@@ -33,7 +50,11 @@ class BitmapEditorTest {
 
         val rotatedBitmap = BitmapEditor.rotate(bitmap, 90f)
 
-        assert(rotatedBitmap.width == height && rotatedBitmap.height == width)
+        assertEquals(height, rotatedBitmap.width)
+        assertEquals(width, rotatedBitmap.height)
+
+        assertNotSame(height, rotatedBitmap.width)
+        assertNotSame(height, rotatedBitmap.height)
     }
 
     @Test
