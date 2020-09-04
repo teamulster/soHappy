@@ -8,6 +8,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import de.hsaugsburg.teamulster.sohappy.analyzer.BitmapEditor
 import junit.framework.Assert.*
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -16,8 +17,13 @@ class BitmapEditorTest {
 
     private val instrumentationContext: Context =
         InstrumentationRegistry.getInstrumentation().context
-    private val inputStream = instrumentationContext.assets.open("negative-test.jpg")
-    private val bitmap: Bitmap = BitmapFactory.decodeStream(inputStream)
+    lateinit var bitmap: Bitmap
+
+    @Before
+    fun setUp(){
+        val inputStream = instrumentationContext.assets.open("negative-test.jpg")
+        bitmap = BitmapFactory.decodeStream(inputStream)
+    }
 
     @Test
     fun testCrop() {
@@ -44,16 +50,14 @@ class BitmapEditorTest {
 
     @Test
     fun testRotate() {
-        val height = bitmap.height
-        val width = bitmap.width
         // only works if the picture has not the same height and width
         val rotatedBitmap = BitmapEditor.rotate(bitmap, 90f)
 
-        assertEquals(height, rotatedBitmap.width)
-        assertEquals(width, rotatedBitmap.height)
+        assertEquals(bitmap.height, rotatedBitmap.width)
+        assertEquals(bitmap.width, rotatedBitmap.height)
 
-        assertNotSame(height, rotatedBitmap.width)
-        assertNotSame(height, rotatedBitmap.height)
+        assertNotSame(bitmap.height, rotatedBitmap.width)
+        assertNotSame(bitmap.height, rotatedBitmap.height)
     }
 
     @Test
@@ -72,14 +76,14 @@ class BitmapEditorTest {
 
     @Test
     fun testGreyScale() {
-        val bitmap = BitmapEditor.greyscale(bitmap)
+        val greyScaleBitmap = BitmapEditor.greyscale(bitmap)
 
         // for greyscale, rgb values are all equal
-        for (y in 0 until bitmap.height) {
-            for (x in 0 until bitmap.width) {
-                // for same reason assertEquals and assertNotSame are not working here
-                assertTrue(bitmap.getColor(x, y).red() == bitmap.getColor(x, y).green())
-                assertTrue(bitmap.getColor(x, y).green() == bitmap.getColor(x, y).blue())
+        for (y in 0 until greyScaleBitmap.height) {
+            for (x in 0 until greyScaleBitmap.width) {
+                // for some reason assertEquals and assertNotSame are not working here
+                assertTrue(greyScaleBitmap.getColor(x, y).red() == greyScaleBitmap.getColor(x, y).green())
+                assertTrue(greyScaleBitmap.getColor(x, y).green() == greyScaleBitmap.getColor(x, y).blue())
             }
         }
     }
