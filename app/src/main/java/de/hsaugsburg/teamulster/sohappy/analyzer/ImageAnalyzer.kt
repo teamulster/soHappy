@@ -27,12 +27,8 @@ class ImageAnalyzer (val activity: CameraActivity, config: ImageAnalyzerConfig) 
             //fixme: do we want to throw an exception here?
             return null;
         }
-        var croppedOutFace = ImageEditor.crop(img, faceDR.frame)
-        if (croppedOutFace == null) {
-            //fixme: do we want to throw an exception here?
-            return null;
-        }
-        var smileDR = smileDetector?.detect(croppedOutFace)
+        var croppedOutFace = ImageEditor.crop(img, faceDR.frame)!!
+        var smileDR = smileDetector!!.detect(croppedOutFace)
         return smileDR
     }
 
