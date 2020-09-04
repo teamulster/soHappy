@@ -5,15 +5,12 @@ import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FaceDetector
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
 import de.hsaugsburg.teamulster.sohappy.config.ImageAnalyzerConfig
 
-class ImageAnalyzer {
-    var faceDetector: FaceDetector
-    var smileDetector: SmileDetector
-
-    constructor(config: ImageAnalyzerConfig) {
-        // TODO: Use proper method for this
-        faceDetector = config.faceDetector.newInstance()
-        smileDetector = config.smileDetector.newInstance()
-    }
+class ImageAnalyzer
+    (config: ImageAnalyzerConfig) {
+    var faceDetector: FaceDetector =
+        Class.forName(config.faceDetector).newInstance() as FaceDetector
+    var smileDetector: SmileDetector =
+        Class.forName(config.smileDetector).newInstance() as SmileDetector
 
     @Suppress("FunctionOnlyReturningConstant")
     fun computeFaceDetectionResult(img: Bitmap): FaceDetector.Companion.FaceDetectionResult? {
