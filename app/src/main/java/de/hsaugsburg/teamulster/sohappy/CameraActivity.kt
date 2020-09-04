@@ -45,15 +45,6 @@ class CameraActivity : AppCompatActivity() {
         gpuImageView = findViewById(R.id.gpu_image_view)
         gpuImageView.setScaleType(GPUImage.ScaleType.CENTER_CROP)
 
-        try {
-            Class.forName("dalvik.system.CloseGuard")
-                .getMethod("setEnabled", Boolean::class.javaPrimitiveType)
-                .invoke(null, true)
-        } catch (e: ReflectiveOperationException) {
-            throw RuntimeException(e)
-        }
-
-
         queue = BitmapQueue()
         imageAnalyzer = ImageAnalyzer(
             this, ImageAnalyzerConfig(

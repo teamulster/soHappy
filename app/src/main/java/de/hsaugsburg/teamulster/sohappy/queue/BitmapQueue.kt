@@ -5,7 +5,7 @@ import com.glidebitmappool.GlideBitmapPool
 import com.google.common.collect.EvictingQueue
 
 class BitmapQueue {
-    val bitmapQueue = EvictingQueue.create<Bitmap>(1)
+    internal val internalEvictingQueue = EvictingQueue.create<Bitmap>(1)
 
     /**
      * Tries to removes the current bitmap from the queue and adds bitmap to the queue
@@ -13,13 +13,13 @@ class BitmapQueue {
      * @param bitmap: Bitmap to add
      */
     fun replace(bitmap: Bitmap) {
-        synchronized(bitmapQueue) {
-            val oldBitmap = bitmapQueue.poll()
+        synchronized(internalEvictingQueue) {
+            val oldBitmap = internalEvictingQueue.poll()
             if (oldBitmap != null) {
                 GlideBitmapPool.putBitmap(oldBitmap)
             }
-            bitmapQueue.add(bitmap)
-            (bitmapQueue as Object).notify()
+            internalEvictingQueue.add(bitmap)
+            (internalEvictingQueue as Object).notify()
         }
     }
 
@@ -27,12 +27,11 @@ class BitmapQueue {
      * polls the latest bitmap from queue; blocks/wait until bitmap is available
      */
     fun poll(): Bitmap? {
-        synchronized(bitmapQueue) {
-            if (bitmapQueue.size == 0) {
-                (bitmapQueue as Object).wait()
+        synchronized(internalEvictingQueue) {
+            if (internalEvictingQueue.size == 0) {
+                (internalEvictingQueue as Object).wait()
             }
-            return bitmapQueue.poll()
+            return internalEvictingQueue.poll()
         }
     }
-
 }
