@@ -59,12 +59,16 @@ class BitmapEditorTest {
 
     @Test
     fun testResize() {
-        val height = 40
         val width = 30
+        val height = 40
 
         val resizeBitmap = BitmapEditor.resize(bitmap, width, height)
 
-        assert(resizeBitmap.width == width && resizeBitmap.height == height)
+        assertEquals(width, resizeBitmap.width)
+        assertEquals(height, resizeBitmap.height)
+
+        assertNotSame(width, resizeBitmap.height)
+        assertNotSame(height, resizeBitmap.width)
     }
 
     @Test
