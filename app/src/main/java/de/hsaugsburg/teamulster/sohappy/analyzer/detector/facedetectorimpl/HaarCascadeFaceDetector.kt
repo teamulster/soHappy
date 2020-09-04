@@ -48,13 +48,7 @@ class HaarCascadeFaceDetector(private val activity: Activity) : FaceDetector {
         return CascadeClassifier(mCascadeFile.absolutePath)
     }
 
-    //
-    private fun allocateBitmap(width: Int, height: Int): Bitmap {
-        return Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-    }
-
     override fun detect(img: Bitmap): FaceDetector.Companion.FaceDetectionResult? {
-        val converter = YuvToRgbConverter(activity)
         val mat = Mat()
         Utils.bitmapToMat(img, mat)
 
