@@ -13,7 +13,7 @@ import java.nio.MappedByteBuffer
 import java.util.*
 import kotlin.collections.ArrayList
 
-/*
+/**
 * This abstract class inherits SmileDetector. It declares function necessary for TF lite to be run.
 *
 * @param tfliteModelPath the path where the tf lite model is stored
@@ -25,7 +25,7 @@ abstract class AbstractTFLiteSmileDetector(tfliteModelPath: String, numberOfThre
                                            activity: Activity) : SmileDetector {
     // Static classes
     companion object {
-        /*
+        /**
         * This data class stores prediction results based on each label a model allows.
         *
         * @param title the label title.
@@ -36,8 +36,7 @@ abstract class AbstractTFLiteSmileDetector(tfliteModelPath: String, numberOfThre
             val title: String, val confidence: Float
         )
 
-        // Override SmileDetectionResult to store predictionResults if isSmiling == false
-        /*
+        /**
         * This data class inherits the SmileDetector.Companion.SmileDetectionResult(isSmiling) function
         * and overrides it.
         *
@@ -66,7 +65,7 @@ abstract class AbstractTFLiteSmileDetector(tfliteModelPath: String, numberOfThre
     }
 
     // TODO: Choose whether model is quantized or not / probabilityProcessor is necessary
-    /*
+    /**
     * This function runs tfliteInterpreter detection on a given image and predicts its probability to match
     * one of the model's labels.
     *
@@ -100,8 +99,7 @@ abstract class AbstractTFLiteSmileDetector(tfliteModelPath: String, numberOfThre
         return sortMatches(labeledProbability);
     }
 
-    // Return ordered list with top 20 matches in processed image
-    /*
+    /**
     * This private function sorts the prediction result by confidence of matching.
     *
     * @param labeledProbability a map containing the confidence mapped on predicted labels
@@ -118,7 +116,7 @@ abstract class AbstractTFLiteSmileDetector(tfliteModelPath: String, numberOfThre
         return recognitions
     }
 
-    /*
+    /**
     * This abstract function is implemented in FerTFLiteSmileDetectorImpl. It is used to invoke this
     * classes execute function.
     *

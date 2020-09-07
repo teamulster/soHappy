@@ -7,7 +7,7 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
 // TODO: add self-trained model
-/*
+/**
 * This class inherits AbstractTFLiteSmileDetector and prepares the image before TF lite detection is run.
 *
 * @param activity the current activity this class was invoked by (e.g. CameraActivity)
@@ -27,7 +27,7 @@ class FerTFLiteSmileDetectorImpl(activity: Activity) :
         labels.add("Neutral")
     }
 
-    /*
+    /**
     * This function overrides the detect function declared in the AbstractTFLiteSmileDetector
     * abstract class.
     * It runs TF lite detection by invoking the execute method in its super class
@@ -48,7 +48,7 @@ class FerTFLiteSmileDetectorImpl(activity: Activity) :
         return Companion.SmileDetectionResult(isSmiling, predictionResults)
     }
 
-    /*
+    /**
     * This private function overrides the prepare function declared in the AbstractTFLiteSmileDetector
     * abstract class.
     * It scales a given bitmap and passes the result to the convertToByteBuffer function to get it ready
@@ -63,7 +63,7 @@ class FerTFLiteSmileDetectorImpl(activity: Activity) :
         return convertToByteBuffer(scaledBitmap)
     }
 
-    /*
+    /**
     * This private function converts a given Bitmap into a ByteBuffer.
     *
     * @param bitmap a Bitmap which will be converted into a ByteBuffer
