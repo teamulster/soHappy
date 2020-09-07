@@ -12,7 +12,7 @@ class VideoMasker(private val gpuImageView: GPUImageView) {
             GPUImageContrastFilter(1f),
             GPUImageSepiaToneFilter(),
             GPUImageHueFilter(210f),
-            GPUImageSaturationFilter(5f),
+            GPUImageSaturationFilter(1f),
             GPUImageBrightnessFilter(-0.2f)
         )
     )
@@ -23,7 +23,29 @@ class VideoMasker(private val gpuImageView: GPUImageView) {
             GPUImageContrastFilter(1f),
             GPUImageSepiaToneFilter(),
             GPUImageHueFilter(330f),
-            GPUImageSaturationFilter(3f),
+            GPUImageSaturationFilter(1f),
+            GPUImageBrightnessFilter(-0.2f)
+        )
+    )
+    private val filterYellow: GPUImageFilter = GPUImageFilterGroup(
+        listOf(
+            GPUImagePixelationFilter().apply { setPixel(5F) },
+            GPUImageGaussianBlurFilter(5.0f),
+            GPUImageContrastFilter(1f),
+            GPUImageSepiaToneFilter(),
+            GPUImageHueFilter(30f),
+            GPUImageSaturationFilter(1f),
+            GPUImageBrightnessFilter(-0.2f)
+        )
+    )
+    private val filterGreen: GPUImageFilter = GPUImageFilterGroup(
+        listOf(
+            GPUImagePixelationFilter().apply { setPixel(5F) },
+            GPUImageGaussianBlurFilter(5.0f),
+            GPUImageContrastFilter(1f),
+            GPUImageSepiaToneFilter(),
+            GPUImageHueFilter(90f),
+            GPUImageSaturationFilter(1f),
             GPUImageBrightnessFilter(-0.2f)
         )
     )
