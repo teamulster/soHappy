@@ -14,6 +14,15 @@
             app:gpuimage_show_loading="false"
             app:gpuimage_surface_type="texture_view">
 
-        </jp.co.cyberagent.android.gpuimage.GPUImageView>
+    </jp.co.cyberagent.android.gpuimage.GPUImageView>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#802196F3"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
 
 </RelativeLayout>
