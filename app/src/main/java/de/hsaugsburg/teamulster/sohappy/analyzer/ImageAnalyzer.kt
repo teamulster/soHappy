@@ -17,11 +17,18 @@ class ImageAnalyzer {
 
     @Suppress("FunctionOnlyReturningConstant")
     fun computeFaceDetectionResult(img: Bitmap): FaceDetector.Companion.FaceDetectionResult? {
-        return null
+        return faceDetector.detect(img)
     }
 
     @Suppress("FunctionOnlyReturningConstant")
     fun computeSmileDetectionResult(img: Bitmap): SmileDetector.Companion.SmileDetectionResult? {
-        return null
+        val faceDR = faceDetector.detect(img)
+        if (faceDR == null) {
+            //fixme: do we want to throw an exception here?
+            return null;
+        }
+        var croppedOutFace = ImageEditor.crop(img, faceDR.frame)!!
+        var smileDR = smileDetector.detect(croppedOutFace)
+        return smileDR
     }
 }
