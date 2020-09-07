@@ -3,6 +3,9 @@ package de.hsaugsburg.teamulster.sohappy.analyzer.detector
 import android.app.Activity
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.util.Log
+import de.hsaugsburg.teamulster.sohappy.analyzer.BitmapEditor
+import java.lang.Exception
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
@@ -37,15 +40,20 @@ class FerTFLiteSmileDetectorImpl(activity: Activity) :
     * @return Companion.SmileDetectionResult
     * */
     override fun detect(bitmap: Bitmap): Companion.SmileDetectionResult {
-        val predictionResults: ArrayList<Companion.Recognition> = super.execute(bitmap)
-        val firstPredictionResult = predictionResults[0]
-        var isSmiling = false
-        // if Happy is detected, set isSmiling = true
-        // TODO: This has to be adapted depending on each model
-        if (firstPredictionResult.title == "Happy" && firstPredictionResult.confidence > 0.75f) {
-            isSmiling = true
+        try {
+            val predictionResults: ArrayList<Companion.Recognition> = super.execute(bitmap)
+            val firstPredictionResult = predictionResults[0]
+            var isSmiling = false
+            // if Happy is detected, set isSmiling = true
+            // TODO: This has to be adapted depending on each model
+            if (firstPredictionResult.title == "Happy" && firstPredictionResult.confidence > 0.75f) {
+                isSmiling = true
+            }
+            return Companion.SmileDetectionResult(isSmiling, predictionResults)
+        } catch (e: Exception) {
+            Log.d("Im crying", e.toString())
         }
-        return Companion.SmileDetectionResult(isSmiling, predictionResults)
+        return Companion.SmileDetectionResult(false, ArrayList());
     }
 
     /**
@@ -60,7 +68,8 @@ class FerTFLiteSmileDetectorImpl(activity: Activity) :
     override fun prepare(img: Bitmap): ByteBuffer? {
         // TODO: This has to be adapted depending on each model
         val scaledBitmap = Bitmap.createScaledBitmap(img, 48, 48, true)
-        return convertToByteBuffer(scaledBitmap)
+        val greyscale = BitmapEditor.greyScale(scaledBitmap)
+        return convertToByteBuffer(greyscale)
     }
 
     /**

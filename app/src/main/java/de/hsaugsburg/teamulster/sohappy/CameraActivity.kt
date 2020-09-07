@@ -4,16 +4,13 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.Matrix
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import com.glidebitmappool.GlideBitmapPool
-import com.glidebitmappool.internal.BitmapPool
+import de.hsaugsburg.teamulster.sohappy.analyzer.BitmapEditor
 import de.hsaugsburg.teamulster.sohappy.analyzer.ImageAnalyzer
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FerTFLiteSmileDetectorImpl
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.HaarCascadeFaceDetector
@@ -38,7 +35,6 @@ class CameraActivity : AppCompatActivity() {
     lateinit var queue: BitmapQueue
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        GlideBitmapPool.initialize(10 * 1024 * 1024); // 10mb max memory size
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera)
         converter = YuvToRgbConverter(this)
@@ -85,20 +81,9 @@ class CameraActivity : AppCompatActivity() {
             //TODO: SuppressLint is dependent on it.image!! Why?
             converter.yuvToRgb(it.image!!, bitmap)
 
-            // This code does rotate the bitmap
-            // TODO: Move this to the ImageEditor
-            val matrix = Matrix()
-            matrix.postRotate(-90F)
-            bitmap = Bitmap.createBitmap(
-                bitmap,
-                0,
-                0,
-                bitmap.width,
-                bitmap.height,
-                matrix,
-                true
-            )
-            queue.replace(GlideBitmapPoolExtension.copy(bitmap))
+            bitmap = BitmapEditor.rotate(bitmap, -90f)
+
+            queue.replace(bitmap.copy(bitmap.config, false))
             gpuImageView.post {
                 gpuImageView.setRatio((bitmap.width / bitmap.height).toFloat())
                 gpuImageView.setImage(bitmap)
@@ -113,7 +98,7 @@ class CameraActivity : AppCompatActivity() {
 
     private fun allocateBitmapIfNecessary(width: Int, height: Int): Bitmap {
         if (!this::bitmap.isInitialized || bitmap!!.width != width || bitmap!!.height != height) {
-            bitmap = GlideBitmapPool.getBitmap(width, height, Bitmap.Config.ARGB_8888)
+            bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         }
         return bitmap
     }
@@ -122,7 +107,7 @@ class CameraActivity : AppCompatActivity() {
         requestCode: Int, permissions: Array<String?>, grantResults: IntArray
     ) {
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            startCameraIfReady()
+            //startCameraIfReady()
         }
     }
 

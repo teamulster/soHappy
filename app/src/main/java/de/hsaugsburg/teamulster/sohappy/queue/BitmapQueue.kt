@@ -1,7 +1,6 @@
 package de.hsaugsburg.teamulster.sohappy.queue
 
 import android.graphics.Bitmap
-import com.glidebitmappool.GlideBitmapPool
 import com.google.common.collect.EvictingQueue
 
 class BitmapQueue {
@@ -15,9 +14,7 @@ class BitmapQueue {
     fun replace(bitmap: Bitmap) {
         synchronized(internalEvictingQueue) {
             val oldBitmap = internalEvictingQueue.poll()
-            if (oldBitmap != null) {
-                GlideBitmapPool.putBitmap(oldBitmap)
-            }
+            oldBitmap?.recycle()
             internalEvictingQueue.add(bitmap)
             (internalEvictingQueue as Object).notify()
         }

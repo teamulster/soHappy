@@ -3,7 +3,6 @@ package de.hsaugsburg.teamulster.sohappy.analyzer
 import android.app.Activity
 import android.graphics.Bitmap
 import android.util.Log
-import com.glidebitmappool.GlideBitmapPool
 import de.hsaugsburg.teamulster.sohappy.CameraActivity
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FaceDetector
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
@@ -28,7 +27,7 @@ class ImageAnalyzer (val activity: CameraActivity, config: ImageAnalyzerConfig) 
             //fixme: do we want to throw an exception here?
             return null;
         }
-        var croppedOutFace = ImageEditor.crop(img, faceDR.frame)!!
+        var croppedOutFace = BitmapEditor.crop(img, faceDR.frame)!!
         var smileDR = smileDetector!!.detect(croppedOutFace)
         return smileDR
     }
@@ -41,7 +40,6 @@ class ImageAnalyzer (val activity: CameraActivity, config: ImageAnalyzerConfig) 
                 if (bitmap != null) {
                     val result = computeSmileDetectionResult(bitmap)
                     Log.d("Result:", result.toString())
-                    GlideBitmapPool.putBitmap(bitmap)
                 }
             }
         }
