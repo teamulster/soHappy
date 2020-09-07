@@ -22,7 +22,7 @@ class ConfigManagerTest {
     }
 
     @Test
-    fun useWrite() {
+    fun useWriteSuccessful() {
         scenario.onActivity { activity ->
             ConfigManager.store(
                 activity, MainConfig(
