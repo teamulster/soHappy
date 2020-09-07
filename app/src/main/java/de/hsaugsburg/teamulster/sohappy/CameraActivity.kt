@@ -88,24 +88,21 @@ class CameraActivity : AppCompatActivity() {
             // TODO: Move this to the ImageEditor
             val matrix = Matrix()
             matrix.postRotate(-90F)
-            val scaledBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.width, bitmap.height, true)
             bitmap = Bitmap.createBitmap(
-                scaledBitmap,
+                bitmap,
                 0,
                 0,
-                scaledBitmap.width,
-                scaledBitmap.height,
+                bitmap.width,
+                bitmap.height,
                 matrix,
                 true
             )
-            GlideBitmapPool.putBitmap(scaledBitmap)
             queue.replace(GlideBitmapPoolExtension.copy(bitmap))
             gpuImageView.post {
                 gpuImageView.setRatio((bitmap.width / bitmap.height).toFloat())
                 gpuImageView.setImage(bitmap)
             }
             it.close()
-
         })
 
 
