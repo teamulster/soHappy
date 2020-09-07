@@ -76,7 +76,7 @@ class BitmapEditorTest {
 
     @Test
     fun testGreyScale() {
-        val greyScaleBitmap = BitmapEditor.greyscale(bitmap)
+        val greyScaleBitmap = BitmapEditor.greyScale(bitmap)
 
         // for greyscale, rgb values are all equal
         for (y in 0 until greyScaleBitmap.height) {
