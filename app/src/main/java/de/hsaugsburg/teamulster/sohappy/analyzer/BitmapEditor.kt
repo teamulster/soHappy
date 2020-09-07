@@ -50,16 +50,16 @@ object BitmapEditor {
      * @return a new grey scaled bitmap.
      */
     fun greyScale(bitmap: Bitmap): Bitmap {
-        val bitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true)
+        val copiedBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true)
         val bitmapGreyScale =
-            Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
+            Bitmap.createBitmap(copiedBitmap.width, copiedBitmap.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmapGreyScale)
         val paint = Paint()
         val colorMatrix = ColorMatrix()
         colorMatrix.setSaturation(0f)
         val colorMatrixFilter = ColorMatrixColorFilter(colorMatrix)
         paint.colorFilter = colorMatrixFilter
-        canvas.drawBitmap(bitmap, 0F, 0F, paint)
+        canvas.drawBitmap(copiedBitmap, 0F, 0F, paint)
         return bitmapGreyScale
     }
 }
