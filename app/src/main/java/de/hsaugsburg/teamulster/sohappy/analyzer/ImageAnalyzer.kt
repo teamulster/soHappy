@@ -13,7 +13,8 @@ import kotlin.concurrent.thread
 class ImageAnalyzer (val activity: CameraActivity, config: ImageAnalyzerConfig) {
     var faceDetector: FaceDetector? = (config.faceDetector?.getConstructor(Activity::class.java)
         ?.newInstance(activity))
-    var smileDetector: SmileDetector? = null //config.smileDetector?.newInstance() as SmileDetector
+    var smileDetector: SmileDetector? = (config.smileDetector?.getConstructor(Activity::class.java)
+        ?.newInstance(activity))
 
     @Suppress("FunctionOnlyReturningConstant")
     fun computeFaceDetectionResult(img: Bitmap): FaceDetector.Companion.FaceDetectionResult? {
@@ -38,8 +39,8 @@ class ImageAnalyzer (val activity: CameraActivity, config: ImageAnalyzerConfig) 
             while (true) {
                 val bitmap = this.activity.queue.poll()
                 if (bitmap != null) {
-                    val result = computeFaceDetectionResult(bitmap)
-                    Log.d("Result:", result?.frame.toString())
+                    val result = computeSmileDetectionResult(bitmap)
+                    Log.d("Result:", result.toString())
                     GlideBitmapPool.putBitmap(bitmap)
                 }
             }

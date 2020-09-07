@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import com.glidebitmappool.GlideBitmapPool
 import com.glidebitmappool.internal.BitmapPool
 import de.hsaugsburg.teamulster.sohappy.analyzer.ImageAnalyzer
+import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FerTFLiteSmileDetectorImpl
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.HaarCascadeFaceDetector
 import de.hsaugsburg.teamulster.sohappy.config.ImageAnalyzerConfig
 import de.hsaugsburg.teamulster.sohappy.queue.BitmapQueue
@@ -49,7 +50,7 @@ class CameraActivity : AppCompatActivity() {
         imageAnalyzer = ImageAnalyzer(
             this, ImageAnalyzerConfig(
                 HaarCascadeFaceDetector::class.java,
-                null
+                FerTFLiteSmileDetectorImpl::class.java,
             )
         )
 
