@@ -14,6 +14,14 @@ import org.opencv.objdetect.CascadeClassifier
 import java.io.File
 import java.io.FileOutputStream
 
+/**
+ * This class implements Haar Cascade FaceDetector approach. It implements the FaceDetector interface.
+ *
+ * @constructor takes the current activity and returns a new HaarCascadeFaceDetector object
+ * @property haarCascade
+ * @property detectorName
+ * @property assetFilename
+ */
 class HaarCascadeFaceDetector(private val activity: Activity) : FaceDetector {
 
     companion object {

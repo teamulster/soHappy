@@ -1,7 +1,8 @@
-package de.hsaugsburg.teamulster.sohappy.analyzer.detector
+package de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl
 
 import android.app.Activity
 import android.graphics.Bitmap
+import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.Interpreter
 import org.tensorflow.lite.support.common.FileUtil

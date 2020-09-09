@@ -1,4 +1,4 @@
-package de.hsaugsburg.teamulster.sohappy.analyzer.detector
+package de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl
 
 import android.app.Activity
 import android.graphics.Bitmap

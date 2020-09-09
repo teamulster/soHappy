@@ -17,6 +17,9 @@ import jp.co.cyberagent.android.gpuimage.GPUImage
 import jp.co.cyberagent.android.gpuimage.GPUImageView
 import java.util.concurrent.Executors
 
+/**
+ * This class implements the main app activity.
+ * */
 class CameraActivity : AppCompatActivity() {
     companion object {
         const val REQUEST_CODE_PERMISSIONS = 10
