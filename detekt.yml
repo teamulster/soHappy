@@ -56,11 +56,11 @@ comments:
     searchInNestedClass: true
     searchInInnerClass: true
     searchInInnerObject: true
-    searchInInnerInterface: true
+    searchInInnerInterface: false
   UndocumentedPublicFunction:
     active: true
   UndocumentedPublicProperty:
-    active: true
+    active: false
 
 complexity:
   active: true
