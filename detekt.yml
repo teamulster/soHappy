@@ -66,7 +66,7 @@ complexity:
   active: true
   ComplexCondition:
     active: true
-    threshold: 3
+    threshold: 4
   ComplexInterface:
     active: false
     threshold: 10
@@ -663,6 +663,6 @@ style:
   VarCouldBeVal:
     active: true
   WildcardImport:
-    active: true
+    active: false
     excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
     excludeImports: ['java.util.*', 'kotlinx.android.synthetic.*']
