@@ -25,12 +25,14 @@ class CameraActivity : AppCompatActivity() {
     private val executor = Executors.newSingleThreadExecutor()
     private var cameraProvider: ProcessCameraProvider? = null
     private var bitmap: Bitmap? = null
-    private var converter = YuvToRgbConverter(this)
+    private lateinit var converter: YuvToRgbConverter
     private lateinit var gpuImageView: GPUImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera)
+
+        converter = YuvToRgbConverter(this)
 
         gpuImageView = findViewById(R.id.gpu_image_view)
         gpuImageView.setScaleType(GPUImage.ScaleType.CENTER_CROP)
@@ -53,7 +55,7 @@ class CameraActivity : AppCompatActivity() {
         // This callback will convert the image provided by the analyzer to an Bitmap, and  will
         // send the image onto the gpuImageView
         // Then, we can use the bitmap for further processing
-        if(isPermissionsGranted() && cameraProvider == null) {
+        if(!isPermissionsGranted() || cameraProvider == null) {
            return
         }
         val imageAnalysis = ImageAnalysis.Builder()
