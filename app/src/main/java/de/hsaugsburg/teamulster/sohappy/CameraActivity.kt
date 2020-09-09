@@ -4,16 +4,14 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.Matrix
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import com.glidebitmappool.GlideBitmapPool
-import com.glidebitmappool.internal.BitmapPool
+import de.hsaugsburg.teamulster.sohappy.analyzer.BitmapEditor
 import de.hsaugsburg.teamulster.sohappy.analyzer.ImageAnalyzer
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.HaarCascadeFaceDetector
 import de.hsaugsburg.teamulster.sohappy.config.ImageAnalyzerConfig
@@ -84,20 +82,8 @@ class CameraActivity : AppCompatActivity() {
             //TODO: SuppressLint is dependent on it.image!! Why?
             converter.yuvToRgb(it.image!!, bitmap)
 
-            // This code does rotate the bitmap
-            // TODO: Move this to the ImageEditor
-            val matrix = Matrix()
-            matrix.postRotate(-90F)
-            bitmap = Bitmap.createBitmap(
-                bitmap,
-                0,
-                0,
-                bitmap.width,
-                bitmap.height,
-                matrix,
-                true
-            )
-            queue.replace(GlideBitmapPoolExtension.copy(bitmap))
+            bitmap = BitmapEditor.rotate(bitmap, -90f)
+
             gpuImageView.post {
                 gpuImageView.setRatio((bitmap.width / bitmap.height).toFloat())
                 gpuImageView.setImage(bitmap)
