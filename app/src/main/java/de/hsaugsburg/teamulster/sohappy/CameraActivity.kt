@@ -68,7 +68,7 @@ class CameraActivity : AppCompatActivity() {
         // This callback will convert the image provided by the analyzer to an Bitmap, and  will
         // send the image onto the gpuImageView
         // Then, we can use the bitmap for further processing
-        if(!isPermissionsGranted() && cameraProvider == null) {
+        if(!isPermissionsGranted() || cameraProvider == null) {
            return
         }
         val imageAnalysis = ImageAnalysis.Builder()
@@ -107,7 +107,7 @@ class CameraActivity : AppCompatActivity() {
         requestCode: Int, permissions: Array<String?>, grantResults: IntArray
     ) {
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            startCameraIfReady()
+            //startCameraIfReady()
         }
     }
 
