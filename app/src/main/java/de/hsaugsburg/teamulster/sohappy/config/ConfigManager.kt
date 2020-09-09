@@ -9,7 +9,6 @@ import java.io.FileInputStream
 import java.io.IOException
 import java.nio.charset.Charset
 
-
 /**
 * This object parses configuration based on config.json.
 * config.json is placed in internal storage and is only accessible from within the app (app-specific)
@@ -46,7 +45,9 @@ object ConfigManager {
         } catch (e: IOException) {
             throw e
         }
-        fromJson(jsonString)
+        val parsedJson = fromJson(jsonString)
+        mainConfig = parsedJson
+        imageAnalyzerConfig = parsedJson.imageAnalyzerConfig
         return mainConfig
     }
 
@@ -94,10 +95,9 @@ object ConfigManager {
     * @param jsonString JSON string which will be converted into MainConfig object
     * @throws InvalidJsonStringException
     * */
-    private fun fromJson(jsonString: String) {
+    private fun fromJson(jsonString: String) : MainConfig {
         try {
-            mainConfig = gson.fromJson<MainConfig>(jsonString, MainConfig::class.java)
-            imageAnalyzerConfig = mainConfig.imageAnalyzerConfig
+            return gson.fromJson<MainConfig>(jsonString, MainConfig::class.java)
         } catch (e: JsonParseException) {
             throw InvalidJsonStringException(this::class.java.name + " : the given json string" +
                     "is not JSON compliant.")
