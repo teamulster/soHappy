@@ -3,7 +3,6 @@ package de.hsaugsburg.teamulster.sohappy.analyzer
 import android.app.Activity
 import android.graphics.Bitmap
 import android.util.Log
-import com.glidebitmappool.GlideBitmapPool
 import de.hsaugsburg.teamulster.sohappy.CameraActivity
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FaceDetector
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
@@ -40,7 +39,7 @@ class ImageAnalyzer (val activity: CameraActivity, config: ImageAnalyzerConfig) 
                 if (bitmap != null) {
                     val result = computeFaceDetectionResult(bitmap)
                     Log.d("Result:", result?.frame.toString())
-                    GlideBitmapPool.putBitmap(bitmap)
+                    bitmap.recycle()
                 }
             }
         }

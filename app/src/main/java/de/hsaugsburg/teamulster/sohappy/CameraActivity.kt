@@ -10,7 +10,6 @@ import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import com.glidebitmappool.GlideBitmapPool
 import de.hsaugsburg.teamulster.sohappy.analyzer.BitmapEditor
 import de.hsaugsburg.teamulster.sohappy.analyzer.ImageAnalyzer
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.HaarCascadeFaceDetector
@@ -35,7 +34,6 @@ class CameraActivity : AppCompatActivity() {
     lateinit var queue: BitmapQueue
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        GlideBitmapPool.initialize(10 * 1024 * 1024); // 10mb max memory size
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera)
         converter = YuvToRgbConverter(this)
@@ -97,8 +95,8 @@ class CameraActivity : AppCompatActivity() {
     }
 
     private fun allocateBitmapIfNecessary(width: Int, height: Int): Bitmap {
-        if (!this::bitmap.isInitialized || bitmap!!.width != width || bitmap!!.height != height) {
-            bitmap = GlideBitmapPool.getBitmap(width, height, Bitmap.Config.ARGB_8888)
+        if (!this::bitmap.isInitialized || bitmap.width != width || bitmap.height != height) {
+            bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         }
         return bitmap
     }
