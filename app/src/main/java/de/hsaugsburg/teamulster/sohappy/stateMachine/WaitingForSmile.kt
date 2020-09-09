@@ -1,8 +1,12 @@
 package de.hsaugsburg.teamulster.sohappy.stateMachine
 
 class WaitingForSmile : State {
-    override fun consumeAction(action: State.Action): State {
-        TODO("Not yet implemented")
+    override fun consumeAction(action: Action): State {
+        return when (action) {
+            is Action.SmileDetected -> SmileCountdown()
+            is Action.Timeout -> NoSmile()
+            else -> throw IllegalStateException("Invalid action $action passed to state $this")
+        }
     }
 
     override fun uiChange() {
