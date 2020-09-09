@@ -23,13 +23,13 @@ class BitmapQueueTest {
         val testBitmaps = (1..6).map { Bitmap.createBitmap(it, it, Bitmap.Config.ARGB_8888) }
         bitmapQueue!!.replace(testBitmaps[0])
         // Access the inner Queue and peek
-        assertEquals(testBitmaps[0], bitmapQueue!!.internalEvictingQueue.peek())
+        assertEquals(testBitmaps[0], bitmapQueue!!.internalBitmapWrapper.bitmap)
         bitmapQueue!!.replace(testBitmaps[1])
         bitmapQueue!!.replace(testBitmaps[2])
         bitmapQueue!!.replace(testBitmaps[3])
         bitmapQueue!!.replace(testBitmaps[4])
         bitmapQueue!!.replace(testBitmaps[5])
-        assertEquals(testBitmaps[5], bitmapQueue!!.internalEvictingQueue.peek())
+        assertEquals(testBitmaps[5], bitmapQueue!!.internalBitmapWrapper.bitmap)
     }
 
     @Test
