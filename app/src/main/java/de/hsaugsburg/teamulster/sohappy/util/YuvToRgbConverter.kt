@@ -31,7 +31,6 @@ class YuvToRgbConverter(context: Context) {
     private lateinit var outputAllocation: Allocation
 
     @Synchronized
-    @Suppress("MagicNumber")
     fun yuvToRgb(image: Image, output: Bitmap) {
 
         // Ensure that the intermediate output byte buffer is allocated

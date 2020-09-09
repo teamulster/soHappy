@@ -5,10 +5,10 @@ import android.graphics.Rect
 
 interface FaceDetector {
     companion object {
-        class FaceDetectionResult (val frame: Rect)
+        data class FaceDetectionResult(val frame: Rect)
     }
 
     val detectorName: String
 
-    fun detect(img: Bitmap) : FaceDetectionResult?
+    fun detect(img: Bitmap): FaceDetectionResult?
 }

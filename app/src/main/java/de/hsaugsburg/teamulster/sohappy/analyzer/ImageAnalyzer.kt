@@ -13,9 +13,8 @@ class ImageAnalyzer
         Class.forName(config.smileDetector).newInstance() as SmileDetector
 
     @Suppress("FunctionOnlyReturningConstant")
-    fun computeFaceDetectionResult(img: Bitmap): FaceDetector.Companion.FaceDetectionResult? {
-        return faceDetector.detect(img)
-    }
+    fun computeFaceDetectionResult(img: Bitmap): FaceDetector.Companion.FaceDetectionResult? =
+        faceDetector.detect(img)
 
     @Suppress("FunctionOnlyReturningConstant")
     fun computeSmileDetectionResult(img: Bitmap): SmileDetector.Companion.SmileDetectionResult? {
@@ -24,8 +23,8 @@ class ImageAnalyzer
             //fixme: do we want to throw an exception here?
             return null;
         }
-        var croppedOutFace = BitmapEditor.crop(img, faceDR.frame)!!
-        var smileDR = smileDetector.detect(croppedOutFace)
+        val croppedOutFace = BitmapEditor.crop(img, faceDR.frame)!!
+        val smileDR = smileDetector.detect(croppedOutFace)
         return smileDR
     }
 }

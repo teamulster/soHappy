@@ -12,5 +12,5 @@ interface SmileDetector {
 
     val detectorName: String
 
-    fun detect(img: Bitmap) : SmileDetectionResult
+    fun detect(img: Bitmap): SmileDetectionResult
 }

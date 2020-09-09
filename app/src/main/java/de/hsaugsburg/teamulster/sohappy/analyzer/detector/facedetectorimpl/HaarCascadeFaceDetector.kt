@@ -1,10 +1,8 @@
 package de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl
 
 import android.app.Activity
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Rect
-import android.media.Image
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FaceDetector
 import de.hsaugsburg.teamulster.sohappy.util.YuvToRgbConverter
 import org.opencv.android.OpenCVLoader
@@ -48,11 +46,7 @@ class HaarCascadeFaceDetector(private val activity: Activity) : FaceDetector {
         return CascadeClassifier(mCascadeFile.absolutePath)
     }
 
-    //
-    private fun allocateBitmap(width: Int, height: Int): Bitmap {
-        return Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-    }
-
+    @Suppress("UnusedPrivateMember")
     override fun detect(img: Bitmap): FaceDetector.Companion.FaceDetectionResult? {
         val converter = YuvToRgbConverter(activity)
         val mat = Mat()
@@ -68,10 +62,12 @@ class HaarCascadeFaceDetector(private val activity: Activity) : FaceDetector {
         val firstFace = list[0]
 
         return FaceDetector.Companion.FaceDetectionResult(
-            Rect(firstFace.x,
+            Rect(
+                firstFace.x,
                 firstFace.y,
                 firstFace.x + firstFace.width,
-                firstFace.y + firstFace.height)
+                firstFace.y + firstFace.height
+            )
         )
     }
 

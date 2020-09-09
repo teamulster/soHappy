@@ -7,7 +7,6 @@ import androidx.test.core.app.launchActivity
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.HaarCascadeFaceDetector
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -15,8 +14,9 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class HaarCascadeFaceDetectorTest {
     lateinit var haarCascadeFaceDetector: HaarCascadeFaceDetector
-    private lateinit var scenario : ActivityScenario<CameraActivity>
-    private val instrumentationContext: Context = InstrumentationRegistry.getInstrumentation().context
+    private lateinit var scenario: ActivityScenario<CameraActivity>
+    private val instrumentationContext: Context =
+        InstrumentationRegistry.getInstrumentation().context
 
     @Before
     fun setUp() {
