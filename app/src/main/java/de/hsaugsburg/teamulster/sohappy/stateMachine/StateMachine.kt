@@ -9,10 +9,11 @@ class StateMachine {
     }
 
     // initialize here?
+    // general question: where to put the ui staff and shall it be separated from function (face and smile detection)?
     private lateinit var timer: Timer
 
     // ui changes here or in state class?
-    fun handleStateChange(newState: State) {
+    private fun handleStateChange(newState: State) {
         newState.uiChange()
         newState.activity()
     }
