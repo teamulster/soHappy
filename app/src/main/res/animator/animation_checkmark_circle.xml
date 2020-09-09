@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:anim/accelerate_interpolator"
+    android:ordering="together"
+    android:shareInterpolator="false">
+
+    <objectAnimator
+        android:duration="@android:integer/config_mediumAnimTime"
+        android:propertyName="trimPathStart"
+        android:valueFrom="1.0"
+        android:valueTo="0.1"
+        android:valueType="floatType" />
+
+    <!-- Somewhat hacky, but it'll have to do -->
+    <objectAnimator
+        android:duration="0"
+        android:propertyName="strokeColor"
+        android:valueFrom="#00000000"
+        android:valueTo="@color/colorSuccess"
+        android:valueType="colorType" />
+
+</set>

@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_homeFragment_to_helpFragment2"
             app:destination="@id/helpFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_smileFragment"
+            app:destination="@id/smileFragment" />
     </fragment>
 
     <fragment
@@ -28,5 +31,10 @@
         android:name="de.hsaugsburg.teamulster.sohappy.HelpFragment"
         android:label="@string/fragment_help_name"
         tools:layout="@layout/fragment_help" />
+    <fragment
+        android:id="@+id/smileFragment"
+        android:name="de.hsaugsburg.teamulster.sohappy.SmileFragment"
+        android:label="fragment_smile"
+        tools:layout="@layout/fragment_smile" />
 
 </navigation>

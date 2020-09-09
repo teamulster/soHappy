@@ -24,6 +24,16 @@
         <item name="android:textColor">@android:color/black</item>
     </style>
 
+    <style name="TextAppearanceCamera">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">26sp</item>
+    </style>
+
+    <style name="TextAppearanceCountdown">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">42sp</item>
+    </style>
+
     <style name="SwitchAppearanceCustom" parent="Theme.AppCompat.Light">
         <item name="colorControlActivated">@color/colorPrimary</item>
     </style>
