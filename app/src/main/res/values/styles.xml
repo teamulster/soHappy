@@ -7,7 +7,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="TextAppearanceHeadlineCustom">
+    <style name="TextAppearanceHeadlineCustom1">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearanceHeadlineCustom2">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@android:color/black</item>
         <item name="android:textStyle">bold</item>
@@ -20,5 +26,16 @@
 
     <style name="SwitchAppearanceCustom" parent="Theme.AppCompat.Light">
         <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
+
+    <style name="ButtonBorderlessNoDescription" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:background">@drawable/button_background_blank</item>
+        <item name="android:gravity">start|center_vertical</item>
+        <item name="android:textAppearance">@style/TextAppearanceHeadlineCustom1</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="ButtonArrowBorderlessNoDescription" parent="ButtonBorderlessNoDescription">
+        <item name="android:drawableEnd">@drawable/ic_baseline_keyboard_arrow_right_24</item>
     </style>
 </resources>

@@ -4,13 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".SettingsFragment">
 
+    <data>
+        <variable name="viewModel"
+            type="de.hsaugsburg.teamulster.sohappy.SettingsViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/generalSection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -20,20 +25,20 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
+            android:id="@+id/creditsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="72dp"
+            android:layout_marginTop="24dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/generalSection">
 
             <TextView
                 android:id="@+id/notification_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/fragment_settings_notification"
-                android:textAppearance="@style/TextAppearanceHeadlineCustom"
+                android:textAppearance="@style/TextAppearanceHeadlineCustom2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,10 +54,11 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switch1"
+                android:id="@+id/settings_notification_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
+                android:checked="@={viewModel.notificationsEnabled}"
                 android:theme="@style/SwitchAppearanceCustom"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -69,7 +75,7 @@
             android:background="@color/colorSeparatorLine"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/creditsLayout" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -84,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/fragment_settings_database"
-                android:textAppearance="@style/TextAppearanceHeadlineCustom"
+                android:textAppearance="@style/TextAppearanceHeadlineCustom2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -100,11 +106,12 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switch2"
+                android:id="@+id/settings_database_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
                 android:theme="@style/SwitchAppearanceCustom"
+                android:checked="@={viewModel.databaseEnabled}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>

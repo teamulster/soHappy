@@ -45,8 +45,6 @@ class CameraFragment: Fragment() {
             false
         )
 
-        Log.wtf(this.javaClass.name, "Creating fragment!")
-
         converter = YuvToRgbConverter(requireContext())
         gpuImageView = binding.gpuImageView
         gpuImageView.setScaleType(GPUImage.ScaleType.CENTER_CROP)
@@ -66,7 +64,6 @@ class CameraFragment: Fragment() {
     override fun onStop() {
         super.onStop()
 
-        Log.wtf(this.javaClass.name, "DESTRUCTION MUAHAHAHA")
         cameraProvider!!.unbindAll()
     }
 

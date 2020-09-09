@@ -4,11 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
     app:startDestination="@id/homeFragment">
+
     <fragment
         android:id="@+id/settingsFragment"
         android:name="de.hsaugsburg.teamulster.sohappy.SettingsFragment"
         android:label="@string/fragment_settings_name"
         tools:layout="@layout/fragment_settings" />
+
     <fragment
         android:id="@+id/homeFragment"
         android:name="de.hsaugsburg.teamulster.sohappy.HomeFragment"
@@ -16,5 +18,15 @@
         <action
             android:id="@+id/action_homeFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_helpFragment2"
+            app:destination="@id/helpFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="de.hsaugsburg.teamulster.sohappy.HelpFragment"
+        android:label="@string/fragment_help_name"
+        tools:layout="@layout/fragment_help" />
+
 </navigation>

@@ -1,16 +1,16 @@
 package de.hsaugsburg.teamulster.sohappy
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
-import de.hsaugsburg.teamulster.sohappy.databinding.FragmentSettingsBinding
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
+import de.hsaugsburg.teamulster.sohappy.databinding.FragmentHelpBinding
+import de.hsaugsburg.teamulster.sohappy.databinding.FragmentHomeBinding
 
-class SettingsFragment : Fragment() {
-    private lateinit var binding: FragmentSettingsBinding
-    private lateinit var viewModel: SettingsViewModel
+class HelpFragment : Fragment() {
+    private lateinit var binding: FragmentHelpBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -19,12 +19,10 @@ class SettingsFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(
             inflater,
-            R.layout.fragment_settings,
+            R.layout.fragment_help,
             container,
             false
         )
-        viewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
-        binding.viewModel = viewModel
 
         return binding.root
     }

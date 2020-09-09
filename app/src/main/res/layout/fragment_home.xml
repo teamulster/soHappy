@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".CameraFragment">
+    tools:context=".HomeFragment">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -13,95 +13,83 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/white"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:visibility="invisible" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.4"
-                android:gravity="center_horizontal|center_vertical"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
                     android:text="@string/ui_welcome_title"
                     android:textAlignment="center"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="6dp" />
+                    android:textAppearance="@style/TextAppearanceHeadlineCustom1"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/textView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:text="@string/ui_welcome_description"
                     android:textAlignment="center"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-            </LinearLayout>
+                    android:textAppearance="@style/TextAppearanceBodyCustom"
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.2">
+                android:layout_marginTop="32dp">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="32dp"
                     android:layout_marginEnd="32dp"
+                    android:layout_marginBottom="32dp"
                     app:cardCornerRadius="7dp"
                     app:cardElevation="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
 
-                    <fragment android:name="de.hsaugsburg.teamulster.sohappy.CameraFragment"
+                    <fragment
                         android:id="@+id/gpuImageView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                    <!-- <jp.co.cyberagent.android.gpuimage.GPUImageView
-                        android:id="@+id/gpu_image_view"
+                        android:name="de.hsaugsburg.teamulster.sohappy.CameraFragment"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:gpuimage_show_loading="false"
-                        app:gpuimage_surface_type="texture_view"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        tools:layout_editor_absoluteY="104dp" /> -->
+                        android:elevation="12dp"
+                        tools:layout="@layout/fragment_camera" />
 
                 </androidx.cardview.widget.CardView>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.4"
-                android:gravity="center_horizontal|center_vertical"
-                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/start_button"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="160dp"
                     android:layout_height="45dp"
+                    android:layout_marginStart="94dp"
+                    android:layout_marginEnd="93dp"
+                    android:layout_marginBottom="32dp"
                     android:background="@drawable/button_background"
-                    android:elevation="0dp"
+                    android:elevation="12dp"
                     android:text="@string/ui_start_button_name"
-                    android:textColor="#FFFFFF" />
-            </LinearLayout>
+                    android:textColor="#FFFFFF"
+                    app:layout_constraintBottom_toBottomOf="@+id/cardView"
+                    app:layout_constraintEnd_toEndOf="@+id/cardView"
+                    app:layout_constraintStart_toStartOf="@+id/cardView" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
     </FrameLayout>
