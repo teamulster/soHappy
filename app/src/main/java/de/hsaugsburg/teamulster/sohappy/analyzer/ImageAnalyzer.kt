@@ -7,6 +7,7 @@ import de.hsaugsburg.teamulster.sohappy.CameraActivity
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FaceDetector
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
 import de.hsaugsburg.teamulster.sohappy.config.ImageAnalyzerConfig
+import de.hsaugsburg.teamulster.sohappy.factories.DetectorFactory
 import kotlin.concurrent.thread
 
 /**
@@ -16,10 +17,8 @@ import kotlin.concurrent.thread
  *               faceDetectorImpl/smileDetectorImpl to be used
  */
 class ImageAnalyzer (val activity: CameraActivity, config: ImageAnalyzerConfig) {
-    var faceDetector: FaceDetector? = Class.forName(config.faceDetector).getConstructor(Activity::class.java)
-        ?.newInstance(activity) as FaceDetector?
-    var smileDetector: SmileDetector? = Class.forName(config.smileDetector).getConstructor(Activity::class.java)
-        ?.newInstance(activity) as SmileDetector?
+    private var faceDetector: FaceDetector? = DetectorFactory.getFaceDetectorFromConfig(config, activity)
+    private var smileDetector: SmileDetector? = DetectorFactory.getSmileDetectorFromConfig(config, activity)
 
     /**
      * This function calculates a FaceDetectionResult using [faceDetector].
