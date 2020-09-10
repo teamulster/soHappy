@@ -9,10 +9,6 @@ class NoSmile : State {
         }
     }
 
-    override fun uiChange() {
-        TODO("Not yet implemented")
-    }
-
     override fun activity() {
         neutralBackground()
         showText()

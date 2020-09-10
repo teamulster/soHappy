@@ -9,10 +9,6 @@ class Stimulus : State {
         }
     }
 
-    override fun uiChange() {
-        TODO("Not yet implemented")
-    }
-
     override fun activity() {
         showText()
     }
