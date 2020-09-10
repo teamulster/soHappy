@@ -40,5 +40,4 @@ object DetectorFactory {
         return Class.forName(config.smileDetector).getConstructor(Activity::class.java)
             .newInstance(activity) as SmileDetector
     }
-
 }

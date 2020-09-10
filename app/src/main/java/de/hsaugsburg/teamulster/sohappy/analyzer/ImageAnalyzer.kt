@@ -1,6 +1,5 @@
 package de.hsaugsburg.teamulster.sohappy.analyzer
 
-import android.app.Activity
 import android.graphics.Bitmap
 import android.util.Log
 import de.hsaugsburg.teamulster.sohappy.CameraActivity
