@@ -3,6 +3,8 @@ package de.hsaugsburg.teamulster.sohappy.analyzer
 import android.graphics.Bitmap
 import android.util.Log
 import de.hsaugsburg.teamulster.sohappy.CameraActivity
+import de.hsaugsburg.teamulster.sohappy.analyzer.collector.Measurements
+import de.hsaugsburg.teamulster.sohappy.analyzer.detector.DetectionResult
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FaceDetector
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
 import de.hsaugsburg.teamulster.sohappy.config.ImageAnalyzerConfig
@@ -16,6 +18,7 @@ import kotlin.concurrent.thread
  *               faceDetectorImpl/smileDetectorImpl to be used
  */
 class ImageAnalyzer (val activity: CameraActivity, config: ImageAnalyzerConfig) {
+    val measurements = Measurements()
     private var faceDetector: FaceDetector? = DetectorFactory.getFaceDetectorFromConfig(config, activity)
     private var smileDetector: SmileDetector? = DetectorFactory.getSmileDetectorFromConfig(config, activity)
 
@@ -35,13 +38,9 @@ class ImageAnalyzer (val activity: CameraActivity, config: ImageAnalyzerConfig) 
      * @param img a bitmap which will be analyzed
      * @return SmileDetector.Companion.SmileDetectionResult?
      */
-    fun computeSmileDetectionResult(img: Bitmap): SmileDetector.Companion.SmileDetectionResult? {
-        val faceDR = faceDetector?.detect(img)
-        if (faceDR == null) {
-            //fixme: do we want to throw an exception here?
-            return null;
-        }
-        val croppedOutFace = BitmapEditor.crop(img, faceDR.frame)!!
+    fun computeSmileDetectionResult(faceDetectionResult: FaceDetector.Companion.FaceDetectionResult,
+    img: Bitmap): SmileDetector.Companion.SmileDetectionResult? {
+        val croppedOutFace = BitmapEditor.crop(img, faceDetectionResult.frame)!!
         val smileDR = smileDetector!!.detect(croppedOutFace)
         return smileDR
     }
@@ -56,8 +55,12 @@ class ImageAnalyzer (val activity: CameraActivity, config: ImageAnalyzerConfig) 
             while (true) {
                 val bitmap = this.activity.queue.poll()
                 if (bitmap != null) {
-                    val result = computeFaceDetectionResult(bitmap)
-                    Log.d("Result:", result?.frame.toString())
+                    val faceDetectionResult = computeFaceDetectionResult(bitmap)
+                    val smileDetectionResult =
+                        faceDetectionResult?.let { computeSmileDetectionResult(it, bitmap) }
+                    Log.d("Result:", smileDetectionResult.toString())
+                    val detectionResult = DetectionResult(faceDetectionResult, smileDetectionResult)
+                    measurements.add(detectionResult)
                     bitmap.recycle()
                 }
             }
