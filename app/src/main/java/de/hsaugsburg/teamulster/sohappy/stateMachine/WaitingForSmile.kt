@@ -9,10 +9,6 @@ class WaitingForSmile : State {
         }
     }
 
-    override fun uiChange() {
-        TODO("Not yet implemented")
-    }
-
     override fun activity() {
         yellowFilterOn()
         showText()

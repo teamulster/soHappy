@@ -9,10 +9,6 @@ class Start: State {
         }
     }
 
-    override fun uiChange() {
-        TODO("Not yet implemented")
-    }
-
     override fun activity() {
         TODO("Not yet implemented")
     }

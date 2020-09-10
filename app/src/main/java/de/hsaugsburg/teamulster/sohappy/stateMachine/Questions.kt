@@ -8,10 +8,6 @@ class Questions : State {
         }
     }
 
-    override fun uiChange() {
-        TODO("Not yet implemented")
-    }
-
     override fun activity() {
         neutralBackground()
         showText()

@@ -8,10 +8,6 @@ class SmileCountdown : State {
         }
     }
 
-    override fun uiChange() {
-        TODO("Not yet implemented")
-    }
-
     override fun activity() {
         blueFilterOn()
         showText()
