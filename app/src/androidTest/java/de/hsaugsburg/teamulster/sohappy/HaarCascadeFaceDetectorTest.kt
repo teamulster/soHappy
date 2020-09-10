@@ -15,8 +15,9 @@ import junit.framework.Assert.assertTrue as assertTrue
 @RunWith(AndroidJUnit4::class)
 class HaarCascadeFaceDetectorTest {
     lateinit var haarCascadeFaceDetector: HaarCascadeFaceDetector
-    private lateinit var scenario : ActivityScenario<CameraActivity>
-    private val instrumentationContext: Context = InstrumentationRegistry.getInstrumentation().context
+    private lateinit var scenario: ActivityScenario<CameraActivity>
+    private val instrumentationContext: Context =
+        InstrumentationRegistry.getInstrumentation().context
 
     @Before
     fun setUp() {
