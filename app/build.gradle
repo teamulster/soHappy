@@ -60,5 +60,5 @@ dependencies {
     implementation 'org.tensorflow:tensorflow-lite-task-vision:0.0.0-nightly'
     implementation 'org.tensorflow:tensorflow-lite-task-text:0.0.0-nightly'
     androidTestImplementation 'androidx.test:core-ktx:1.3.0'
-
+    androidTestImplementation "org.jetbrains.kotlin:kotlin-test:1.3.0"
 }
