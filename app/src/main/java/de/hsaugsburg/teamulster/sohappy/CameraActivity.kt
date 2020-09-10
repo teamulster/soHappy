@@ -12,7 +12,6 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import de.hsaugsburg.teamulster.sohappy.analyzer.BitmapEditor
 import de.hsaugsburg.teamulster.sohappy.analyzer.ImageAnalyzer
-import de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.HaarCascadeFaceDetector
 import de.hsaugsburg.teamulster.sohappy.config.ImageAnalyzerConfig
 import de.hsaugsburg.teamulster.sohappy.queue.BitmapQueue
 import de.hsaugsburg.teamulster.sohappy.util.YuvToRgbConverter
@@ -49,8 +48,8 @@ class CameraActivity : AppCompatActivity() {
         queue = BitmapQueue()
         imageAnalyzer = ImageAnalyzer(
             this, ImageAnalyzerConfig(
-                HaarCascadeFaceDetector::class.java,
-                null
+                "de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.HaarCascadeFaceDetector",
+                "de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl.FerTFLiteSmileDetectorImpl",
             )
         )
 

@@ -16,14 +16,19 @@ import kotlin.concurrent.thread
  *               faceDetectorImpl/smileDetectorImpl to be used
  */
 class ImageAnalyzer (val activity: CameraActivity, config: ImageAnalyzerConfig) {
-    var faceDetector: FaceDetector? = (config.faceDetector?.getConstructor(Activity::class.java)
-        ?.newInstance(activity))
-    var smileDetector: SmileDetector? = null //config.smileDetector?.newInstance() as SmileDetector
+    var faceDetector: FaceDetector? = Class.forName(config.faceDetector).getConstructor(Activity::class.java)
+        ?.newInstance(activity) as FaceDetector?
+    var smileDetector: SmileDetector? = Class.forName(config.smileDetector).getConstructor(Activity::class.java)
+        ?.newInstance(activity) as SmileDetector?
 
-    @Suppress("FunctionOnlyReturningConstant")
-    fun computeFaceDetectionResult(img: Bitmap): FaceDetector.Companion.FaceDetectionResult? {
-        return faceDetector?.detect(img)
-    }
+    /**
+     * This function calculates a FaceDetectionResult using [faceDetector].
+     *
+     * @param img a bitmap which will be analyzed
+     * @return [FaceDetector.Companion.FaceDetectionResult]
+     */
+    fun computeFaceDetectionResult(img: Bitmap): FaceDetector.Companion.FaceDetectionResult? =
+        faceDetector?.detect(img)
 
     /**
      * This function calculates a SmileDetectionResult which holds the result,
@@ -38,11 +43,15 @@ class ImageAnalyzer (val activity: CameraActivity, config: ImageAnalyzerConfig) 
             //fixme: do we want to throw an exception here?
             return null;
         }
-        var croppedOutFace = BitmapEditor.crop(img, faceDR.frame)!!
-        var smileDR = smileDetector!!.detect(croppedOutFace)
+        val croppedOutFace = BitmapEditor.crop(img, faceDR.frame)!!
+        val smileDR = smileDetector!!.detect(croppedOutFace)
         return smileDR
     }
 
+    /**
+     * starts an thread with an infinite loop. Gets the current frame from the bitmapQueue and
+     * and processes it.
+     */
     fun execute() {
         // TODO: Improve this
         thread {

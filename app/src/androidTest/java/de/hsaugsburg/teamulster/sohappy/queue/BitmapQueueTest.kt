@@ -45,7 +45,7 @@ class BitmapQueueTest {
         val polledBitmap = bitmapQueue!!.poll()
         val afterPoll = System.currentTimeMillis()
         // poll must at least wait waitingTime or longer
-        assertTrue((afterPoll - beforePoll) >= waitingTime)
+        assertTrue(afterPoll - beforePoll >= waitingTime)
         // and the bitmaps should be the same
         assertEquals(originalBitmap, polledBitmap)
     }

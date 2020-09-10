@@ -2,6 +2,9 @@ package de.hsaugsburg.teamulster.sohappy.queue
 
 import android.graphics.Bitmap
 
+/**
+ * 1-sized synchronous BitmapQueue.
+ */
 class BitmapQueue {
     companion object {
         internal class BitmapWrapper {
@@ -22,7 +25,7 @@ class BitmapQueue {
 
     /**
      * Tries to removes the current bitmap from the queue and adds bitmap to the queue
-     * The old bitmap will be recycled
+     * The old bitmap will be recycled.
      * @param bitmap: Bitmap to add
      */
     fun replace(bitmap: Bitmap) {
@@ -35,7 +38,7 @@ class BitmapQueue {
     }
 
     /**
-     * polls the latest bitmap from queue; blocks/wait until bitmap is available
+     * polls the latest bitmap from queue; blocks/wait until bitmap is available.
      */
     fun poll(): Bitmap? {
         synchronized(internalBitmapWrapper) {
