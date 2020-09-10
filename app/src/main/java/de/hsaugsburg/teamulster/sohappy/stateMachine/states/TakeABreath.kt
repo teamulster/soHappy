@@ -1,4 +1,6 @@
-package de.hsaugsburg.teamulster.sohappy.stateMachine
+package de.hsaugsburg.teamulster.sohappy.stateMachine.states
+
+import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 
 class TakeABreath : State {
     override fun consumeAction(action: Action): State {
@@ -8,6 +10,7 @@ class TakeABreath : State {
         }
     }
 
-    override fun activity() {
+    override fun executeCoreFunctionality() {
+        // lggging
     }
 }

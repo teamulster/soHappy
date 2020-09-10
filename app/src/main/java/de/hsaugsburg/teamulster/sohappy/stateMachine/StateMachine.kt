@@ -1,16 +1,12 @@
 package de.hsaugsburg.teamulster.sohappy.stateMachine
 
-import java.util.*
+import de.hsaugsburg.teamulster.sohappy.stateMachine.states.*
 import kotlin.properties.Delegates
 
 class StateMachine {
-    private var currentState by Delegates.observable<State>(initialValue = WaitingForFace()) { _, old, new ->
+    private var currentState by Delegates.observable<State>(initialValue = Start()) { _, old, new ->
         handleStateChange(old, new)
     }
-
-    // initialize here?
-    // general question: where to put the ui staff and shall it be separated from function (face and smile detection)?
-    private lateinit var timer: Timer
 
     private fun handleStateChange(newState: State, oldState: State) {
         when (oldState) {
@@ -27,12 +23,12 @@ class StateMachine {
             is Start -> prepareStartScreen()
             is WaitingForFace -> {
                 prepareWaitingForFaceScreen()
-                newState.activity()
-                // start Timer (10s)
+                newState.executeCoreFunctionality()
+                // start Timer (10s) -> nach activity
             }
             is TakeABreath -> {
                 prepareTakeABreathScreen()
-                newState.activity()
+                newState.executeCoreFunctionality()
                 // start Timer (3s)
             }
             is Stimulus -> {
@@ -41,7 +37,7 @@ class StateMachine {
             }
             is WaitingForSmile -> {
                 prepareWaitingForSmileScreen()
-                newState.activity()
+                newState.executeCoreFunctionality()
                 // start Timer (10s)
             }
             is SmileCountdown -> {

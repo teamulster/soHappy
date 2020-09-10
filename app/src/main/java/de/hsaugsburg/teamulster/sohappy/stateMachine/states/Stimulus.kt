@@ -1,4 +1,6 @@
-package de.hsaugsburg.teamulster.sohappy.stateMachine
+package de.hsaugsburg.teamulster.sohappy.stateMachine.states
+
+import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 
 
 class Stimulus : State {
@@ -9,6 +11,6 @@ class Stimulus : State {
         }
     }
 
-    override fun activity() {
+    override fun executeCoreFunctionality() {
     }
 }

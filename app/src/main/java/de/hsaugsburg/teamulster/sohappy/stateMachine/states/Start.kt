@@ -1,4 +1,6 @@
-package de.hsaugsburg.teamulster.sohappy.stateMachine
+package de.hsaugsburg.teamulster.sohappy.stateMachine.states
+
+import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 
 class Start: State {
     override fun consumeAction(action: Action): State {
@@ -9,7 +11,7 @@ class Start: State {
         }
     }
 
-    override fun activity() {
+    override fun executeCoreFunctionality() {
         startCamera()
     }
 
