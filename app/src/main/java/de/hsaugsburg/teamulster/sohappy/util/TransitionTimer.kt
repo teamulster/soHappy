@@ -4,11 +4,10 @@ import android.os.CountDownTimer
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 
 object TransitionTimer {
+    lateinit var action : Action
 
     fun startTimer(sec: Long): Action {
-        // TODO: solve problem: returns the action before changing its value
-        var newAction: Action
-        newAction = Action.Initial
+        // TODO: do not return NewAction before changing its value
         object : CountDownTimer(sec, 1000) {
 
             @Suppress("EmptyFunctionBlock")
@@ -16,10 +15,10 @@ object TransitionTimer {
             }
 
             override fun onFinish() {
-                newAction = Action.Timeout
+                action = Action.Timeout
             }
         }.start()
 
-        return newAction
+        return action
     }
 }

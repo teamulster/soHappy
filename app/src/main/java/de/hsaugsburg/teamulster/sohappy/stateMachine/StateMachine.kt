@@ -13,6 +13,6 @@ class StateMachine {
         oldState.tearDownUi()
         newState.prepareUi()
         var action = newState.executeCoreFunctionality()
-        currentState.consumeAction(action)
+        currentState = currentState.consumeAction(action)
     }
 }

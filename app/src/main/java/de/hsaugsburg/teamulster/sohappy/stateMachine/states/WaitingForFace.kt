@@ -16,7 +16,7 @@ class WaitingForFace : State {
 
     override fun executeCoreFunctionality(): Action {
         //TODO: need to get the action wich is faster
-        // synchronize ?
+        // synchronize?
         var fasterAction: Action
 
         fasterAction = startFaceDetection()

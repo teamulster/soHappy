@@ -14,12 +14,9 @@ class WaitingForSmile : State {
 
     override fun executeCoreFunctionality(): Action {
         // synchronize ?
-        var fasterAction by Delegates.observable<Action>(initialValue = Action.Initial) { _, _, new ->
-            consumeAction(new)
-        }
         startSmileDetection()
         // start timer
-        return fasterAction
+        return Action.Initial
     }
 
     override fun prepareUi() {
