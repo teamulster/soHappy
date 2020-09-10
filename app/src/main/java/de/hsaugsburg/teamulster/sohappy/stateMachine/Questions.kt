@@ -11,4 +11,3 @@ class Questions : State {
     override fun activity() {
     }
 }
-

@@ -11,4 +11,3 @@ class SmileCountdown : State {
     override fun activity() {
     }
 }
-

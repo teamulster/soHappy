@@ -12,4 +12,3 @@ class Stimulus : State {
     override fun activity() {
     }
 }
-

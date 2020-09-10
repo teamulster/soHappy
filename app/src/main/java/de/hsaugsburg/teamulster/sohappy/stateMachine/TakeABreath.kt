@@ -9,15 +9,5 @@ class TakeABreath : State {
     }
 
     override fun activity() {
-        blueFilterOn()
-        showText()
-    }
-
-    private fun blueFilterOn() {
-        TODO("Not yet implemented")
-    }
-
-    private fun showText() {
-        TODO("Not yet implemented")
     }
 }
