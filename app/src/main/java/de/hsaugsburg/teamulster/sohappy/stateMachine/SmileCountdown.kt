@@ -9,20 +9,6 @@ class SmileCountdown : State {
     }
 
     override fun activity() {
-        blueFilterOn()
-        showText()
-        showSmileyFeedback()
-    }
-
-    private fun blueFilterOn() {
-        TODO("Not yet implemented")
-    }
-
-    private fun showText() {
-        TODO("Not yet implemented")
-    }
-
-    private fun showSmileyFeedback() {
-        TODO("Not yet implemented")
     }
 }
+

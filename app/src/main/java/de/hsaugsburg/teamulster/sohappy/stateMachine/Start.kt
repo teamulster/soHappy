@@ -10,6 +10,10 @@ class Start: State {
     }
 
     override fun activity() {
+        startCamera()
+    }
+
+    private fun startCamera() {
         TODO("Not yet implemented")
     }
 }

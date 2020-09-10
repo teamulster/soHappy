@@ -10,15 +10,5 @@ class NoSmile : State {
     }
 
     override fun activity() {
-        neutralBackground()
-        showText()
-    }
-
-    private fun neutralBackground() {
-        TODO("Not yet implemented")
-    }
-
-    private fun showText() {
-        TODO("Not yet implemented")
     }
 }

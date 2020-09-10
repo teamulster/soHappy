@@ -10,10 +10,6 @@ class Stimulus : State {
     }
 
     override fun activity() {
-        showText()
-    }
-
-    private fun showText() {
-        TODO("Not yet implemented")
     }
 }
+

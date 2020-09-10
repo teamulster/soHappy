@@ -10,17 +10,7 @@ class WaitingForSmile : State {
     }
 
     override fun activity() {
-        yellowFilterOn()
-        showText()
         startSmileDetection()
-    }
-
-    private fun yellowFilterOn() {
-        TODO("Not yet implemented")
-    }
-
-    private fun showText() {
-        TODO("Not yet implemented")
     }
 
     private fun startSmileDetection() {
