@@ -5,21 +5,21 @@ import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 
 object TransitionTimer {
 
-    fun startTimer(sec: Long): Action.Timeout {
-        var isTimeOut = false
+    fun startTimer(sec: Long): Action {
+        // TODO: solve problem: returns the action before changing its value
+        var newAction: Action
+        newAction = Action.Initial
         object : CountDownTimer(sec, 1000) {
 
+            @Suppress("EmptyFunctionBlock")
             override fun onTick(millisUntilFinished: Long) {
-                TODO("Not yet implemented")
             }
 
             override fun onFinish() {
-                isTimeOut = true
+                newAction = Action.Timeout
             }
         }.start()
-        while (!isTimeOut) {
-            if (isTimeOut)
-                return Action.Timeout
-        }
+
+        return newAction
     }
 }

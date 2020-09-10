@@ -11,6 +11,19 @@ class NoSmile : State {
         }
     }
 
-    override fun executeCoreFunctionality() {
+    override fun executeCoreFunctionality(): Action {
+        return Action.Initial
+    }
+
+    override fun prepareUi() {
+        TODO("Not yet implemented")
+        // neutral background
+        // show text
+    }
+
+    override fun tearDownUi() {
+        TODO("Not yet implemented")
+        // remove background
+        // remove text
     }
 }

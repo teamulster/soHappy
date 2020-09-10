@@ -7,4 +7,5 @@ sealed class Action {
     object FacedDetected : Action()
     object SmileDetected : Action()
     object Timeout : Action()
+    object Initial : Action()
 }

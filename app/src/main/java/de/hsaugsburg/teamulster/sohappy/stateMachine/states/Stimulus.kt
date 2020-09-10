@@ -2,7 +2,6 @@ package de.hsaugsburg.teamulster.sohappy.stateMachine.states
 
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 
-
 class Stimulus : State {
     override fun consumeAction(action: Action): State {
         return when (action) {
@@ -11,6 +10,18 @@ class Stimulus : State {
         }
     }
 
-    override fun executeCoreFunctionality() {
+    override fun executeCoreFunctionality(): Action {
+        return Action.Initial
+    }
+
+    override fun prepareUi() {
+        TODO("Not yet implemented")
+        // show text
+    }
+
+    override fun tearDownUi() {
+        TODO("Not yet implemented")
+        // remove blue filter
+        // remove text
     }
 }

@@ -10,7 +10,19 @@ class TakeABreath : State {
         }
     }
 
-    override fun executeCoreFunctionality() {
+    override fun executeCoreFunctionality(): Action {
         // lggging
+        return Action.Initial
+    }
+
+    override fun prepareUi() {
+        TODO("Not yet implemented")
+        // blue filter on
+        // show text
+    }
+
+    override fun tearDownUi() {
+        TODO("Not yet implemented")
+        // remove text
     }
 }

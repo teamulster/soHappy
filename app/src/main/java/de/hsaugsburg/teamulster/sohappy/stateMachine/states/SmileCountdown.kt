@@ -10,7 +10,21 @@ class SmileCountdown : State {
         }
     }
 
-    @Suppress("")
-    override fun executeCoreFunctionality() {
+    override fun executeCoreFunctionality(): Action {
+        return Action.Initial
+    }
+
+    override fun prepareUi() {
+        TODO("Not yet implemented")
+        // blue filter on
+        // show text
+        // show smiley feedback
+    }
+
+    override fun tearDownUi() {
+        TODO("Not yet implemented")
+        // remove blue filter
+        // remove text
+        // remove smiley feedback
     }
 }
