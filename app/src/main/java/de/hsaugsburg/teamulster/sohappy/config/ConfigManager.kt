@@ -73,8 +73,8 @@ object ConfigManager {
      * */
     fun store(context: Context, mainConfig: MainConfig) {
         val jsonString = toJson(mainConfig)
-        val file = getFile(context)
         try {
+            val file = getFile(context)
             file.writeText(jsonString, Charset.defaultCharset())
         } catch (e: IOException) {
             throw e

@@ -47,7 +47,7 @@ class ConfigManagerTest {
             val configDirectory = File(dirPath, "config")
             val file = File(configDirectory, "config.json")
             val inString = FileInputStream(file).bufferedReader().use { it.readText() }
-            val assertValues = Gson().toJson(
+            val assertObject = Gson().toJson(
                 MainConfig(
                     ImageAnalyzerConfig(
                         "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
@@ -63,7 +63,7 @@ class ConfigManagerTest {
                 )
             )
             assertEquals(
-                assertValues,
+                assertObject,
                 inString
             )
         }
