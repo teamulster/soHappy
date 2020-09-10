@@ -7,16 +7,17 @@ import androidx.test.core.app.launchActivity
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.HaarCascadeFaceDetector
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import junit.framework.Assert.assertTrue as assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class HaarCascadeFaceDetectorTest {
     lateinit var haarCascadeFaceDetector: HaarCascadeFaceDetector
-    private lateinit var scenario : ActivityScenario<CameraActivity>
-    private val instrumentationContext: Context = InstrumentationRegistry.getInstrumentation().context
+    private lateinit var scenario: ActivityScenario<CameraActivity>
+    private val instrumentationContext: Context =
+        InstrumentationRegistry.getInstrumentation().context
 
     @Before
     fun setUp() {
@@ -31,13 +32,13 @@ class HaarCascadeFaceDetectorTest {
             val istream = instrumentationContext.assets.open("test.jpg")
             val bitmap = BitmapFactory.decodeStream(istream);
             val detectResult = haarCascadeFaceDetector.detect(bitmap)
-            assert(detectResult != null)
+            assertTrue(detectResult != null)
         }
         scenario.onActivity {
             val istream = instrumentationContext.assets.open("negative-test.jpg")
             val bitmap = BitmapFactory.decodeStream(istream);
             val detectResult = haarCascadeFaceDetector.detect(bitmap)
-            assert(detectResult == null)
+            assertTrue(detectResult == null)
         }
     }
 }

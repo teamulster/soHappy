@@ -1,9 +1,12 @@
 package de.hsaugsburg.teamulster.sohappy.config
 
-import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FaceDetector
-import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
-
-class ImageAnalyzerConfig(
-    val faceDetector: Class<out FaceDetector>?,
-    val smileDetector: Class<out SmileDetector>?
-    )
+/**
+ * This data class stores a ImageAnalyzerConfig.
+ *
+ * @property faceDetector a package string to the selected faceDetectorImpl
+ * @property smileDetector a package string to the selected smileDetectorImpl
+ */
+data class ImageAnalyzerConfig(
+    val faceDetector: String,
+    val smileDetector: String
+)

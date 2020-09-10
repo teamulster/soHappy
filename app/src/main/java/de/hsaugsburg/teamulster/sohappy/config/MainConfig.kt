@@ -1,3 +1,8 @@
 package de.hsaugsburg.teamulster.sohappy.config
 
-class MainConfig (val imageAnalyzerConfig: ImageAnalyzerConfig)
+/**
+ * This data class stores the MainConfig.
+ *
+ * @property imageAnalyzerConfig
+ */
+data class MainConfig(val imageAnalyzerConfig: ImageAnalyzerConfig)
