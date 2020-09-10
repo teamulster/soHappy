@@ -7,8 +7,9 @@ import androidx.test.core.app.launchActivity
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import de.hsaugsburg.teamulster.sohappy.CameraActivity
-import de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl.FerTFLiteSmileDetectorImpl
-import junit.framework.Assert.assertEquals
+import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FerTFLiteSmileDetectorImpl
+import junit.framework.Assert.assertFalse
+import junit.framework.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -31,7 +32,7 @@ class FerTFLiteSmileDetectorImplTest {
         scenario.onActivity {
             val istr = instrumentationContext.assets.open("tflite_test.jpg")
             val detectResult = tfliteImpl.detect(BitmapFactory.decodeStream(istr))
-            assertEquals(true, detectResult.isSmiling)
+            assertTrue(detectResult.isSmiling)
         }
     }
 
@@ -40,7 +41,7 @@ class FerTFLiteSmileDetectorImplTest {
         scenario.onActivity {
             val istr = instrumentationContext.assets.open("tflite_negative_test.png")
             val detectResult = tfliteImpl.detect(BitmapFactory.decodeStream(istr))
-            assertEquals(false, detectResult.isSmiling)
+            assertFalse(detectResult.isSmiling)
         }
     }
 }
