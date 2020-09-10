@@ -40,8 +40,6 @@ class CameraActivity : AppCompatActivity() {
         setContentView(R.layout.activity_camera)
         converter = YuvToRgbConverter(this)
 
-        converter = YuvToRgbConverter(this)
-
         gpuImageView = findViewById(R.id.gpu_image_view)
         gpuImageView.setScaleType(GPUImage.ScaleType.CENTER_CROP)
 
@@ -85,6 +83,8 @@ class CameraActivity : AppCompatActivity() {
             converter.yuvToRgb(it.image!!, bitmap)
 
             bitmap = BitmapEditor.rotate(bitmap, -90f)
+
+            queue.replace(bitmap.copy(bitmap.config, false))
 
             gpuImageView.post {
                 gpuImageView.setRatio((bitmap.width / bitmap.height).toFloat())
