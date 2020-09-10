@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentSmileBinding
 
 // TODO: The requireView.postDelayed() calls serve as proof of concept for animations - replace!
@@ -26,13 +27,12 @@ class SmileFragment : Fragment() {
             false
         )
 
-        (requireActivity() as AppCompatActivity).supportActionBar!!.hide()
-
         return binding.root
     }
 
     override fun onStart() {
         super.onStart()
+        (requireActivity() as AppCompatActivity).supportActionBar!!.hide()
 
         // The initial animation has to be started here, otherwise the animation
         // will play even if the screen is currently not focused on this fragment
@@ -53,6 +53,15 @@ class SmileFragment : Fragment() {
         requireView().postDelayed({
             fadeInText(getString(R.string.fragment_camera_stimulus1))
         }, 8250)
+
+        requireView().postDelayed({
+            findNavController().navigate(R.id.questionnaire01Fragment)
+        }, 12250)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (requireActivity() as AppCompatActivity).supportActionBar!!.show()
     }
 
     private fun startInitAnimation() {
@@ -72,7 +81,7 @@ class SmileFragment : Fragment() {
 
         fadeOutText()
         requireView().postDelayed({
-            fadeInText(getString(R.string.fragment_camera_init))
+            fadeInText(getString(R.string.fragment_camera_face))
 
             binding.countdownText.apply {
                 alpha = 0f

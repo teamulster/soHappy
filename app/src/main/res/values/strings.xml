@@ -21,7 +21,11 @@
     <string name="fragment_camera_checkmark_text">Success!</string>
     <string name="fragment_camera_countdown_text">Counting down…</string>
 
+    <string name="fragment_jokes_appbar_title">Jokes</string>
     <string name="fragment_jokes_search_hint">Search…</string>
+    <!-- TODO: Refactor jokes to be drawn from a data source rather than from this XML -->
+    <string name="fragment_jokes_sample_title">What\'s a Karen called in Europe?</string>
+    <string name="fragment_jokes_sample_description">An American.</string>
 
     <string name="fragment_help_name">Help &amp; Contact</string>
     <string name="fragment_help_credits">Credits</string>
@@ -42,4 +46,47 @@
     <string name="fragment_settings_notification_text">If enabled, you will be reminded to open the app every once in a while.</string>
     <string name="fragment_settings_database">Send Usage Data</string>
     <string name="fragment_settings_database_text">If enabled, your usage data will be leveraged to improve the app.</string>
+
+    <string name="fragment_questionnaire">Questionnaire</string>
+    <string name="fragment_questionnaire_continue">Continue</string>
+    <string name="fragment_questionnaire_01_title">Do you feel happy?</string>
+    <string name="fragment_questionnaire_01_unhappy">Very unhappy</string>
+    <string name="fragment_questionnaire_01_happy">Very happy</string>
+    <string name="fragment_questionnaire_02_title">Where are you located right now?</string>
+    <string-array name="fragment_questionnaire_02_choices">
+        <item>Home</item>
+        <item>Work</item>
+        <item>University</item>
+        <item>Shopping</item>
+        <item>Café</item>
+        <item>Restaurant</item>
+        <item>Bar</item>
+        <item>Club</item>
+        <item>Outdoors Rural</item>
+        <item>Outdoors City</item>
+        <item>Town</item>
+    </string-array>
+    <string name="fragment_questionnaire_03_title">How much social interaction have you had since last using the app?</string>
+    <string name="fragment_questionnaire_03_lots">Lots</string>
+    <string name="fragment_questionnaire_03_none">None</string>
+    <string name="fragment_questionnaire_04_title">Who was your most recent social interaction with?</string>
+    <string-array name="fragment_questionnaire_04_choices">
+        <item>Family</item>
+        <item>Friend</item>
+        <item>Colleague</item>
+        <item>Acquaintance</item>
+        <item>Stranger</item>
+    </string-array>
+    <string name="fragment_questionnaire_05_title">How physically active have you been since last using the app?</string>
+    <string name="fragment_questionnaire_05_not_active">Not Active</string>
+    <string name="fragment_questionnaire_05_very_active">Very Active</string>
+    <string name="fragment_questionnaire_06_title">How tired do you feel at present?</string>
+    <string name="fragment_questionnaire_06_not_tired">Not Tired</string>
+    <string name="fragment_questionnaire_06_very_tired">Very Tired</string>
+
+    <string name="fragment_results_appbar_title">Results</string>
+    <string name="fragment_results_title">Thank you for your time!</string>
+    <string name="fragment_results_text">Feel free to continue using the app. If you have enabled notifications, you will be reminded to open the app after a certain timeframe has passed.</string>
+    <string name="fragment_results_results_overview">Your Results</string>
+    <string name="fragment_results_finish">Finish</string>
 </resources>

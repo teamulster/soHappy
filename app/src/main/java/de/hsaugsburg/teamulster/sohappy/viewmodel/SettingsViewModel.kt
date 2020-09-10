@@ -1,4 +1,4 @@
-package de.hsaugsburg.teamulster.sohappy
+package de.hsaugsburg.teamulster.sohappy.viewmodel
 
 import androidx.lifecycle.ViewModel
 
