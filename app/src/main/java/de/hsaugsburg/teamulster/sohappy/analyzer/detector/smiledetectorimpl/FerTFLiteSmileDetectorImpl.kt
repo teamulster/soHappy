@@ -1,4 +1,4 @@
-package de.hsaugsburg.teamulster.sohappy.analyzer.detector
+package de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl
 
 import android.app.Activity
 import android.graphics.Bitmap
@@ -8,11 +8,11 @@ import java.nio.ByteOrder
 
 // TODO: add self-trained model
 /**
-* This class inherits AbstractTFLiteSmileDetector and prepares the image before TF lite detection is run.
-*
-* @param activity the current activity this class was invoked by (e.g. CameraActivity)
-* @constructor creates a TFLiteImpl object with a test model
-* */
+ * This class inherits AbstractTFLiteSmileDetector and prepares the image before TF lite detection is run.
+ *
+ * @param activity the current activity this class was invoked by (e.g. CameraActivity)
+ * @constructor creates a TFLiteImpl object with a test model
+ * */
 class FerTFLiteSmileDetectorImpl(activity: Activity) :
     AbstractTFLiteSmileDetector(tfliteModelPath = "model.tflite", numberOfThreads = 1, activity) {
 
@@ -28,14 +28,14 @@ class FerTFLiteSmileDetectorImpl(activity: Activity) :
     }
 
     /**
-    * This function overrides the detect function declared in the AbstractTFLiteSmileDetector
-    * abstract class.
-    * It runs TF lite detection by invoking the execute method in its super class
-    * (AbstractTFLiteSmileDetector).
-    *
-    * @param bitmap the image which TF lite will be running detection on.
-    * @return Companion.SmileDetectionResult
-    * */
+     * This function overrides the detect function declared in the AbstractTFLiteSmileDetector
+     * abstract class.
+     * It runs TF lite detection by invoking the execute method in its super class
+     * (AbstractTFLiteSmileDetector).
+     *
+     * @param bitmap the image which TF lite will be running detection on.
+     * @return Companion.SmileDetectionResult
+     * */
     override fun detect(bitmap: Bitmap): Companion.SmileDetectionResult {
         val predictionResults: ArrayList<Companion.Recognition> = super.execute(bitmap)
         val firstPredictionResult = predictionResults[0]
@@ -49,14 +49,14 @@ class FerTFLiteSmileDetectorImpl(activity: Activity) :
     }
 
     /**
-    * This private function overrides the prepare function declared in the AbstractTFLiteSmileDetector
-    * abstract class.
-    * It scales a given bitmap and passes the result to the convertToByteBuffer function to get it ready
-    * for prediction.
-    *
-    * @param img the current image which will be prepared
-    * @return ByteBuffer?
-    * */
+     * This private function overrides the prepare function declared in the AbstractTFLiteSmileDetector
+     * abstract class.
+     * It scales a given bitmap and passes the result to the convertToByteBuffer function to get it ready
+     * for prediction.
+     *
+     * @param img the current image which will be prepared
+     * @return ByteBuffer?
+     * */
     override fun prepare(img: Bitmap): ByteBuffer? {
         // TODO: This has to be adapted depending on each model
         val scaledBitmap = Bitmap.createScaledBitmap(img, 48, 48, true)
@@ -64,11 +64,11 @@ class FerTFLiteSmileDetectorImpl(activity: Activity) :
     }
 
     /**
-    * This private function converts a given Bitmap into a ByteBuffer.
-    *
-    * @param bitmap a Bitmap which will be converted into a ByteBuffer
-    * @return ByteBuffer?
-    * */
+     * This private function converts a given Bitmap into a ByteBuffer.
+     *
+     * @param bitmap a Bitmap which will be converted into a ByteBuffer
+     * @return ByteBuffer?
+     * */
     private fun convertToByteBuffer(bitmap: Bitmap): ByteBuffer? {
         val width = bitmap.width
         val height = bitmap.height

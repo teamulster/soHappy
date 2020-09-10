@@ -1,10 +1,8 @@
 package de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl
 
 import android.app.Activity
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Rect
-import android.media.Image
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FaceDetector
 import de.hsaugsburg.teamulster.sohappy.util.YuvToRgbConverter
 import org.opencv.android.OpenCVLoader
@@ -16,6 +14,14 @@ import org.opencv.objdetect.CascadeClassifier
 import java.io.File
 import java.io.FileOutputStream
 
+/**
+ * This class implements Haar Cascade FaceDetector approach. It implements the FaceDetector interface.
+ *
+ * @constructor takes the current activity and returns a new HaarCascadeFaceDetector object
+ * @property haarCascade
+ * @property detectorName
+ * @property assetFilename
+ */
 class HaarCascadeFaceDetector(private val activity: Activity) : FaceDetector {
 
     companion object {
@@ -48,11 +54,7 @@ class HaarCascadeFaceDetector(private val activity: Activity) : FaceDetector {
         return CascadeClassifier(mCascadeFile.absolutePath)
     }
 
-    //
-    private fun allocateBitmap(width: Int, height: Int): Bitmap {
-        return Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-    }
-
+    @Suppress("UnusedPrivateMember")
     override fun detect(img: Bitmap): FaceDetector.Companion.FaceDetectionResult? {
         val converter = YuvToRgbConverter(activity)
         val mat = Mat()
@@ -68,10 +70,12 @@ class HaarCascadeFaceDetector(private val activity: Activity) : FaceDetector {
         val firstFace = list[0]
 
         return FaceDetector.Companion.FaceDetectionResult(
-            Rect(firstFace.x,
+            Rect(
+                firstFace.x,
                 firstFace.y,
                 firstFace.x + firstFace.width,
-                firstFace.y + firstFace.height)
+                firstFace.y + firstFace.height
+            )
         )
     }
 

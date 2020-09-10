@@ -9,6 +9,7 @@ import android.renderscript.Allocation
 import android.renderscript.Element
 import android.renderscript.RenderScript
 import android.renderscript.ScriptIntrinsicYuvToRGB
+import de.hsaugsburg.teamulster.sohappy.BuildConfig
 import java.nio.ByteBuffer
 
 /**
@@ -30,10 +31,14 @@ class YuvToRgbConverter(context: Context) {
     private lateinit var inputAllocation: Allocation
     private lateinit var outputAllocation: Allocation
 
+    /**
+     * This function converts a YUV image to RGB bitmap.
+     *
+     * @param image the input image which will be converted
+     * @param output the output bitmap bitmap where the converted image will be assigned
+     */
     @Synchronized
-    @Suppress("MagicNumber")
     fun yuvToRgb(image: Image, output: Bitmap) {
-
         // Ensure that the intermediate output byte buffer is allocated
         if (!::yuvBuffer.isInitialized) {
             pixelCount = image.cropRect.width() * image.cropRect.height()
@@ -62,7 +67,9 @@ class YuvToRgbConverter(context: Context) {
 
     @Suppress("LongMethod")
     private fun imageToByteBuffer(image: Image, outputBuffer: ByteBuffer) {
-        assert(image.format == ImageFormat.YUV_420_888)
+        if (BuildConfig.DEBUG && image.format != ImageFormat.YUV_420_888) {
+            error("Assertion failed")
+        }
 
         val imageCrop = image.cropRect
         val imagePlanes = image.planes

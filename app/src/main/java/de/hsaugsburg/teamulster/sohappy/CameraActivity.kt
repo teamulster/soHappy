@@ -17,6 +17,9 @@ import jp.co.cyberagent.android.gpuimage.GPUImage
 import jp.co.cyberagent.android.gpuimage.GPUImageView
 import java.util.concurrent.Executors
 
+/**
+ * This class implements the main app activity.
+ * */
 class CameraActivity : AppCompatActivity() {
     companion object {
         const val REQUEST_CODE_PERMISSIONS = 10
@@ -55,8 +58,8 @@ class CameraActivity : AppCompatActivity() {
         // This callback will convert the image provided by the analyzer to an Bitmap, and  will
         // send the image onto the gpuImageView
         // Then, we can use the bitmap for further processing
-        if(!isPermissionsGranted() || cameraProvider == null) {
-           return
+        if (!isPermissionsGranted() || cameraProvider == null) {
+            return
         }
         val imageAnalysis = ImageAnalysis.Builder()
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
@@ -71,7 +74,7 @@ class CameraActivity : AppCompatActivity() {
             bitmap = BitmapEditor.rotate(bitmap, -90f)
 
             gpuImageView.post {
-                gpuImageView.setRatio((bitmap.width/ bitmap.height).toFloat())
+                gpuImageView.setRatio((bitmap.width / bitmap.height).toFloat())
                 Log.d("Min Height", gpuImageView.height.toString())
                 Log.d("Bitmap width", bitmap.width.toString());
                 Log.d("Bitmap height", bitmap.height.toString())
@@ -99,7 +102,6 @@ class CameraActivity : AppCompatActivity() {
         }
     }
 
-    private fun isPermissionsGranted(): Boolean {
-        return ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
-    }
+    private fun isPermissionsGranted(): Boolean = ContextCompat
+        .checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
 }

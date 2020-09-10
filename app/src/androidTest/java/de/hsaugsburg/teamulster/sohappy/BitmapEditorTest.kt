@@ -20,7 +20,7 @@ class BitmapEditorTest {
     lateinit var bitmap: Bitmap
 
     @Before
-    fun setUp(){
+    fun setUp() {
         val inputStream = instrumentationContext.assets.open("negative-test.jpg")
         bitmap = BitmapFactory.decodeStream(inputStream)
     }
@@ -82,8 +82,12 @@ class BitmapEditorTest {
         for (y in 0 until greyScaleBitmap.height) {
             for (x in 0 until greyScaleBitmap.width) {
                 // for some reason assertEquals and assertNotSame are not working here
-                assertTrue(greyScaleBitmap.getColor(x, y).red() == greyScaleBitmap.getColor(x, y).green())
-                assertTrue(greyScaleBitmap.getColor(x, y).green() == greyScaleBitmap.getColor(x, y).blue())
+                assertTrue(
+                    greyScaleBitmap.getColor(x, y).red() == greyScaleBitmap.getColor(x, y).green()
+                )
+                assertTrue(
+                    greyScaleBitmap.getColor(x, y).green() == greyScaleBitmap.getColor(x, y).blue()
+                )
             }
         }
     }

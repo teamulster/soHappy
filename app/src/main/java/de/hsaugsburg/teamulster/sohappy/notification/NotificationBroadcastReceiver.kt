@@ -11,7 +11,7 @@ import de.hsaugsburg.teamulster.sohappy.R
  * Receives notification alarms from NotificationHandler and uses a NotificationManager
  * to push the notification to the user's device.
  */
-class NotificationBroadcastReceiver: BroadcastReceiver() {
+class NotificationBroadcastReceiver : BroadcastReceiver() {
 
     /**
      * Upon receiving an alarm from NotificationHandler, the corresponding notification is
