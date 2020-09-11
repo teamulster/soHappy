@@ -1,12 +1,14 @@
 package de.hsaugsburg.teamulster.sohappy.config
 
 import android.content.Context
+import android.util.MalformedJsonException
+import android.webkit.URLUtil
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
-import de.hsaugsburg.teamulster.sohappy.exceptions.InvalidJsonStringException
 import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
+import java.net.MalformedURLException
 import java.nio.charset.Charset
 
 /**
@@ -17,13 +19,19 @@ import java.nio.charset.Charset
 object ConfigManager {
     // Init variables
     lateinit var imageAnalyzerConfig: ImageAnalyzerConfig
+    lateinit var aboutConfig: AboutConfig
     lateinit var mainConfig: MainConfig
-    private var file: File? = null
     private val gson = Gson()
+    @Suppress("StringLiteralDuplication")
     private val defaultConfig: MainConfig = MainConfig(
         ImageAnalyzerConfig(
-            "de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl",
-            "de.hsaugsburg.teamulster.sohappy.analyzer.detector.TFLiteImpl"
+            "de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.HaarCascadeFaceDetector",
+            "de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl.FerTFLiteSmileDetectorImpl"
+        ),
+        AboutConfig(
+            "https://github.com/teamulster/soHappy",
+            "https://github.com/teamulster/soHappy",
+            "https://github.com/teamulster/soHappy"
         )
     )
 
@@ -31,58 +39,65 @@ object ConfigManager {
      * This function loads config from the config file and parses the JSON string to MainConfig(
      * ImageAnalyzerConfig) objects.
      *
-     * @param context current context describing from where the method was invoked
-     * @throws IOException
-     * @return MainConfig
+     * @param [context] current context describing from where the method was invoked
+     * @throws [IOException]
+     * @throws [ClassNotFoundException]
+     * @return [MainConfig]
      * */
     fun load(context: Context): MainConfig {
         val jsonString: String
         try {
-            if (file == null || !file?.exists()!!) {
-                createConfigFile(context)
-            }
+            val file = getFile(context)
             jsonString = FileInputStream(file).bufferedReader().use { it.readText() }
+
+            val parsedJson = fromJson(jsonString)
+            checkAboutConfig(parsedJson.aboutConfig)
+            checkImageAnalyzerConfig(parsedJson.imageAnalyzerConfig)
+            mainConfig = parsedJson
+            imageAnalyzerConfig = parsedJson.imageAnalyzerConfig
+            aboutConfig = parsedJson.aboutConfig
         } catch (e: IOException) {
             throw e
+        } catch (e: ClassNotFoundException) {
+            throw e
         }
-        val parsedJson = fromJson(jsonString)
-        mainConfig = parsedJson
-        imageAnalyzerConfig = parsedJson.imageAnalyzerConfig
         return mainConfig
     }
 
     /**
      * This function stores the MainConfig object it is handed into the config.json file.
      *
-     * @param context current context describing from where the method was invoked
-     * @param mainConfig MainConfig object which contents will be stored
-     * @throws IOException
+     * @param [context] current context describing from where the method was invoked
+     * @param [mainConfig] MainConfig object which contents will be stored
+     * @throws [IOException]
      * */
     fun store(context: Context, mainConfig: MainConfig) {
         val jsonString = toJson(mainConfig)
         try {
-            if (file == null || !file?.exists()!!) {
-                createConfigFile(context)
-            }
-            file!!.writeText(jsonString, Charset.defaultCharset())
+            val file = getFile(context)
+            file.writeText(jsonString, Charset.defaultCharset())
         } catch (e: IOException) {
             throw e
         }
     }
 
     /**
-     * This private function creates a config.json inside a config folder.
+     * This private function returns the current config.json file or creates it, if it does'nt exist.
      *
-     * @param context current context describing from where the method was invoked
-     * @throws IOException
+     * @param [context] the current context
+     * @throws [IOException]
+     * @return [File]
      * */
-    private fun createConfigFile(context: Context) {
+    private fun getFile(context: Context): File {
         try {
             val dirPath = context.filesDir
             val configDirectory = File(dirPath, "config")
             configDirectory.mkdirs()
-            file = File(configDirectory, "config.json")
-            file!!.writeText(toJson(defaultConfig), Charset.defaultCharset())
+            val file = File(configDirectory, "config.json")
+            if (!file.exists()) {
+                file.writeText(toJson(defaultConfig), Charset.defaultCharset())
+            }
+            return file
         } catch (e: IOException) {
             throw e
         }
@@ -90,16 +105,17 @@ object ConfigManager {
 
     /**
      * This private function parses a given JSON string into a MainConfig object. The object is stored
-     * in class attributes mainConfig (imageAnalyzerConfig)
+     * in class attributes mainConfig (imageAnalyzerConfig).
      *
-     * @param jsonString JSON string which will be converted into MainConfig object
-     * @throws InvalidJsonStringException
+     * @param [jsonString] JSON string which will be converted into MainConfig object
+     * @throws [MalformedJsonException]
+     * @return [MainConfig]
      * */
     private fun fromJson(jsonString: String): MainConfig {
         try {
             return gson.fromJson<MainConfig>(jsonString, MainConfig::class.java)
         } catch (e: JsonParseException) {
-            throw InvalidJsonStringException(
+            throw MalformedJsonException(
                 this::class.java.name + " : the given json string" +
                         "is not JSON compliant."
             )
@@ -110,8 +126,64 @@ object ConfigManager {
      * This private function parses a given MainConfig object into a JSON string. This string will
      * be returned.
      *
-     * @param mainConfig MainConfig object which will be parsed to JSON
-     * @return String
+     * @param [mainConfig] MainConfig object which will be parsed to JSON
+     * @return [String]
      * */
     private fun toJson(mainConfig: MainConfig): String = gson.toJson(mainConfig)
+
+    /**
+     * This private function checks a given URL compliance.
+     *
+     * @param [url] a String which will be checked
+     * @return [Boolean]
+     * */
+    private fun isURLValid(url: String): Boolean = URLUtil.isValidUrl(url)
+            && (URLUtil.isHttpUrl(url) || URLUtil.isHttpsUrl(url))
+
+    /**
+     * This private function checks a given AboutConfig object for its property value compliance.
+     *
+     * @param [aboutConfig] a given AboutConfig object which will be checked
+     * @throws [MalformedURLException]
+     */
+    @Suppress("ThrowsCount")
+    private fun checkAboutConfig(aboutConfig: AboutConfig) {
+        val optRecommendation = "Make sure http:// or https:// is prepended."
+        if (!isURLValid(aboutConfig.creditsURL)) {
+            throw MalformedURLException(
+                this::class.java.name
+                        + " : aboutConfig.creditsURL is not properly formatted."
+                        + "\n" + optRecommendation
+            )
+        }
+        if (!isURLValid(aboutConfig.privacyURL)) {
+            throw MalformedURLException(
+                this::class.java.name
+                        + " : aboutConfig.privacyURL is not properly formatted"
+                        + "\n" + optRecommendation
+            )
+        }
+        if (!isURLValid(aboutConfig.imprintURL)) {
+            throw MalformedURLException(
+                this::class.java.name
+                        + " : aboutConfig.imprintURL is not properly formatted"
+                        + "\n" + optRecommendation
+            )
+        }
+    }
+
+    /**
+     * This private function checks a given ImageAnalyzerConfig object for its property value compliance.
+     *
+     * @param [imageAnalyzerConfig]
+     * @throws [ClassNotFoundException]
+     * */
+    private fun checkImageAnalyzerConfig(imageAnalyzerConfig: ImageAnalyzerConfig) {
+        try {
+            Class.forName(imageAnalyzerConfig.faceDetector)
+            Class.forName(imageAnalyzerConfig.smileDetector)
+        } catch (e: ClassNotFoundException) {
+            throw e
+        }
+    }
 }
