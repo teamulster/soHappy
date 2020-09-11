@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import de.hsaugsburg.teamulster.sohappy.R
+import de.hsaugsburg.teamulster.sohappy.config.ConfigManager
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentSettingsBinding
 import de.hsaugsburg.teamulster.sohappy.viewmodel.SettingsViewModel
 
@@ -35,7 +36,7 @@ class SettingsFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        binding.settingsNotificationSwitch.isActivated = viewModel.notificationsEnabled
-        binding.settingsDatabaseSwitch.isActivated = viewModel.databaseEnabled
+        binding.settingsNotificationSwitch.isActivated = ConfigManager.settingsConfig.notifications
+        binding.settingsDatabaseSwitch.isActivated = ConfigManager.settingsConfig.databaseSync
     }
 }
