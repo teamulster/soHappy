@@ -3,6 +3,7 @@ package de.hsaugsburg.teamulster.sohappy.analyzer
 import android.app.Activity
 import android.graphics.Bitmap
 import android.util.Log
+import de.hsaugsburg.teamulster.sohappy.CameraActivity
 import de.hsaugsburg.teamulster.sohappy.analyzer.collector.Measurement
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.DetectionResult
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FaceDetector
@@ -29,12 +30,12 @@ class ImageAnalyzer (val fragment: CameraFragment, config: ImageAnalyzerConfig) 
         }
     }
     private val measurement = Measurement()
-    private var faceDetector: FaceDetector? = DetectorFactory.getFaceDetectorFromConfig(config, activity)
-    private var smileDetector: SmileDetector? = DetectorFactory.getSmileDetectorFromConfig(config, activity)
+    private var faceDetector: FaceDetector? = DetectorFactory.getFaceDetectorFromConfig(config, fragment.requireActivity())
+    private var smileDetector: SmileDetector? = DetectorFactory.getSmileDetectorFromConfig(config, fragment.requireActivity())
     private var imageAnalyzerState: ImageAnalyzerState = ImageAnalyzerState.NONE
 
     init {
-        fragment.stateMachine.onStateChangeList.add { _, new ->
+        (fragment.requireActivity() as CameraActivity).stateMachine.onStateChangeList.add { _, new ->
             imageAnalyzerState = when (new) {
                 // TODO: use boolean value
                 is WaitingForFace -> ImageAnalyzerState.FACE_DETECTION
