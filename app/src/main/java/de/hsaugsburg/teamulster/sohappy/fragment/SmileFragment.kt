@@ -13,6 +13,10 @@ import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentSmileBinding
 
 // TODO: The requireView.postDelayed() calls serve as proof of concept for animations - replace!
+/**
+ * SmileFragment is the main Fragment and serves as the user interface for the
+ * procedure described in the paper.
+ */
 class SmileFragment : Fragment() {
     private lateinit var binding: FragmentSmileBinding
 
@@ -57,7 +61,7 @@ class SmileFragment : Fragment() {
 
         requireView().postDelayed({
             findNavController().navigate(R.id.questionnaire01Fragment)
-        }, 12250)
+        }, 12_250)
     }
 
     override fun onStop() {

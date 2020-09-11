@@ -4,9 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.Matrix
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.camera.core.CameraSelector
@@ -25,7 +23,10 @@ import jp.co.cyberagent.android.gpuimage.GPUImage
 import jp.co.cyberagent.android.gpuimage.GPUImageView
 import java.util.concurrent.Executors
 
-
+/**
+ * CameraFragment uses the device's camera in order to perform various
+ * image processing operations.
+ */
 class CameraFragment: Fragment() {
     companion object {
         const val REQUEST_CODE_PERMISSIONS = 10

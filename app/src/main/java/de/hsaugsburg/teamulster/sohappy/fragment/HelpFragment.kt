@@ -7,6 +7,9 @@ import androidx.databinding.DataBindingUtil
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentHelpBinding
 
+/**
+ * HelpFragment contains a variety of tabs that have miscellaneous purposes.
+ */
 class HelpFragment : Fragment() {
     private lateinit var binding: FragmentHelpBinding
 

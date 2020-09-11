@@ -4,15 +4,16 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentResultsBinding
-import de.hsaugsburg.teamulster.sohappy.viewmodel.QuestionnaireViewModel
 
+/**
+ * ResultsFragment serves as the conclusion of the smile procedure and provides the
+ * user with a summary of their session.
+ */
 class ResultsFragment : Fragment() {
     private lateinit var binding: FragmentResultsBinding
-    private val questionnaireViewModel: QuestionnaireViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

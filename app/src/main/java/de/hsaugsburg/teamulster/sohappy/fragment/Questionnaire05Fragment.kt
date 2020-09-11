@@ -11,6 +11,9 @@ import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentQuestionnaire05Binding
 import de.hsaugsburg.teamulster.sohappy.viewmodel.QuestionnaireViewModel
 
+/**
+ * Questionnaire05Fragment contains the question for the fifth part of the questionnaire.
+ */
 class Questionnaire05Fragment: Fragment() {
     private lateinit var binding: FragmentQuestionnaire05Binding
     private val viewModel: QuestionnaireViewModel by activityViewModels()
@@ -33,8 +36,12 @@ class Questionnaire05Fragment: Fragment() {
                 viewModel.questionnaire01Answer = progress
             }
 
-            override fun onStartTrackingTouch(p0: SeekBar?) {}
-            override fun onStopTrackingTouch(p0: SeekBar?) {}
+            override fun onStartTrackingTouch(p0: SeekBar?) {
+                // no-op
+            }
+            override fun onStopTrackingTouch(p0: SeekBar?) {
+                // no-op
+            }
         })
         binding.continueButton.setOnClickListener {
             findNavController().navigate(R.id.questionnaire06Fragment)

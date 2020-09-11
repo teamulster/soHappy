@@ -7,6 +7,9 @@ import androidx.databinding.DataBindingUtil
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentJokesBinding
 
+/**
+ * JokesFragment contains a selection of jokes that the user can browse through.
+ */
 class JokesFragment : Fragment() {
     private lateinit var binding: FragmentJokesBinding
 

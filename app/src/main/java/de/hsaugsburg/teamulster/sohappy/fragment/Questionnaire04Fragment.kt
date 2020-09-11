@@ -10,6 +10,9 @@ import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentQuestionnaire04Binding
 import de.hsaugsburg.teamulster.sohappy.viewmodel.QuestionnaireViewModel
 
+/**
+ * Questionnaire04Fragment contains the question for the fourth part of the questionnaire.
+ */
 class Questionnaire04Fragment: Fragment() {
     private lateinit var binding: FragmentQuestionnaire04Binding
     private val viewModel: QuestionnaireViewModel by activityViewModels()

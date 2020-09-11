@@ -11,6 +11,9 @@ import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentQuestionnaire02Binding
 import de.hsaugsburg.teamulster.sohappy.viewmodel.QuestionnaireViewModel
 
+/**
+ * Questionnaire02Fragment contains the question for the second part of the questionnaire.
+ */
 class Questionnaire02Fragment: Fragment() {
     private lateinit var binding: FragmentQuestionnaire02Binding
     private val viewModel: QuestionnaireViewModel by activityViewModels()

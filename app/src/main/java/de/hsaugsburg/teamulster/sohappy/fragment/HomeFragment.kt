@@ -11,6 +11,9 @@ import androidx.navigation.ui.NavigationUI
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentHomeBinding
 
+/**
+ * HomeFragment is the entry point for the app.
+ */
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
 

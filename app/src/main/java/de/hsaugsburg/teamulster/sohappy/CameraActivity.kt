@@ -7,7 +7,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import de.hsaugsburg.teamulster.sohappy.databinding.ActivityCameraBinding
 
-
+/**
+ * CameraActivity serves as the sole Activity and entry point for the app.
+ */
 class CameraActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding
 
@@ -19,7 +21,6 @@ class CameraActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this, navController)
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        return findNavController(R.id.navHostFragment).navigateUp()
-    }
+    override fun onSupportNavigateUp(): Boolean =
+        findNavController(R.id.navHostFragment).navigateUp()
 }

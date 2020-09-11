@@ -9,6 +9,9 @@ import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentSettingsBinding
 import de.hsaugsburg.teamulster.sohappy.viewmodel.SettingsViewModel
 
+/**
+ * SettingsFragment contains all UI elements concerning app settings.
+ */
 class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
     private val viewModel: SettingsViewModel by activityViewModels()
