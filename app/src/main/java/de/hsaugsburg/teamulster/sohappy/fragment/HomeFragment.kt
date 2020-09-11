@@ -1,5 +1,6 @@
 package de.hsaugsburg.teamulster.sohappy.fragment
 
+import android.graphics.Camera
 import android.os.Bundle
 import android.view.*
 import androidx.core.animation.doOnEnd
@@ -8,20 +9,34 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
+import de.hsaugsburg.teamulster.sohappy.CameraActivity
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentHomeBinding
+import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
+import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
+import de.hsaugsburg.teamulster.sohappy.stateMachine.states.WaitingForFace
 
 /**
  * HomeFragment is the entry point for the app.
  */
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var stateMachine : StateMachine
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        stateMachine = (this.requireActivity() as CameraActivity).stateMachine
+        // TODO: extract (this.requireActivity() as CameraActivity).stateMachine into own, shared function
+        stateMachine.onStateChangeList.add { _, new ->
+            if (new is WaitingForFace) {
+                findNavController().navigate(R.id.smileFragment)
+            }
+
+        }
+
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_home,
@@ -65,7 +80,7 @@ class HomeFragment : Fragment() {
         view.visibility = View.VISIBLE
 
         circleAnimation.doOnEnd {
-            findNavController().navigate(R.id.smileFragment)
+           stateMachine.consumeAction(Action.StartButtonPressed)
         }
 
         circleAnimation.start()

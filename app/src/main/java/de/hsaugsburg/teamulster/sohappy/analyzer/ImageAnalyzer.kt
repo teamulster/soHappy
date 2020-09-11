@@ -12,6 +12,8 @@ import de.hsaugsburg.teamulster.sohappy.config.ImageAnalyzerConfig
 import de.hsaugsburg.teamulster.sohappy.factories.DetectorFactory
 import de.hsaugsburg.teamulster.sohappy.stateMachine.states.*
 import de.hsaugsburg.teamulster.sohappy.fragment.CameraFragment
+import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
+import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 import kotlin.concurrent.thread
 
 /**
@@ -33,17 +35,25 @@ class ImageAnalyzer (val fragment: CameraFragment, config: ImageAnalyzerConfig) 
     private var faceDetector: FaceDetector? = DetectorFactory.getFaceDetectorFromConfig(config, fragment.requireActivity())
     private var smileDetector: SmileDetector? = DetectorFactory.getSmileDetectorFromConfig(config, fragment.requireActivity())
     private var imageAnalyzerState: ImageAnalyzerState = ImageAnalyzerState.NONE
+    private var stateMachine = (fragment.requireActivity() as CameraActivity).stateMachine
+
 
     init {
-        (fragment.requireActivity() as CameraActivity).stateMachine.onStateChangeList.add { _, new ->
+        stateMachine.onStateChangeList.add { _, new ->
             imageAnalyzerState = when (new) {
-                // TODO: use boolean value
                 is WaitingForFace -> ImageAnalyzerState.FACE_DETECTION
                 is WaitingForSmile -> ImageAnalyzerState.SMILE_DETECTION
                 is Questions -> ImageAnalyzerState.CANCEL
                 is NoSmile, is Start -> ImageAnalyzerState.CANCEL
                 else -> imageAnalyzerState
             }
+        }
+        imageAnalyzerState = when(stateMachine.currentState) {
+            is WaitingForFace -> ImageAnalyzerState.FACE_DETECTION
+            is WaitingForSmile -> ImageAnalyzerState.SMILE_DETECTION
+            is Questions -> ImageAnalyzerState.CANCEL
+            is NoSmile, is Start -> ImageAnalyzerState.CANCEL
+            else -> imageAnalyzerState
         }
     }
 
@@ -84,7 +94,11 @@ class ImageAnalyzer (val fragment: CameraFragment, config: ImageAnalyzerConfig) 
                 if (bitmap != null) {
                     val result = when (imageAnalyzerState) {
                         ImageAnalyzerState.NONE -> DetectionResult(null, null)
-                        ImageAnalyzerState.FACE_DETECTION -> computeFaceDetectionResult(bitmap)
+                        ImageAnalyzerState.FACE_DETECTION -> {
+                            val r = computeFaceDetectionResult(bitmap)
+                            stateMachine.consumeAction(Action.FaceDetected)
+                            r
+                        }
                         ImageAnalyzerState.SMILE_DETECTION -> computeSmileDetectionResult(bitmap)
                         ImageAnalyzerState.CANCEL -> break
                     }

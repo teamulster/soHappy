@@ -9,8 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
+import de.hsaugsburg.teamulster.sohappy.CameraActivity
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentSmileBinding
+import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
+import de.hsaugsburg.teamulster.sohappy.stateMachine.states.TakeABreath
 
 // TODO: The requireView.postDelayed() calls serve as proof of concept for animations - replace!
 /**
@@ -18,6 +21,7 @@ import de.hsaugsburg.teamulster.sohappy.databinding.FragmentSmileBinding
  * procedure described in the paper.
  */
 class SmileFragment : Fragment() {
+    private lateinit var stateMachine: StateMachine
     private lateinit var binding: FragmentSmileBinding
 
     override fun onCreateView(
@@ -31,6 +35,18 @@ class SmileFragment : Fragment() {
             container,
             false
         )
+        stateMachine = (this.requireActivity() as CameraActivity).stateMachine
+        stateMachine.onStateChangeList.add { _, new ->
+            when(new) {
+                is TakeABreath -> {
+                    requireView().postDelayed( {
+                        (binding.checkmarkView.drawable as Animatable).start()
+                        fadeOutText()
+                        fadeInText(getString(R.string.fragment_camera_stimulus1))
+                    }, 0)
+                }
+            }
+        }
 
         return binding.root
     }
@@ -42,12 +58,9 @@ class SmileFragment : Fragment() {
         // The initial animation has to be started here, otherwise the animation
         // will play even if the screen is currently not focused on this fragment
         startInitAnimation()
+        (binding.checkmarkView.drawable as Animatable).start()
 
-        requireView().postDelayed({
-            (binding.checkmarkView.drawable as Animatable).start()
-        }, 3000)
-
-        requireView().postDelayed({
+/*        requireView().postDelayed({
             startCountdown()
         }, 4000)
 
@@ -61,7 +74,7 @@ class SmileFragment : Fragment() {
 
         requireView().postDelayed({
             findNavController().navigate(R.id.questionnaire01Fragment)
-        }, 12_250)
+        }, 12_250)*/
     }
 
     override fun onStop() {
