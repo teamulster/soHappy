@@ -132,7 +132,7 @@ object ConfigManager {
     private fun toJson(mainConfig: MainConfig): String = gson.toJson(mainConfig)
 
     /**
-     * This private function checks a given URL URL compliance.
+     * This private function checks a given URL compliance.
      *
      * @param [url] a String which will be checked
      * @return [Boolean]
