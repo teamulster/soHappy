@@ -7,4 +7,65 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="TextAppearanceHeadlineCustom1">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearanceHeadlineCustom2">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearanceBodyCustom">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="TextAppearanceCamera">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">26sp</item>
+    </style>
+
+    <style name="TextAppearanceCountdown">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">42sp</item>
+    </style>
+
+    <style name="SwitchAppearanceCustom" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
+
+    <style name="SeekBarAppearanceCustom" parent="Theme.AppCompat.Light">
+        <item name="android:thumbTint">@color/colorPrimary</item>
+        <item name="android:progressTint">@color/colorSuccess</item>
+        <item name="android:progressBackgroundTint">@android:color/darker_gray</item>
+    </style>
+
+    <style name="SeekBarLabelAppearanceCustom">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@android:color/darker_gray</item>
+    </style>
+
+    <style name="SpinnerDropdownAppearanceCustom" parent="Widget.AppCompat.DropDownItem.Spinner">
+        <item name="android:paddingStart">8dp</item>
+    </style>
+
+    <style name="ButtonPrimary">
+        <item name="android:background">@drawable/button_background</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="ButtonBorderlessNoDescription" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:background">@drawable/button_background_blank</item>
+        <item name="android:gravity">start|center_vertical</item>
+        <item name="android:textAppearance">@style/TextAppearanceHeadlineCustom1</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="ButtonArrowBorderlessNoDescription" parent="ButtonBorderlessNoDescription">
+        <item name="android:drawableEnd">@drawable/ic_baseline_keyboard_arrow_right_24</item>
+    </style>
 </resources>

@@ -1,8 +1,8 @@
 package de.hsaugsburg.teamulster.sohappy.analyzer
 
+import android.app.Activity
 import android.graphics.Bitmap
 import android.util.Log
-import de.hsaugsburg.teamulster.sohappy.CameraActivity
 import de.hsaugsburg.teamulster.sohappy.analyzer.collector.Measurement
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.DetectionResult
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FaceDetector
@@ -10,6 +10,7 @@ import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
 import de.hsaugsburg.teamulster.sohappy.config.ImageAnalyzerConfig
 import de.hsaugsburg.teamulster.sohappy.factories.DetectorFactory
 import de.hsaugsburg.teamulster.sohappy.stateMachine.states.*
+import de.hsaugsburg.teamulster.sohappy.fragment.CameraFragment
 import kotlin.concurrent.thread
 
 /**
@@ -18,7 +19,7 @@ import kotlin.concurrent.thread
  * @param [config] a given ImageAnalyzerConfig which determines the
  *               faceDetectorImpl/smileDetectorImpl to be used
  */
-class ImageAnalyzer (val activity: CameraActivity, config: ImageAnalyzerConfig) {
+class ImageAnalyzer (val fragment: CameraFragment, config: ImageAnalyzerConfig) {
     companion object {
         enum class ImageAnalyzerState {
             NONE,
@@ -27,14 +28,13 @@ class ImageAnalyzer (val activity: CameraActivity, config: ImageAnalyzerConfig) 
             CANCEL
         }
     }
-
     private val measurement = Measurement()
     private var faceDetector: FaceDetector? = DetectorFactory.getFaceDetectorFromConfig(config, activity)
     private var smileDetector: SmileDetector? = DetectorFactory.getSmileDetectorFromConfig(config, activity)
     private var imageAnalyzerState: ImageAnalyzerState = ImageAnalyzerState.NONE
 
     init {
-        activity.stateMachine.onStateChangeList.add { old, new ->
+        fragment.stateMachine.onStateChangeList.add { _, new ->
             imageAnalyzerState = when (new) {
                 // TODO: use boolean value
                 is WaitingForFace -> ImageAnalyzerState.FACE_DETECTION
@@ -79,7 +79,7 @@ class ImageAnalyzer (val activity: CameraActivity, config: ImageAnalyzerConfig) 
         // TODO: Improve this
         thread {
             while (true) {
-                val bitmap = this.activity.queue.poll()
+                val bitmap = fragment.queue.poll()
                 if (bitmap != null) {
                     val result = when (imageAnalyzerState) {
                         ImageAnalyzerState.NONE -> DetectionResult(null, null)
