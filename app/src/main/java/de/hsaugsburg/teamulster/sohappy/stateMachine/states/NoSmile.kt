@@ -1,5 +1,6 @@
 package de.hsaugsburg.teamulster.sohappy.stateMachine.states
 
+import android.util.Log
 import de.hsaugsburg.teamulster.sohappy.CameraActivity
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
@@ -9,10 +10,13 @@ class NoSmile : State {
         return when (action) {
             is Action.EndButtonPressed -> Start()
             is Action.QuestionButtonPressed -> Questions()
-            else -> throw IllegalStateException("Invalid action $action passed to state $this")
+            else -> {
+                Log.d("Invalid action: ", action.toString())
+                this
+            }
         }
     }
-
+    @Suppress("EmptyFunctionBlock")
     override fun executeCoreFunctionality(
         stateMachine: StateMachine,
         cameraActivity: CameraActivity

@@ -4,8 +4,7 @@ sealed class Action {
     object StartButtonPressed : Action()
     object EndButtonPressed : Action()
     object QuestionButtonPressed : Action()
-    object FacedDetected : Action()
+    object FaceDetected : Action()
     object SmileDetected : Action()
     object Timeout : Action()
-    object Initial : Action()
 }

@@ -1,21 +1,26 @@
 package de.hsaugsburg.teamulster.sohappy.stateMachine.states
 
+import android.util.Log
 import de.hsaugsburg.teamulster.sohappy.CameraActivity
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
-import kotlin.properties.Delegates
 
 class WaitingForSmile : State {
     override fun consumeAction(action: Action): State {
         return when (action) {
             is Action.SmileDetected -> SmileCountdown()
             is Action.Timeout -> NoSmile()
-            else -> throw IllegalStateException("Invalid action $action passed to state $this")
+            else -> {
+                Log.d("Invalid action: ", action.toString())
+                this
+            }
         }
     }
 
-    override fun executeCoreFunctionality(stateMachine: StateMachine, cameraActivity: CameraActivity) {
-        // synchronize ?
+    override fun executeCoreFunctionality(
+        stateMachine: StateMachine,
+        cameraActivity: CameraActivity
+    ) {
         startSmileDetection()
     }
 

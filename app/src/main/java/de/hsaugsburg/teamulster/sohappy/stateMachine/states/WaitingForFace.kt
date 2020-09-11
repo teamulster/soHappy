@@ -1,29 +1,31 @@
 package de.hsaugsburg.teamulster.sohappy.stateMachine.states
 
-import android.os.CountDownTimer
+import android.util.Log
 import de.hsaugsburg.teamulster.sohappy.CameraActivity
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
-import de.hsaugsburg.teamulster.sohappy.util.TransitionTimer
-import java.util.*
 import kotlin.concurrent.thread
-import kotlin.properties.Delegates
 
 class WaitingForFace : State {
 
     override fun consumeAction(action: Action): State {
         return when (action) {
             is Action.Timeout -> Start()
-            is Action.FacedDetected -> TakeABreath()
-            else -> throw IllegalStateException("Invalid action $action passed to state $this")
+            is Action.FaceDetected -> TakeABreath()
+            else -> {
+                Log.d("Invalid action: ", action.toString())
+                this
+            }
         }
     }
 
-    override fun executeCoreFunctionality(stateMachine: StateMachine, cameraActivity: CameraActivity) {
-        //TODO: need to get the action wich is faster
-        // synchronize?
+    override fun executeCoreFunctionality(
+        stateMachine: StateMachine,
+        cameraActivity: CameraActivity
+    ) {
         thread {
-            Thread.sleep(3000)
+            //TODO: get sec from config
+            Thread.sleep(10 * 1000)
             stateMachine.consumeAction(Action.Timeout)
         }
     }

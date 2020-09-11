@@ -7,6 +7,10 @@ import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FaceDetector
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
 import de.hsaugsburg.teamulster.sohappy.config.ImageAnalyzerConfig
 import de.hsaugsburg.teamulster.sohappy.factories.DetectorFactory
+import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
+import de.hsaugsburg.teamulster.sohappy.stateMachine.states.State
+import de.hsaugsburg.teamulster.sohappy.stateMachine.states.WaitingForFace
+import de.hsaugsburg.teamulster.sohappy.stateMachine.states.WaitingForSmile
 import kotlin.concurrent.thread
 
 /**
@@ -18,6 +22,16 @@ import kotlin.concurrent.thread
 class ImageAnalyzer (val activity: CameraActivity, config: ImageAnalyzerConfig) {
     private var faceDetector: FaceDetector? = DetectorFactory.getFaceDetectorFromConfig(config, activity)
     private var smileDetector: SmileDetector? = DetectorFactory.getSmileDetectorFromConfig(config, activity)
+    private var searchForSmile: Boolean = false
+
+    init {
+        activity.stateMachine.onStateChangeList.add { _, new ->
+            when (new) {
+                // TODO: use boolean value
+                is WaitingForSmile -> searchForSmile = true
+            }
+        }
+    }
 
     /**
      * This function calculates a FaceDetectionResult using [faceDetector].
