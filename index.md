@@ -1,37 +1,35 @@
-## Welcome to GitHub Pages
+# soHappy
 
-You can use the [editor on GitHub](https://github.com/teamulster/soHappy/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+## Motivation
+This Android app is based on the [Remember to smile - design of a mobile affective technology
+to help promote individual happiness through smiling](https://www.researchgate.net/publication/318014342_Remember_to_smile_-_design_of_a_mobile_affective_technology_to_help_promote_individual_happiness_through_smiling)
+paper by George Moore, Leo Galway and Mark Donnelly, which theorizes that more frequent genuine
+smiling can substantially improve happiness. With technology improving over the years, it has been
+made possible to measure an individual's happiness through Affective Computing, which allows a more
+objective evaluation than more traditional methods, such as questionnaires.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Not only is pursuing happiness deeply integrated into our roots, it has also been proven that
+increased happiness is associated with higher productivity, well-being and quality of life,
+prompting well known organizations such as the World Health Organization to support happiness
+as an important factor to an individual's overall health.
 
-### Markdown
+## Methodology
+Previously, happiness was measured using a wide variety of approaches that were primarily
+defined by the respective creator's belief in factors contributing to happiness. As such, they
+are plagued by subjectivity, which somewhat diminishes their potential to effectively
+assess happiness. Techniques carried out by computers have been shown to be capable of providing
+more objective results. For this reason, the aforementioned paper proposed a mobile application
+designed to encourage genuine smiling.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Upon launching the app, the user will be asked to move their face into the camera frame. As soon as
+a face has been detected, a short countdown is started in order to give the user an opportunity to
+relax. After the countdown has passed, another, longer countdown is started and a text message is
+shown on the screen, serving as a stimulus for a genuine smile. The user is given feedback every
+second whether a smile has been recognized or not. Detected smiles are used to calculate the total
+duration and probability of a genuine smile. During the entire process, the camera frame is
+blurred to reduce feelings of self-consciousness, greatly reducing the likelihood of fake smiling.
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/teamulster/soHappy/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Once the second countdown has passed, a set of questions are posed to the user. These range from
+questions concerning the user's current evaluation of their own happiness to the user's recent
+activities. After all questions have been answered, the user will be presented with a screen in
+which they are thanked for their participation.
