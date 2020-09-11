@@ -33,7 +33,7 @@ class Questionnaire06Fragment: Fragment() {
         binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 binding.seekBarProgressLabel.text = seekBar.progress.toString()
-                viewModel.questionnaire01Answer = progress
+                viewModel.questionnaire06Answer = progress
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {
