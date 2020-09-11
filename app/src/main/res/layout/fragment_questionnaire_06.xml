@@ -4,11 +4,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:context=".questionnaire06Fragment">
 
-    <data>
-        <variable name="viewModel"
-            type="de.hsaugsburg.teamulster.sohappy.viewmodel.QuestionnaireViewModel" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -26,13 +21,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <SeekBar
-            android:id="@+id/slider"
+            android:id="@+id/seekBar"
             style="@style/SeekBarAppearanceCustom"
             android:layout_width="280dp"
             android:layout_height="18dp"
             android:layout_marginBottom="256dp"
             android:max="10"
-            android:progress="@={viewModel.questionnaire06Answer}"
             app:layout_constraintBottom_toTopOf="@+id/continueButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -44,8 +38,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="@string/fragment_questionnaire_06_not_tired"
-            app:layout_constraintStart_toStartOf="@+id/slider"
-            app:layout_constraintTop_toBottomOf="@+id/slider" />
+            app:layout_constraintStart_toStartOf="@+id/seekBar"
+            app:layout_constraintTop_toBottomOf="@+id/seekBar" />
 
         <TextView
             android:id="@+id/veryTiredText"
@@ -54,8 +48,19 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:text="@string/fragment_questionnaire_06_very_tired"
-            app:layout_constraintEnd_toEndOf="@+id/slider"
-            app:layout_constraintTop_toBottomOf="@+id/slider" />
+            app:layout_constraintEnd_toEndOf="@+id/seekBar"
+            app:layout_constraintTop_toBottomOf="@+id/seekBar" />
+
+        <TextView
+            android:id="@+id/seekBarProgressLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="@string/fragment_questionnaire_seekbar_initial"
+            android:textAppearance="@style/SeekBarLabelAppearanceCustom"
+            app:layout_constraintBottom_toTopOf="@+id/seekBar"
+            app:layout_constraintEnd_toEndOf="@+id/seekBar"
+            app:layout_constraintStart_toStartOf="@+id/seekBar" />
 
         <Button
             android:id="@+id/continueButton"

@@ -1,14 +1,14 @@
-package de.hsaugsburg.teamulster.sohappy
+package de.hsaugsburg.teamulster.sohappy.fragment
 
 import android.os.Bundle
 import android.view.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
+import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {

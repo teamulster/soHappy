@@ -1,13 +1,11 @@
-package de.hsaugsburg.teamulster.sohappy
+package de.hsaugsburg.teamulster.sohappy.fragment
 
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI
+import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentHelpBinding
-import de.hsaugsburg.teamulster.sohappy.databinding.FragmentHomeBinding
 
 class HelpFragment : Fragment() {
     private lateinit var binding: FragmentHelpBinding

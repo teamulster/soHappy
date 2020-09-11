@@ -20,12 +20,19 @@
     <string name="fragment_camera_smile">Smile detected!</string>
     <string name="fragment_camera_checkmark_text">Success!</string>
     <string name="fragment_camera_countdown_text">Counting down…</string>
+    <string name="fragment_camera_countdown_initial">3</string>
 
     <string name="fragment_jokes_appbar_title">Jokes</string>
     <string name="fragment_jokes_search_hint">Search…</string>
     <!-- TODO: Refactor jokes to be drawn from a data source rather than from this XML -->
     <string name="fragment_jokes_sample_title">What\'s a Karen called in Europe?</string>
     <string name="fragment_jokes_sample_description">An American.</string>
+
+    <string name="fragment_history_appbar_title">History</string>
+    <string name="fragment_history_sample_date">September 2020</string>
+    <string name="fragment_history_header_date">DATE</string>
+    <string name="fragment_history_header_time">TIME</string>
+    <string name="fragment_history_header_result">RESULT</string>
 
     <string name="fragment_help_name">Help &amp; Contact</string>
     <string name="fragment_help_credits">Credits</string>
@@ -48,6 +55,7 @@
     <string name="fragment_settings_database_text">If enabled, your usage data will be leveraged to improve the app.</string>
 
     <string name="fragment_questionnaire">Questionnaire</string>
+    <string name="fragment_questionnaire_seekbar_initial">0</string>
     <string name="fragment_questionnaire_continue">Continue</string>
     <string name="fragment_questionnaire_01_title">Do you feel happy?</string>
     <string name="fragment_questionnaire_01_unhappy">Very unhappy</string>

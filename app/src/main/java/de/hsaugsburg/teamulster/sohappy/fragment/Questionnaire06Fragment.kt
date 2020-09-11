@@ -1,12 +1,13 @@
-package de.hsaugsburg.teamulster.sohappy
+package de.hsaugsburg.teamulster.sohappy.fragment
 
 import android.os.Bundle
 import android.view.*
+import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentQuestionnaire06Binding
 import de.hsaugsburg.teamulster.sohappy.viewmodel.QuestionnaireViewModel
 
@@ -25,8 +26,16 @@ class Questionnaire06Fragment: Fragment() {
             container,
             false
         )
-        binding.viewModel = viewModel
 
+        binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                binding.seekBarProgressLabel.text = seekBar.progress.toString()
+                viewModel.questionnaire01Answer = progress
+            }
+
+            override fun onStartTrackingTouch(p0: SeekBar?) {}
+            override fun onStopTrackingTouch(p0: SeekBar?) {}
+        })
         binding.continueButton.setOnClickListener {
             findNavController().navigate(R.id.resultsFragment)
         }

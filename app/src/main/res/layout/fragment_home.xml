@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".HomeFragment">
+    tools:context=".fragment.HomeFragment">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -65,7 +65,7 @@
 
                     <fragment
                         android:id="@+id/gpuImageView"
-                        android:name="de.hsaugsburg.teamulster.sohappy.CameraFragment"
+                        android:name="de.hsaugsburg.teamulster.sohappy.fragment.CameraFragment"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:elevation="12dp"
