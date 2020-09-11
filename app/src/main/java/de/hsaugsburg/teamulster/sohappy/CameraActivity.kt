@@ -12,6 +12,7 @@ import androidx.camera.core.ImageAnalysis
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import de.hsaugsburg.teamulster.sohappy.analyzer.BitmapEditor
+import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 import de.hsaugsburg.teamulster.sohappy.util.YuvToRgbConverter
 import jp.co.cyberagent.android.gpuimage.GPUImage
 import jp.co.cyberagent.android.gpuimage.GPUImageView
@@ -30,10 +31,13 @@ class CameraActivity : AppCompatActivity() {
     private var bitmap: Bitmap? = null
     private lateinit var converter: YuvToRgbConverter
     private lateinit var gpuImageView: GPUImageView
+    lateinit var stateMachine: StateMachine
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera)
+
+        stateMachine = StateMachine(this)
 
         converter = YuvToRgbConverter(this)
 

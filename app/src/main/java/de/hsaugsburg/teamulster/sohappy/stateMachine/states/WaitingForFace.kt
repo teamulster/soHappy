@@ -1,7 +1,12 @@
 package de.hsaugsburg.teamulster.sohappy.stateMachine.states
 
+import android.os.CountDownTimer
+import de.hsaugsburg.teamulster.sohappy.CameraActivity
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
+import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 import de.hsaugsburg.teamulster.sohappy.util.TransitionTimer
+import java.util.*
+import kotlin.concurrent.thread
 import kotlin.properties.Delegates
 
 class WaitingForFace : State {
@@ -14,14 +19,13 @@ class WaitingForFace : State {
         }
     }
 
-    override fun executeCoreFunctionality(): Action {
+    override fun executeCoreFunctionality(stateMachine: StateMachine, cameraActivity: CameraActivity) {
         //TODO: need to get the action wich is faster
         // synchronize?
-        var fasterAction: Action
-
-        fasterAction = startFaceDetection()
-        fasterAction = TransitionTimer.startTimer(10)
-        return fasterAction
+        thread {
+            Thread.sleep(3000)
+            stateMachine.consumeAction(Action.Timeout)
+        }
     }
 
     override fun prepareUi() {

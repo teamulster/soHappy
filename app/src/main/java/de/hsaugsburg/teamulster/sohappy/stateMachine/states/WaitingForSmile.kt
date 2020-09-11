@@ -1,6 +1,8 @@
 package de.hsaugsburg.teamulster.sohappy.stateMachine.states
 
+import de.hsaugsburg.teamulster.sohappy.CameraActivity
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
+import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 import kotlin.properties.Delegates
 
 class WaitingForSmile : State {
@@ -12,11 +14,9 @@ class WaitingForSmile : State {
         }
     }
 
-    override fun executeCoreFunctionality(): Action {
+    override fun executeCoreFunctionality(stateMachine: StateMachine, cameraActivity: CameraActivity) {
         // synchronize ?
         startSmileDetection()
-        // start timer
-        return Action.Initial
     }
 
     override fun prepareUi() {

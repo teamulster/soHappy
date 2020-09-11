@@ -1,6 +1,8 @@
 package de.hsaugsburg.teamulster.sohappy.stateMachine.states
 
+import de.hsaugsburg.teamulster.sohappy.CameraActivity
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
+import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 
 class Questions : State {
     override fun consumeAction(action: Action): State {
@@ -10,8 +12,7 @@ class Questions : State {
         }
     }
 
-    override fun executeCoreFunctionality(): Action {
-        return Action.Initial
+    override fun executeCoreFunctionality(stateMachine: StateMachine, cameraActivity: CameraActivity) {
     }
 
     override fun prepareUi() {
