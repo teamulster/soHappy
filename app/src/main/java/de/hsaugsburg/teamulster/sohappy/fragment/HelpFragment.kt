@@ -12,7 +12,6 @@ import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.config.ConfigManager
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentHelpBinding
 
-
 /**
  * HelpFragment contains a variety of tabs that have miscellaneous purposes.
  */
