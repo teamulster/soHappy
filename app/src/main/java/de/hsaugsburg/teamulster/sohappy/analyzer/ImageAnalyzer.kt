@@ -42,8 +42,8 @@ class ImageAnalyzer (val activity: CameraActivity, config: ImageAnalyzerConfig) 
      */
     fun computeSmileDetectionResult(img: Bitmap): DetectionResult {
         val faceDetectionResult = faceDetector?.detect(img)
-        val croppedOutFace = faceDetectionResult?.frame?.let { BitmapEditor.crop(img, it) }!!
-        val smileDR = smileDetector?.detect(croppedOutFace)
+        val croppedOutFace = faceDetectionResult?.frame?.let { BitmapEditor.crop(img, it) }
+        val smileDR = croppedOutFace?.let { smileDetector?.detect(it) }
         return DetectionResult(faceDetectionResult, smileDR)
     }
 
