@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
+import de.hsaugsburg.teamulster.sohappy.config.ConfigManager
 import de.hsaugsburg.teamulster.sohappy.databinding.ActivityCameraBinding
 
 /**
@@ -15,6 +16,7 @@ class CameraActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ConfigManager.load(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_camera)
 
         val navController = findNavController(R.id.navHostFragment)
