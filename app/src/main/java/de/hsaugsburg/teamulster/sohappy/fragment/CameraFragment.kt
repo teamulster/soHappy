@@ -15,7 +15,11 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import de.hsaugsburg.teamulster.sohappy.R
+import de.hsaugsburg.teamulster.sohappy.analyzer.BitmapEditor
+import de.hsaugsburg.teamulster.sohappy.analyzer.ImageAnalyzer
+import de.hsaugsburg.teamulster.sohappy.config.ImageAnalyzerConfig
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentCameraBinding
+import de.hsaugsburg.teamulster.sohappy.queue.BitmapQueue
 import de.hsaugsburg.teamulster.sohappy.util.YuvToRgbConverter
 import jp.co.cyberagent.android.gpuimage.GPUImage
 import jp.co.cyberagent.android.gpuimage.GPUImageView
@@ -29,10 +33,12 @@ class CameraFragment: Fragment() {
 
     private val executor = Executors.newSingleThreadExecutor()
     private var cameraProvider: ProcessCameraProvider? = null
-    private var bitmap: Bitmap? = null
     private lateinit var binding: FragmentCameraBinding
-    private lateinit var converter: YuvToRgbConverter
+    private lateinit var bitmap: Bitmap
+    private lateinit var converter : YuvToRgbConverter
     private lateinit var gpuImageView: GPUImageView
+    private lateinit var imageAnalyzer: ImageAnalyzer
+    lateinit var queue: BitmapQueue
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,16 +51,25 @@ class CameraFragment: Fragment() {
             container,
             false
         )
+        val context = requireContext()
 
-        converter = YuvToRgbConverter(requireContext())
+        converter = YuvToRgbConverter(context)
         gpuImageView = binding.gpuImageView
         gpuImageView.setScaleType(GPUImage.ScaleType.CENTER_CROP)
+
+        queue = BitmapQueue()
+        imageAnalyzer = ImageAnalyzer(
+            this, requireActivity(), ImageAnalyzerConfig(
+                "de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.HaarCascadeFaceDetector",
+                "de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl.FerTFLiteSmileDetectorImpl",
+            )
+        )
 
         requestPermissions(arrayOf(Manifest.permission.CAMERA), REQUEST_CODE_PERMISSIONS)
         // From the processCameraProvider, we can request a Future, which will contain the
         // camera instance, when its available
-        val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
-        cameraProviderFuture.addListener(Runnable {
+        val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
+        cameraProviderFuture.addListener({
             cameraProvider = cameraProviderFuture.get()
             startCameraIfReady()
         }, ContextCompat.getMainExecutor(context))
@@ -76,50 +91,40 @@ class CameraFragment: Fragment() {
         // This callback will convert the image provided by the analyzer to an Bitmap, and  will
         // send the image onto the gpuImageView
         // Then, we can use the bitmap for further processing
-        if (isPermissionsGranted() && cameraProvider == null) {
+        if (!isPermissionsGranted() || cameraProvider == null) {
             return
         }
-
         val imageAnalysis = ImageAnalysis.Builder()
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             // TODO: take a look into .setBackgroundExecutor()
             .build()
 
-        imageAnalysis.setAnalyzer(executor, ImageAnalysis.Analyzer {
+        imageAnalysis.setAnalyzer(executor, {
             var bitmap = allocateBitmapIfNecessary(it.width, it.height)
             //TODO: SuppressLint is dependent on it.image!! Why?
             converter.yuvToRgb(it.image!!, bitmap)
 
-            // This code does rotate the bitmap
-            // TODO: Move this to the ImageEditor
-            val matrix = Matrix()
-            matrix.postRotate(-90F)
-            val scaledBitmap = Bitmap.createScaledBitmap(
-                bitmap, bitmap.width, bitmap.height, true
-            )
-            bitmap = Bitmap.createBitmap(
-                scaledBitmap, 0, 0,  scaledBitmap.width, scaledBitmap.height, matrix, true
-            )
+            bitmap = BitmapEditor.rotate(bitmap, -90f)
+
+            queue.replace(bitmap.copy(bitmap.config, false))
 
             gpuImageView.post {
-                gpuImageView.setRatio((bitmap.width/ bitmap.height).toFloat())
-                Log.d("Min Height", gpuImageView.height.toString())
-                Log.d("Bitmap width", bitmap.width.toString());
-                Log.d("Bitmap height", bitmap.height.toString())
+                gpuImageView.setRatio((bitmap.width / bitmap.height).toFloat())
                 gpuImageView.setImage(bitmap)
             }
             it.close()
         })
 
+
         cameraProvider!!.bindToLifecycle(this, CameraSelector.DEFAULT_FRONT_CAMERA, imageAnalysis)
+        imageAnalyzer.execute()
     }
 
     private fun allocateBitmapIfNecessary(width: Int, height: Int): Bitmap {
-        if (bitmap == null || bitmap!!.width != width || bitmap!!.height != height) {
+        if (!this::bitmap.isInitialized || bitmap.width != width || bitmap.height != height) {
             bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         }
-
-        return bitmap!!
+        return bitmap
     }
 
     override fun onRequestPermissionsResult(
@@ -130,9 +135,6 @@ class CameraFragment: Fragment() {
         }
     }
 
-    private fun isPermissionsGranted(): Boolean {
-        return ContextCompat.checkSelfPermission(
-            requireContext(), Manifest.permission.CAMERA
-        ) == PackageManager.PERMISSION_GRANTED
-    }
+    private fun isPermissionsGranted(): Boolean = ContextCompat
+        .checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
 }
