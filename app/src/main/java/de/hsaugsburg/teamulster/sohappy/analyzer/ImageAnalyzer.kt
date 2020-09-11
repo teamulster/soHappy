@@ -3,7 +3,6 @@ package de.hsaugsburg.teamulster.sohappy.analyzer
 import android.app.Activity
 import android.graphics.Bitmap
 import android.util.Log
-import de.hsaugsburg.teamulster.sohappy.CameraActivity
 import de.hsaugsburg.teamulster.sohappy.analyzer.collector.Measurement
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.DetectionResult
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FaceDetector
