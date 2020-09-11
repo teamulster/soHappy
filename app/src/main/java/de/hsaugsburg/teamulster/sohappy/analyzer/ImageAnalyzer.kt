@@ -19,7 +19,7 @@ import kotlin.concurrent.thread
  * @param [config] a given ImageAnalyzerConfig which determines the
  *               faceDetectorImpl/smileDetectorImpl to be used
  */
-class ImageAnalyzer (val fragment: CameraFragment, val activity: CameraActivity, config: ImageAnalyzerConfig) {
+class ImageAnalyzer (val fragment: CameraFragment, val activity: Activity, config: ImageAnalyzerConfig) {
     private val measurement = Measurement()
     private var faceDetector: FaceDetector? = DetectorFactory.getFaceDetectorFromConfig(config, activity)
     private var smileDetector: SmileDetector? = DetectorFactory.getSmileDetectorFromConfig(config, activity)
