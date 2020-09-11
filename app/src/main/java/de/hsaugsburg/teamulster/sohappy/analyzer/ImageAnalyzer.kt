@@ -1,14 +1,15 @@
 package de.hsaugsburg.teamulster.sohappy.analyzer
 
+import android.app.Activity
 import android.graphics.Bitmap
 import android.util.Log
-import de.hsaugsburg.teamulster.sohappy.CameraActivity
 import de.hsaugsburg.teamulster.sohappy.analyzer.collector.Measurement
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.DetectionResult
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FaceDetector
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
 import de.hsaugsburg.teamulster.sohappy.config.ImageAnalyzerConfig
 import de.hsaugsburg.teamulster.sohappy.factories.DetectorFactory
+import de.hsaugsburg.teamulster.sohappy.fragment.CameraFragment
 import kotlin.concurrent.thread
 
 /**
@@ -17,7 +18,7 @@ import kotlin.concurrent.thread
  * @param [config] a given ImageAnalyzerConfig which determines the
  *               faceDetectorImpl/smileDetectorImpl to be used
  */
-class ImageAnalyzer (val activity: CameraActivity, config: ImageAnalyzerConfig) {
+class ImageAnalyzer (val fragment: CameraFragment, val activity: Activity, config: ImageAnalyzerConfig) {
     private val measurement = Measurement()
     private var faceDetector: FaceDetector? = DetectorFactory.getFaceDetectorFromConfig(config, activity)
     private var smileDetector: SmileDetector? = DetectorFactory.getSmileDetectorFromConfig(config, activity)
@@ -55,7 +56,7 @@ class ImageAnalyzer (val activity: CameraActivity, config: ImageAnalyzerConfig) 
         // TODO: Improve this
         thread {
             while (true) {
-                val bitmap = this.activity.queue.poll()
+                val bitmap = fragment.queue.poll()
                 if (bitmap != null) {
                     val smileDetectionResult = computeSmileDetectionResult(bitmap)
                     Log.d("Result:", smileDetectionResult.toString())
