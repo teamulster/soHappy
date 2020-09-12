@@ -41,7 +41,7 @@ class ConfigManagerTest {
                         "https://github.com/teamulster/soHappy",
                         "https://github.com/teamulster/soHappy/pulse"
                     )
-                )
+                ), SettingsConfig(notifications = true, databaseSync = true)
             )
             val dirPath = cameraActivity.filesDir
             val configDirectory = File(dirPath, "config")
@@ -85,7 +85,7 @@ class ConfigManagerTest {
                         "https://github.com/teamulster/soHappy",
                         "https://github.com/teamulster/soHappy/pulse"
                     )
-                )
+                ), SettingsConfig(notifications = true, databaseSync = true)
             )
             val loadObject = ConfigManager.load(it)
             val assertValue = MainConfig(
@@ -120,7 +120,7 @@ class ConfigManagerTest {
                         "https://github.com/teamulster/soHappy",
                         "https://github.com/teamulster/soHappy/pulse"
                     )
-                )
+                ), SettingsConfig(notifications = true, databaseSync = true)
             )
             assertFailsWith(ClassNotFoundException::class) {
                 ConfigManager.load(it)
@@ -144,7 +144,7 @@ class ConfigManagerTest {
                         "hallo",
                         "https://github.com/teamulster/soHappy/pulse"
                     )
-                )
+                ), SettingsConfig(notifications = true, databaseSync = true)
             )
             assertFailsWith(MalformedURLException::class) {
                 ConfigManager.load(it)
@@ -158,8 +158,13 @@ class ConfigManagerTest {
             val dirPath = activity.filesDir
             val configDirectory = File(dirPath, "config")
             configDirectory.mkdirs()
-            val file = File(configDirectory, "config.json")
-            file.writeText("No JSON", Charset.defaultCharset())
+            val mainFile = File(configDirectory, "config.json")
+            mainFile.writeText("No JSON", Charset.defaultCharset())
+            assertFailsWith(MalformedJsonException::class) {
+                ConfigManager.load(activity).toString()
+            }
+            val settingsFile = File(configDirectory, "settingsConfig.json")
+            settingsFile.writeText("No JSON", Charset.defaultCharset())
             assertFailsWith(MalformedJsonException::class) {
                 ConfigManager.load(activity).toString()
             }
