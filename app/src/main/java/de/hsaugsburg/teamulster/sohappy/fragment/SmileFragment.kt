@@ -38,7 +38,7 @@ class SmileFragment : Fragment() {
             false
         )
         stateMachine = StateMachineSupport.getStateMachine(this)
-        when (stateMachine.currentState) {
+        when (stateMachine.getCurrentMachineState()) {
             is WaitingForFace -> {
                 thread {
                     Thread.sleep(10_000)

@@ -6,11 +6,10 @@ import de.hsaugsburg.teamulster.sohappy.stateMachine.states.State
 import kotlin.properties.Delegates
 
 class StateMachine {
-    // TODO: Make list private, create function addStateChangeListener
     private val onStateChangeList = ArrayList<(State, State) -> Unit>()
 
     // TODO: Read only by outside
-    var currentState by Delegates.observable<State>(initialValue = Start()) { _, old, new ->
+    private var currentState by Delegates.observable<State>(initialValue = Start()) { _, old, new ->
         handleStateChange(old, new)
     }
 
@@ -23,6 +22,8 @@ class StateMachine {
     fun addStateChangeListener(function: (old: State, new: State) -> Unit) {
         onStateChangeList.add(function)
     }
+
+    fun getCurrentMachineState(): State = currentState
 
     private fun handleStateChange(oldState: State, newState: State) {
         for (r in onStateChangeList) {
