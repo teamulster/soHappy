@@ -21,7 +21,7 @@ class BitmapEditorTest {
 
     @Before
     fun setUp() {
-        val inputStream = instrumentationContext.assets.open("negative-test.jpg")
+        val inputStream = instrumentationContext.assets.open("faceDetector_test_negative.jpg")
         bitmap = BitmapFactory.decodeStream(inputStream)
     }
 

@@ -28,20 +28,24 @@ class FerTFLiteSmileDetectorImplTest {
     }
 
     @Test
-    fun useSmileDetectorWithPositiveResult() {
+    fun useDetectPositive() {
         scenario.onActivity {
-            val istr = instrumentationContext.assets.open("tflite_test.jpg")
+            val istr = instrumentationContext.assets.open("smileDetector_test_positive.jpg")
             val detectResult = tfliteImpl.detect(BitmapFactory.decodeStream(istr))
-            assertTrue(detectResult.isSmiling)
+            if (detectResult != null) {
+                assertTrue(detectResult.isSmiling)
+            }
         }
     }
 
     @Test
-    fun useSmileDetectorWithNegativeResult() {
+    fun useDetectNegative() {
         scenario.onActivity {
-            val istr = instrumentationContext.assets.open("tflite_negative_test.png")
+            val istr = instrumentationContext.assets.open("smileDetector_test_negative.png")
             val detectResult = tfliteImpl.detect(BitmapFactory.decodeStream(istr))
-            assertFalse(detectResult.isSmiling)
+            if (detectResult != null) {
+                assertFalse(detectResult.isSmiling)
+            }
         }
     }
 }

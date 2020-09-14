@@ -26,17 +26,22 @@ class HaarCascadeFaceDetectorTest {
         scenario.onActivity { haarCascadeFaceDetector = HaarCascadeFaceDetector(it) }
     }
 
+    // TODO: Choose better files
+
     @Test
-    fun detectTest() {
+    fun detectTestPositive() {
         scenario.onActivity {
-            // TODO: Rename files and choose better files
-            val istream = instrumentationContext.assets.open("test.jpg")
+            val istream = instrumentationContext.assets.open("faceDetector_test_positive.jpg")
             val bitmap = BitmapFactory.decodeStream(istream)
             val detectResult = haarCascadeFaceDetector.detect(bitmap)
             assertTrue(detectResult != null)
         }
+    }
+
+    @Test
+    fun detectTestNegative() {
         scenario.onActivity {
-            val istream = instrumentationContext.assets.open("negative-test.jpg")
+            val istream = instrumentationContext.assets.open("faceDetector_test_negative.jpg")
             val bitmap = BitmapFactory.decodeStream(istream)
             val detectResult = haarCascadeFaceDetector.detect(bitmap)
             assertTrue(detectResult == null)
