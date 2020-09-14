@@ -1,20 +1,19 @@
 package de.hsaugsburg.teamulster.sohappy.fragment
 
-import android.graphics.Camera
 import android.os.Bundle
 import android.view.*
 import androidx.core.animation.doOnEnd
-import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
-import de.hsaugsburg.teamulster.sohappy.CameraActivity
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentHomeBinding
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 import de.hsaugsburg.teamulster.sohappy.stateMachine.states.WaitingForFace
+import de.hsaugsburg.teamulster.sohappy.util.StateMachineSupport
 
 /**
  * HomeFragment is the entry point for the app.
@@ -28,7 +27,7 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        stateMachine = (this.requireActivity() as CameraActivity).stateMachine
+        stateMachine = StateMachineSupport.getStateMachine(this)
         // TODO: extract (this.requireActivity() as CameraActivity).stateMachine into own, shared function
         stateMachine.onStateChangeList.add { _, new ->
             if (new is WaitingForFace) {
