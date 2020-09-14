@@ -7,6 +7,9 @@ import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetectorOptions
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FaceDetector
 
+/**
+ * This class implements a FaceDetector using the Google MLKit API.
+ * */
 class GoogleMLKitAPIFaceDetectorImpl : FaceDetector {
     override val detectorName: String = "Google MLKit API Face Detector"
 
@@ -16,10 +19,12 @@ class GoogleMLKitAPIFaceDetectorImpl : FaceDetector {
         .setClassificationMode(com.google.android.gms.vision.face.FaceDetector.ALL_CLASSIFICATIONS)
         .build()
 
-    override fun detect(img: Bitmap): FaceDetector.Companion.FaceDetectionResult {
+    override fun detect(img: Bitmap): FaceDetector.Companion.FaceDetectionResult? {
+        // Init faceDetector and convert bitmap to InputImage object
         val faceDetector = FaceDetection.getClient(options)
         val inputImage = InputImage.fromBitmap(img, 0)
-        lateinit var result: FaceDetector.Companion.FaceDetectionResult
+        var result: FaceDetector.Companion.FaceDetectionResult? = null
+        // process given image and store results as FaceDetectionResult
         faceDetector.process(inputImage)
             .addOnSuccessListener { faces ->
                 val firstFace = faces[0]
@@ -29,9 +34,6 @@ class GoogleMLKitAPIFaceDetectorImpl : FaceDetector {
                         firstFace.boundingBox.right, firstFace.boundingBox.bottom
                     )
                 )
-            }
-            .addOnFailureListener { err ->
-                // TODO: move to next state after timer has expired or add exception handling
             }
         return result
     }

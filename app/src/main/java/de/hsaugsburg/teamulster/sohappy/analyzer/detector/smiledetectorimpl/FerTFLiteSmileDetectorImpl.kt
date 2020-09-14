@@ -37,7 +37,7 @@ class FerTFLiteSmileDetectorImpl(activity: Activity) :
      * @param [img] the image which TF lite will be running detection on.
      * @return [SmileDetector.Companion.SmileDetectionResult]
      * */
-    override fun detect(img: Bitmap): SmileDetector.Companion.SmileDetectionResult {
+    override fun detect(img: Bitmap): SmileDetector.Companion.SmileDetectionResult? {
         val predictionResults: ArrayList<SmileDetector.Companion.Recognition> = super.execute(img)
         val firstPredictionResult = predictionResults[0]
         var isSmiling = false

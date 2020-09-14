@@ -7,8 +7,10 @@ import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetectorOptions
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
 
-class GoogleMLKitAPISmileDetectorImpl :
-    SmileDetector {
+/**
+ * This class implements a SmileDetector using the Google MLKit API.
+ * */
+class GoogleMLKitAPISmileDetectorImpl : SmileDetector {
     companion object {
         /**
          * This data class inherits the SmileDetector.Companion.SmileDetectionResult(isSmiling) function
@@ -27,22 +29,27 @@ class GoogleMLKitAPISmileDetectorImpl :
 
     override val detectorName: String = "Google MLKit API Smile Detector"
 
+    // Specify options for MLKit SmileDetector
     private val options = FaceDetectorOptions.Builder()
         .setPerformanceMode(ACCURATE_MODE)
         .setLandmarkMode(NO_LANDMARKS)
         .setClassificationMode(ALL_CLASSIFICATIONS)
         .build()
 
-    override fun detect(img: Bitmap): SmileDetector.Companion.SmileDetectionResult {
+    override fun detect(img: Bitmap): SmileDetector.Companion.SmileDetectionResult? {
+        // Init faceDetector and convert bitmap to InputImage object
         val faceDetector = FaceDetection.getClient(options)
         val inputImage = InputImage.fromBitmap(img, 0)
-        lateinit var result: SmileDetector.Companion.SmileDetectionResult
+        var result: SmileDetector.Companion.SmileDetectionResult? = null
+        // process given image and store results as SmileDetectionResult
+        // NOTE: predictionResults has to be stored as ArrayList to make it compliant to the TF Lite approach
         faceDetector.process(inputImage)
             .addOnSuccessListener { faces ->
                 val firstFace = faces[0]
                 val predictionResults = ArrayList<SmileDetector.Companion.Recognition>()
                 var isSmiling = false
 
+                // Add smiling probability to predictionResults if smiling confidence is above 0.75
                 if (firstFace.smilingProbability!! > 0.75f) {
                     isSmiling = true
                     predictionResults.add(
@@ -56,9 +63,6 @@ class GoogleMLKitAPISmileDetectorImpl :
                     isSmiling,
                     predictionResults
                 )
-            }
-            .addOnFailureListener { err ->
-                // TODO: move to next state after timer has expired or add exception handling
             }
         return result
     }

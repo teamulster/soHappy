@@ -30,8 +30,8 @@ abstract class AbstractTFLiteSmileDetector(
          * This data class inherits the SmileDetector.Companion.SmileDetectionResult(isSmiling) function
          * and overrides it.
          *
-         * @param isSmiling determines whether the image contains a smiling person or not
-         * @param predictionResults stores all top matches
+         * @param [isSmiling] determines whether the image contains a smiling person or not
+         * @param [predictionResults] stores all top matches
          * @constructor creates SmileDetectionResult object containing the given params
          * */
         data class SmileDetectionResult(
@@ -59,8 +59,8 @@ abstract class AbstractTFLiteSmileDetector(
      * This function runs tfliteInterpreter detection on a given image and predicts its probability to match
      * one of the model's labels.
      *
-     * @param img the current image
-     * @return ArrayList<Recognition>
+     * @param [img] the current image
+     * @return [ArrayList]<Recognition>
      * */
     fun execute(img: Bitmap): ArrayList<SmileDetector.Companion.Recognition> {
         // Init probability val
@@ -92,8 +92,8 @@ abstract class AbstractTFLiteSmileDetector(
     /**
      * This private function sorts the prediction result by confidence of matching.
      *
-     * @param labeledProbability a map containing the confidence mapped on predicted labels
-     * @return ArrayList<Recognition>
+     * @param [labeledProbability] a map containing the confidence mapped on predicted labels
+     * @return [ArrayList]<Recognition>
      * */
     private fun sortMatches(labeledProbability: Map<String, Float>): ArrayList<SmileDetector.Companion.Recognition> {
         val recognitions: ArrayList<SmileDetector.Companion.Recognition> = ArrayList()
@@ -110,8 +110,8 @@ abstract class AbstractTFLiteSmileDetector(
      * This abstract function is implemented in FerTFLiteSmileDetectorImpl. It is used to invoke this
      * classes execute function.
      *
-     * @param img the current image
-     * @return ByteBuffer?
+     * @param [img] the current image
+     * @return [ByteBuffer]
      * */
     abstract fun prepare(img: Bitmap): ByteBuffer?
 }
