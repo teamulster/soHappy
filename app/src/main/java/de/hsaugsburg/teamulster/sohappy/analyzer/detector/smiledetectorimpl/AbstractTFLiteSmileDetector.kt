@@ -11,8 +11,6 @@ import org.tensorflow.lite.support.label.TensorLabel
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import java.nio.ByteBuffer
 import java.nio.MappedByteBuffer
-import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * This abstract class inherits SmileDetector. It declares function necessary for TF lite to be run.
@@ -29,17 +27,6 @@ abstract class AbstractTFLiteSmileDetector(
     // Static classes
     companion object {
         /**
-         * This data class stores prediction results based on each label a model allows.
-         *
-         * @param title the label title.
-         * @param confidence a Float value between 0 and 1 stating possible this label is
-         * @constructor creates a Recognition object containing the given params
-         * */
-        data class Recognition(
-            val title: String, val confidence: Float
-        )
-
-        /**
          * This data class inherits the SmileDetector.Companion.SmileDetectionResult(isSmiling) function
          * and overrides it.
          *
@@ -49,7 +36,7 @@ abstract class AbstractTFLiteSmileDetector(
          * */
         data class SmileDetectionResult(
             override val isSmiling: Boolean,
-            override val predictionResults: ArrayList<Recognition>
+            override val predictionResults: ArrayList<SmileDetector.Companion.Recognition>
         ) :
             SmileDetector.Companion.SmileDetectionResult
     }
@@ -75,9 +62,9 @@ abstract class AbstractTFLiteSmileDetector(
      * @param img the current image
      * @return ArrayList<Recognition>
      * */
-    fun execute(img: Bitmap): ArrayList<Recognition> {
+    fun execute(img: Bitmap): ArrayList<SmileDetector.Companion.Recognition> {
         // Init probability val
-        val probabilityTensorIndex: Int = 0
+        val probabilityTensorIndex = 0
         val probabilityShape: IntArray =
             tfliteInterpreter.getOutputTensor(probabilityTensorIndex).shape()
         val probabilityDataType: DataType =
@@ -99,7 +86,7 @@ abstract class AbstractTFLiteSmileDetector(
         val labeledProbability: Map<String, Float> =
             TensorLabel(labels, probabilityProcessor.process(outputProbability))
                 .mapWithFloatValue
-        return sortMatches(labeledProbability);
+        return sortMatches(labeledProbability)
     }
 
     /**
@@ -108,14 +95,14 @@ abstract class AbstractTFLiteSmileDetector(
      * @param labeledProbability a map containing the confidence mapped on predicted labels
      * @return ArrayList<Recognition>
      * */
-    private fun sortMatches(labeledProbability: Map<String, Float>): ArrayList<Recognition> {
-        val recognitions: ArrayList<Recognition> = ArrayList()
+    private fun sortMatches(labeledProbability: Map<String, Float>): ArrayList<SmileDetector.Companion.Recognition> {
+        val recognitions: ArrayList<SmileDetector.Companion.Recognition> = ArrayList()
 
         for ((key, value) in labeledProbability.entries) {
-            recognitions.add(Recognition("" + key, value))
+            recognitions.add(SmileDetector.Companion.Recognition("" + key, value))
         }
         // Intentionally reversed to put high confidence at the head of the queue.
-        recognitions.sortWith(Comparator { lhs, rhs -> rhs.confidence.compareTo(lhs.confidence) })
+        recognitions.sortWith { lhs, rhs -> rhs.confidence.compareTo(lhs.confidence) }
         return recognitions
     }
 
