@@ -44,7 +44,9 @@ class Questionnaire06Fragment: Fragment() {
             }
         })
         binding.continueButton.setOnClickListener {
-            findNavController().navigate(R.id.resultsFragment)
+            findNavController().navigate(
+                R.id.action_questionnaire06Fragment_to_resultsFragment
+            )
         }
 
         return binding.root

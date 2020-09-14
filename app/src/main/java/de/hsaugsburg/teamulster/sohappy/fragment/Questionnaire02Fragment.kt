@@ -32,7 +32,9 @@ class Questionnaire02Fragment: Fragment() {
         binding.viewModel = viewModel
 
         binding.continueButton.setOnClickListener {
-            findNavController().navigate(R.id.questionnaire03Fragment)
+            findNavController().navigate(
+                R.id.action_questionnaire02Fragment_to_questionnaire03Fragment
+            )
         }
 
         return binding.root

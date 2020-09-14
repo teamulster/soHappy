@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -47,9 +48,21 @@ class Questionnaire01Fragment: Fragment() {
             }
         })
         binding.continueButton.setOnClickListener {
-            findNavController().navigate(R.id.questionnaire02Fragment)
+            findNavController().navigate(
+                R.id.action_questionnaire01Fragment_to_questionnaire02Fragment
+            )
         }
 
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        (requireActivity() as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(false)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (requireActivity() as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 }

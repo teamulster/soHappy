@@ -25,16 +25,16 @@
 
             <Button
                 android:id="@+id/button"
+                style="@style/ButtonArrowBorderlessNoDescription"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="12dp"
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp"
                 android:text="@string/fragment_help_credits"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/generalSection"
-                style="@style/ButtonArrowBorderlessNoDescription" />
+                app:layout_constraintTop_toBottomOf="@+id/generalSection" />
 
             <View
                 android:id="@+id/sep"
@@ -94,16 +94,16 @@
 
             <Button
                 android:id="@+id/button4"
+                style="@style/ButtonArrowBorderlessNoDescription"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="12dp"
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp"
                 android:text="@string/fragment_help_imprint"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/legalSection"
-                style="@style/ButtonArrowBorderlessNoDescription" />
+                app:layout_constraintTop_toBottomOf="@+id/legalSection" />
 
             <View
                 android:id="@+id/sep2"
@@ -163,16 +163,16 @@
 
             <Button
                 android:id="@+id/button8"
+                style="@style/ButtonArrowBorderlessNoDescription"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="12dp"
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp"
                 android:text="@string/fragment_help_feedback"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/legalSection2"
-                style="@style/ButtonArrowBorderlessNoDescription" />
+                app:layout_constraintTop_toBottomOf="@+id/legalSection2" />
 
             <View
                 android:id="@+id/sep4"

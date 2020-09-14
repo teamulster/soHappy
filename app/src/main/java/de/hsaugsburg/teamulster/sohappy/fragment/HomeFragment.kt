@@ -5,9 +5,7 @@ import android.view.*
 import androidx.core.animation.doOnEnd
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.NavigationUI
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentHomeBinding
 
@@ -47,9 +45,29 @@ class HomeFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return NavigationUI.onNavDestinationSelected(
-            item, requireView().findNavController()
-        ) || super.onOptionsItemSelected(item)
+        val navController = findNavController()
+
+        // onNavDestinationSelected() would be an alternative, but Actions defined in the
+        // Navigation Graph cannot be leveraged this way, hence the usage of a when() block
+        when (item.itemId) {
+            R.id.explanationFragment -> {
+                navController.navigate(R.id.action_homeFragment_to_explanationFragment)
+            }
+            R.id.historyFragment -> {
+                navController.navigate(R.id.action_homeFragment_to_historyFragment)
+            }
+            R.id.jokesFragment -> {
+                navController.navigate(R.id.action_homeFragment_to_jokesFragment)
+            }
+            R.id.settingsFragment -> {
+                navController.navigate(R.id.action_homeFragment_to_settingsFragment)
+            }
+            R.id.helpFragment -> {
+                navController.navigate(R.id.action_homeFragment_to_helpFragment)
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     private fun animateCircle(view: View, centerX: Int, centerY: Int) {
@@ -65,7 +83,7 @@ class HomeFragment : Fragment() {
         view.visibility = View.VISIBLE
 
         circleAnimation.doOnEnd {
-            findNavController().navigate(R.id.smileFragment)
+            findNavController().navigate(R.id.action_homeFragment_to_smileFragment)
         }
 
         circleAnimation.start()
