@@ -9,6 +9,7 @@ class StateMachine(private val cameraActivity: CameraActivity) {
     // TODO: Make list private, create function addStateChangeListener
     val onStateChangeList = ArrayList<(State, State) -> Unit>()
 
+    // TODO: Read only by outside
     var currentState by Delegates.observable<State>(initialValue = Start()) { _, old, new ->
         handleStateChange(old, new)
     }

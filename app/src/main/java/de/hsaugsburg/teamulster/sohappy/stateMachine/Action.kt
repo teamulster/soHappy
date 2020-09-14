@@ -7,4 +7,7 @@ sealed class Action {
     object FaceDetected : Action()
     object SmileDetected : Action()
     object Timeout : Action()
+    object SmileCountdownTimeout : Action()
+    object NoSmileTimeout : Action()
+    object WaitingForFaceTimeout: Action()
 }

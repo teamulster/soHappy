@@ -8,7 +8,7 @@ import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 class SmileCountdown : State {
     override fun consumeAction(action: Action): State {
         return when (action) {
-            is Action.Timeout -> Questions()
+            is Action.SmileCountdownTimeout-> Questions()
             else -> {
                 Log.d("Invalid action: ", action.toString())
                 this

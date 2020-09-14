@@ -9,7 +9,7 @@ class WaitingForSmile : State {
     override fun consumeAction(action: Action): State {
         return when (action) {
             is Action.SmileDetected -> SmileCountdown()
-            is Action.Timeout -> NoSmile()
+            is Action.NoSmileTimeout-> NoSmile()
             else -> {
                 Log.d("Invalid action: ", action.toString())
                 this
