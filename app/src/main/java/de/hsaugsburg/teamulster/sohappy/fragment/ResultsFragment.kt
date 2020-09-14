@@ -35,7 +35,7 @@ class ResultsFragment : Fragment() {
         )
         stateMachine = StateMachineSupport.getStateMachine(this)
 
-        stateMachine.onStateChangeList.add { _, new ->
+        stateMachine.addStateChangeListener { _, new ->
             when (new) {
                 is Start -> {
                     findNavController().navigate(R.id.homeFragment)

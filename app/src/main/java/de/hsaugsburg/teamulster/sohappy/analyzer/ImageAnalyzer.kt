@@ -1,6 +1,5 @@
 package de.hsaugsburg.teamulster.sohappy.analyzer
 
-import android.app.Activity
 import android.graphics.Bitmap
 import android.util.Log
 import de.hsaugsburg.teamulster.sohappy.CameraActivity
@@ -13,7 +12,6 @@ import de.hsaugsburg.teamulster.sohappy.factories.DetectorFactory
 import de.hsaugsburg.teamulster.sohappy.stateMachine.states.*
 import de.hsaugsburg.teamulster.sohappy.fragment.CameraFragment
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
-import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 import kotlin.concurrent.thread
 
 /**
@@ -39,7 +37,7 @@ class ImageAnalyzer (val fragment: CameraFragment, config: ImageAnalyzerConfig) 
 
 
     init {
-        stateMachine.onStateChangeList.add { _, new ->
+        stateMachine.addStateChangeListener { _, new ->
             imageAnalyzerState = when (new) {
                 is WaitingForFace -> ImageAnalyzerState.FACE_DETECTION
                 is WaitingForSmile -> ImageAnalyzerState.SMILE_DETECTION

@@ -47,7 +47,7 @@ class SmileFragment : Fragment() {
             }
         }
         // TODO: Lambdas need to be unregistered, when new fragment is initialized
-        stateMachine.onStateChangeList.add { _, new ->
+        stateMachine.addStateChangeListener { _, new ->
             when (new) {
                 is Start -> {
                     requireView().post {
@@ -128,8 +128,7 @@ class SmileFragment : Fragment() {
                 visibility = View.VISIBLE
             }
             binding.countdownText.animate()
-                .alpha(1f)
-                .setDuration(500)
+                .alpha(1f).duration = 500
             (binding.countdownView.drawable as Animatable).start()
         }, 750)
 
@@ -162,8 +161,7 @@ class SmileFragment : Fragment() {
                 if (nextTick > 0) {
                     binding.countdownText.animate()
                         .alpha(1f)
-                        .translationYBy(100f)
-                        .setDuration(125)
+                        .translationYBy(100f).duration = 125
                 }
             }
     }
@@ -176,13 +174,11 @@ class SmileFragment : Fragment() {
         }
 
         binding.textView.animate()
-            .alpha(1f)
-            .setDuration(500)
+            .alpha(1f).duration = 500
     }
 
     private fun fadeOutText() {
         binding.textView.animate()
-            .alpha(0f)
-            .setDuration(500)
+            .alpha(0f).duration = 500
     }
 }

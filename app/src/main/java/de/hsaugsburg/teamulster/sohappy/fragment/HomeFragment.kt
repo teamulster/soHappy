@@ -28,8 +28,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         stateMachine = StateMachineSupport.getStateMachine(this)
-        // TODO: extract (this.requireActivity() as CameraActivity).stateMachine into own, shared function
-        stateMachine.onStateChangeList.add { _, new ->
+        stateMachine.addStateChangeListener { _, new ->
             if (new is WaitingForFace) {
                 findNavController().navigate(R.id.smileFragment)
             }
