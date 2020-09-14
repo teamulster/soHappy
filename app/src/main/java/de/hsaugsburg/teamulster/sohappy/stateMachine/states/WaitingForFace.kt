@@ -3,6 +3,9 @@ package de.hsaugsburg.teamulster.sohappy.stateMachine.states
 import android.util.Log
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 
+/**
+ * state where the camera image are analyser for a face.
+ */
 class WaitingForFace : State {
 
     override fun consumeAction(action: Action): State {
@@ -15,17 +18,4 @@ class WaitingForFace : State {
             }
         }
     }
-/*
-    override fun executeCoreFunctionality(
-        stateMachine: StateMachine,
-        cameraActivity: CameraActivity
-    ) {
-        thread {
-            //TODO: get sec from config
-            Thread.sleep(10_000)
-            stateMachine.consumeAction(Action.WaitingForFaceTimer)
-        }
-    }
-
- */
 }

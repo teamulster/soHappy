@@ -20,7 +20,7 @@ import kotlin.concurrent.thread
  * @param [config] a given ImageAnalyzerConfig which determines the
  *               faceDetectorImpl/smileDetectorImpl to be used
  */
-class ImageAnalyzer (val fragment: CameraFragment, config: ImageAnalyzerConfig) {
+class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
     companion object {
         enum class ImageAnalyzerState {
             NONE,
@@ -29,9 +29,12 @@ class ImageAnalyzer (val fragment: CameraFragment, config: ImageAnalyzerConfig) 
             CANCEL
         }
     }
+
     private val measurement = Measurement()
-    private var faceDetector: FaceDetector? = DetectorFactory.getFaceDetectorFromConfig(config, fragment.requireActivity())
-    private var smileDetector: SmileDetector? = DetectorFactory.getSmileDetectorFromConfig(config, fragment.requireActivity())
+    private var faceDetector: FaceDetector? =
+        DetectorFactory.getFaceDetectorFromConfig(config, fragment.requireActivity())
+    private var smileDetector: SmileDetector? =
+        DetectorFactory.getSmileDetectorFromConfig(config, fragment.requireActivity())
     private var imageAnalyzerState: ImageAnalyzerState = ImageAnalyzerState.NONE
     private var stateMachine = (fragment.requireActivity() as CameraActivity).stateMachine
 
@@ -46,7 +49,7 @@ class ImageAnalyzer (val fragment: CameraFragment, config: ImageAnalyzerConfig) 
                 else -> imageAnalyzerState
             }
         }
-        imageAnalyzerState = when(stateMachine.getCurrentMachineState()) {
+        imageAnalyzerState = when (stateMachine.getCurrentMachineState()) {
             is WaitingForFace -> ImageAnalyzerState.FACE_DETECTION
             is WaitingForSmile -> ImageAnalyzerState.SMILE_DETECTION
             is Questions -> ImageAnalyzerState.CANCEL
@@ -85,7 +88,6 @@ class ImageAnalyzer (val fragment: CameraFragment, config: ImageAnalyzerConfig) 
      * and processes it.
      */
     fun execute() {
-        // TODO: Improve this
         thread {
             while (true) {
                 val bitmap = fragment.queue.poll()
@@ -94,14 +96,19 @@ class ImageAnalyzer (val fragment: CameraFragment, config: ImageAnalyzerConfig) 
                         ImageAnalyzerState.NONE -> DetectionResult(null, null)
                         ImageAnalyzerState.FACE_DETECTION -> {
                             val r = computeFaceDetectionResult(bitmap)
-                            if (stateMachine.getCurrentMachineState() is WaitingForFace && r.faceDetectionResult != null) {
+                            if (stateMachine.getCurrentMachineState() is WaitingForFace
+                                && r.faceDetectionResult != null
+                            ) {
                                 stateMachine.consumeAction(Action.FaceDetected)
                             }
                             r
                         }
-                        ImageAnalyzerState.SMILE_DETECTION ->  {
+                        ImageAnalyzerState.SMILE_DETECTION -> {
                             val r = computeSmileDetectionResult(bitmap)
-                            if (stateMachine.getCurrentMachineState() is WaitingForSmile  && r.smileDetectionResult != null && r.smileDetectionResult.isSmiling) {
+                            if (stateMachine.getCurrentMachineState() is WaitingForSmile
+                                && r.smileDetectionResult != null
+                                && r.smileDetectionResult.isSmiling
+                            ) {
                                 stateMachine.consumeAction(Action.SmileDetected)
                             }
                             r

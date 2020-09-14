@@ -14,7 +14,7 @@ import junit.framework.Assert.assertTrue as assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class HaarCascadeFaceDetectorTest {
-    lateinit var haarCascadeFaceDetector: HaarCascadeFaceDetector
+    private lateinit var haarCascadeFaceDetector: HaarCascadeFaceDetector
     private lateinit var scenario: ActivityScenario<CameraActivity>
     private val instrumentationContext: Context =
         InstrumentationRegistry.getInstrumentation().context
@@ -28,15 +28,14 @@ class HaarCascadeFaceDetectorTest {
     @Test
     fun detectTest() {
         scenario.onActivity {
-            // TODO: Rename files and choose better files
-            val istream = instrumentationContext.assets.open("test.jpg")
-            val bitmap = BitmapFactory.decodeStream(istream);
+            val inputStream = instrumentationContext.assets.open("test.jpg")
+            val bitmap = BitmapFactory.decodeStream(inputStream);
             val detectResult = haarCascadeFaceDetector.detect(bitmap)
             assertTrue(detectResult != null)
         }
         scenario.onActivity {
-            val istream = instrumentationContext.assets.open("negative-test.jpg")
-            val bitmap = BitmapFactory.decodeStream(istream);
+            val inputStream = instrumentationContext.assets.open("negative-test.jpg")
+            val bitmap = BitmapFactory.decodeStream(inputStream);
             val detectResult = haarCascadeFaceDetector.detect(bitmap)
             assertTrue(detectResult == null)
         }
