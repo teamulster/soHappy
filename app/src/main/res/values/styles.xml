@@ -73,7 +73,7 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="ButtonPrimaryContour">
+    <style name="ButtonPrimaryContour" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:background">@drawable/button_background_contour</item>
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
