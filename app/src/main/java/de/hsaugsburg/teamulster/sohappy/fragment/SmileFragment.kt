@@ -60,7 +60,7 @@ class SmileFragment : Fragment() {
         }, 8250)
 
         requireView().postDelayed({
-            findNavController().navigate(R.id.questionnaire01Fragment)
+            findNavController().navigate(R.id.action_smileFragment_to_questionnaire01Fragment)
         }, 12_250)
     }
 

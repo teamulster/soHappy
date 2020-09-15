@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".fragment.ExplanationFragment">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+        </androidx.viewpager.widget.ViewPager>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/circleMiddle"
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:layout_marginTop="300dp"
+                android:background="@drawable/ic_explanation_circle_transition"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/circleLeft"
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:layout_marginTop="300dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/ic_explanation_circle_transition"
+                app:layout_constraintEnd_toStartOf="@+id/circleMiddle"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/circleRight"
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="300dp"
+                android:background="@drawable/ic_explanation_circle_transition"
+                app:layout_constraintStart_toEndOf="@+id/circleMiddle"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+
+</layout>
