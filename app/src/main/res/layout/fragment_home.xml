@@ -63,13 +63,13 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
 
-                  <!--  <fragment
+                  <fragment
                         android:id="@+id/gpuImageView"
                         android:name="de.hsaugsburg.teamulster.sohappy.fragment.CameraFragment"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:elevation="12dp"
-                        tools:layout="@layout/fragment_camera" /> -->
+                        tools:layout="@layout/fragment_camera" />
 
                 </androidx.cardview.widget.CardView>
 
