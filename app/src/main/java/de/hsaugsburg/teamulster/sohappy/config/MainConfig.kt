@@ -5,9 +5,9 @@ package de.hsaugsburg.teamulster.sohappy.config
  *
  * @property [imageAnalyzerConfig]
  * @property [aboutConfig]
- * @property [secondsConfig]
+ * @property [timerConfig]
  */
 data class MainConfig(
     val imageAnalyzerConfig: ImageAnalyzerConfig, val aboutConfig: AboutConfig,
-    val secondsConfig: SecondsConfig
+    val timerConfig: TimerConfig
 )

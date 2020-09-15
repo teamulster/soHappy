@@ -21,7 +21,7 @@ object ConfigManager {
     // Init variables
     lateinit var imageAnalyzerConfig: ImageAnalyzerConfig
     lateinit var aboutConfig: AboutConfig
-    lateinit var secondsConfig: SecondsConfig
+    lateinit var timerConfig: TimerConfig
     lateinit var mainConfig: MainConfig
     lateinit var settingsConfig: SettingsConfig
     private val gson = Gson()
@@ -37,7 +37,7 @@ object ConfigManager {
             "https://github.com/teamulster/soHappy",
             "https://github.com/teamulster/soHappy"
         ),
-        SecondsConfig(3.0f, 2.5f, 10.0f, 30.0f)
+        TimerConfig(3000, 2500, 10000, 30000)
     )
     private val defaultSettingsConfig = SettingsConfig(notifications = true, databaseSync = true)
 
@@ -69,7 +69,7 @@ object ConfigManager {
             mainConfig = parsedMainJson
             imageAnalyzerConfig = parsedMainJson.imageAnalyzerConfig
             aboutConfig = parsedMainJson.aboutConfig
-            secondsConfig = parsedMainJson.secondsConfig
+            timerConfig = parsedMainJson.timerConfig
         } catch (e: IOException) {
             throw e
         } catch (e: ClassNotFoundException) {
