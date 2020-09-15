@@ -1,16 +1,27 @@
-package de.hsaugsburg.teamulster.sohappy.detector
+package de.hsaugsburg.teamulster.sohappy.analyzer.detector
 
 import android.content.Context
 import android.graphics.BitmapFactory
+import androidx.test.core.app.ActivityScenario
+import androidx.test.core.app.launchActivity
 import androidx.test.platform.app.InstrumentationRegistry
+import de.hsaugsburg.teamulster.sohappy.CameraActivity
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.GoogleMLKitAPIFaceDetectorImpl
 import junit.framework.Assert.assertTrue
+import org.junit.Before
 import org.junit.Test
 
 class GoogleMLKitAPIFaceDetectorTest {
-    private val mLKitFaceDetector = GoogleMLKitAPIFaceDetectorImpl()
+    private lateinit var mLKitFaceDetector: GoogleMLKitAPIFaceDetectorImpl
+    private lateinit var scenario: ActivityScenario<CameraActivity>
     private val instrumentationContext: Context =
         InstrumentationRegistry.getInstrumentation().context
+
+    @Before
+    fun setUp() {
+        scenario = launchActivity<CameraActivity>()
+        scenario.onActivity { mLKitFaceDetector = GoogleMLKitAPIFaceDetectorImpl(it) }
+    }
 
     @Test
     fun useDetectPositive() {

@@ -1,4 +1,4 @@
-package de.hsaugsburg.teamulster.sohappy.detector
+package de.hsaugsburg.teamulster.sohappy.analyzer.detector
 
 import android.content.Context
 import android.graphics.BitmapFactory
