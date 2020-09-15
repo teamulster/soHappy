@@ -4,11 +4,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:context=".questionnaire04Fragment">
 
-    <data>
-        <variable name="viewModel"
-            type="de.hsaugsburg.teamulster.sohappy.viewmodel.QuestionnaireViewModel" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -34,7 +29,6 @@
             android:background="@drawable/spinner_background"
             android:entries="@array/fragment_questionnaire_04_choices"
             android:spinnerMode="dropdown"
-            android:selectedItemPosition="@={viewModel.questionnaire04Answer}"
             app:layout_constraintBottom_toTopOf="@+id/continueButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -45,7 +39,7 @@
             android:layout_height="45dp"
             android:layout_marginBottom="32dp"
             android:text="@string/fragment_questionnaire_continue"
-            style="@style/ButtonPrimary"
+            style="@style/ButtonDisabled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

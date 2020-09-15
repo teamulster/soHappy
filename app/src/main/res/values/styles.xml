@@ -46,7 +46,7 @@
 
     <style name="SeekBarAppearanceCustom" parent="Theme.AppCompat.Light">
         <item name="android:thumbTint">@color/colorPrimary</item>
-        <item name="android:progressTint">@color/colorSuccess</item>
+        <item name="android:progressTint">@color/colorPrimary</item>
         <item name="android:progressBackgroundTint">@android:color/darker_gray</item>
     </style>
 
@@ -63,6 +63,13 @@
         <item name="android:background">@drawable/button_background</item>
         <item name="android:elevation">0dp</item>
         <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="ButtonDisabled" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:background">@drawable/button_background_disabled</item>
+        <item name="android:elevation">0dp</item>
+        <item name="android:textColor">#EAEAEA</item>
         <item name="android:textSize">14sp</item>
     </style>
 

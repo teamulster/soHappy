@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
 
+/**
+ * ExplanationPagerAdapter serves as the required adapter for the ViewPager in ExplanationFragment.
+ */
 class ExplanationPagerAdapter(private val context: Context, val pages: List<Int>): PagerAdapter() {
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val page = pages.get(position)
@@ -16,15 +19,9 @@ class ExplanationPagerAdapter(private val context: Context, val pages: List<Int>
         return viewGroup
     }
 
-    override fun destroyItem(container: ViewGroup, position: Int, obj: Any) {
+    override fun destroyItem(container: ViewGroup, position: Int, obj: Any) =
         container.removeView(obj as View)
-    }
 
-    override fun isViewFromObject(view: View, obj: Any): Boolean {
-        return view == obj
-    }
-
-    override fun getCount(): Int {
-        return pages.size
-    }
+    override fun isViewFromObject(view: View, obj: Any): Boolean = view == obj
+    override fun getCount(): Int = pages.size
 }
