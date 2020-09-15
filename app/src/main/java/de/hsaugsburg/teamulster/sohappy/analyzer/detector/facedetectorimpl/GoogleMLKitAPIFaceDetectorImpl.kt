@@ -1,5 +1,6 @@
 package de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl
 
+import android.app.Activity
 import android.graphics.Bitmap
 import android.graphics.Rect
 import com.google.common.util.concurrent.SettableFuture
@@ -11,7 +12,7 @@ import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FaceDetector
 /**
  * This class implements a FaceDetector using the Google MLKit API.
  * */
-class GoogleMLKitAPIFaceDetectorImpl : FaceDetector {
+class GoogleMLKitAPIFaceDetectorImpl(activity: Activity) : FaceDetector {
     override val detectorName: String = "Google MLKit API Face Detector"
 
     private val options = FaceDetectorOptions.Builder()

@@ -1,17 +1,19 @@
 package de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl
 
+import android.app.Activity
 import android.graphics.Bitmap
 import com.google.android.gms.vision.face.FaceDetector.*
 import com.google.common.util.concurrent.SettableFuture
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.FaceDetection
+import com.google.mlkit.vision.face.FaceDetector
 import com.google.mlkit.vision.face.FaceDetectorOptions
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
 
 /**
  * This class implements a SmileDetector using the Google MLKit API.
  * */
-class GoogleMLKitAPISmileDetectorImpl : SmileDetector {
+class GoogleMLKitAPISmileDetectorImpl(activity : Activity) : SmileDetector {
     companion object {
         /**
          * This data class inherits the SmileDetector.Companion.SmileDetectionResult(isSmiling) function
@@ -32,9 +34,9 @@ class GoogleMLKitAPISmileDetectorImpl : SmileDetector {
 
     // Specify options for MLKit SmileDetector
     private val options = FaceDetectorOptions.Builder()
-        .setPerformanceMode(ACCURATE_MODE)
-        .setLandmarkMode(ALL_LANDMARKS)
-        .setClassificationMode(ALL_CLASSIFICATIONS)
+        .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_ACCURATE)
+        .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_ALL)
+        .setClassificationMode(FaceDetectorOptions.CLASSIFICATION_MODE_ALL)
         .build()
 
     override fun detect(img: Bitmap): SmileDetector.Companion.SmileDetectionResult? {

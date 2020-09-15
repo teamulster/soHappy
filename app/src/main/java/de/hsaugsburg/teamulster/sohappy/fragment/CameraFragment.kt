@@ -61,8 +61,8 @@ class CameraFragment: Fragment() {
         queue = BitmapQueue()
         imageAnalyzer = ImageAnalyzer(
             this, requireActivity(), ImageAnalyzerConfig(
-                "de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.HaarCascadeFaceDetector",
-                "de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl.FerTFLiteSmileDetectorImpl",
+                "de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.GoogleMLKitAPIFaceDetectorImpl",
+                "de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl.GoogleMLKitAPISmileDetectorImpl",
             )
         )
 
