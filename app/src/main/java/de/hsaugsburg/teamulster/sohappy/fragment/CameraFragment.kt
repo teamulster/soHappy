@@ -57,8 +57,8 @@ class CameraFragment: Fragment() {
         converter = YuvToRgbConverter(context)
         gpuImageView = binding.gpuImageView
         gpuImageView.setScaleType(GPUImage.ScaleType.CENTER_CROP)
-
         queue = BitmapQueue()
+
         imageAnalyzer = ImageAnalyzer(
             this, requireActivity(), ImageAnalyzerConfig(
                 "de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.HaarCascadeFaceDetector",
@@ -85,7 +85,6 @@ class CameraFragment: Fragment() {
     }
 
     @SuppressLint("UnsafeExperimentalUsageError")
-    @Suppress("MagicNumber")
     private fun startCameraIfReady() {
         // We need to build an ImageAnalysis, which will get binded to the cameraProvider.
         // We can register an Analyzer for the analysis, which is a callback.
@@ -106,6 +105,7 @@ class CameraFragment: Fragment() {
             converter.yuvToRgb(it.image!!, bitmap)
 
             bitmap = BitmapEditor.rotate(bitmap, -90f)
+            bitmap = BitmapEditor.flipHorizontal(bitmap)
 
             queue.replace(bitmap.copy(bitmap.config, false))
 
