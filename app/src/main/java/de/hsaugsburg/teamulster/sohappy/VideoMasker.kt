@@ -3,9 +3,12 @@ package de.hsaugsburg.teamulster.sohappy
 import jp.co.cyberagent.android.gpuimage.GPUImageView
 import jp.co.cyberagent.android.gpuimage.filter.*
 
-class VideoMasker(private val gpuImageView: GPUImageView) {
+/**
+ * Helper class to blur the camera image with a specific color.
+ */
+object VideoMasker {
 
-    private val filterBlue: GPUImageFilter = GPUImageFilterGroup(
+    private val blueFilter: GPUImageFilter = GPUImageFilterGroup(
         listOf(
             GPUImagePixelationFilter().apply { setPixel(5F) },
             GPUImageGaussianBlurFilter(5.0f),
@@ -16,7 +19,7 @@ class VideoMasker(private val gpuImageView: GPUImageView) {
             GPUImageBrightnessFilter(-0.2f)
         )
     )
-    private val filterRed: GPUImageFilter = GPUImageFilterGroup(
+    private val redFilter: GPUImageFilter = GPUImageFilterGroup(
         listOf(
             GPUImagePixelationFilter().apply { setPixel(5F) },
             GPUImageGaussianBlurFilter(5.0f),
@@ -27,7 +30,7 @@ class VideoMasker(private val gpuImageView: GPUImageView) {
             GPUImageBrightnessFilter(-0.2f)
         )
     )
-    private val filterYellow: GPUImageFilter = GPUImageFilterGroup(
+    private val yellowFilter: GPUImageFilter = GPUImageFilterGroup(
         listOf(
             GPUImagePixelationFilter().apply { setPixel(5F) },
             GPUImageGaussianBlurFilter(5.0f),
@@ -38,7 +41,7 @@ class VideoMasker(private val gpuImageView: GPUImageView) {
             GPUImageBrightnessFilter(-0.2f)
         )
     )
-    private val filterGreen: GPUImageFilter = GPUImageFilterGroup(
+    private val greenFilter: GPUImageFilter = GPUImageFilterGroup(
         listOf(
             GPUImagePixelationFilter().apply { setPixel(5F) },
             GPUImageGaussianBlurFilter(5.0f),
@@ -50,12 +53,39 @@ class VideoMasker(private val gpuImageView: GPUImageView) {
         )
     )
 
-    fun switchColor(face: Boolean) {
-        if (face) {
-            gpuImageView.filter = filterBlue
-        } else {
-            gpuImageView.filter = filterRed
-        }
+    /**
+     * applies blue blur filter.
+     *
+     * @param gpuImageView the image to be blurred.
+     */
+    fun applyBlueFilter (gpuImageView: GPUImageView): GPUImageView = gpuImageView.apply {
+        gpuImage.setFilter(blueFilter)
     }
 
+    /**
+     * applies red blur filter.
+     *
+     * @param gpuImageView the image to be blurred.
+     */
+    fun applyRedFilter (gpuImageView: GPUImageView): GPUImageView = gpuImageView.apply {
+        gpuImage.setFilter(redFilter)
+    }
+
+    /**
+     * applies yellow blur filter.
+     *
+     * @param gpuImageView the image to be blurred.
+     */
+    fun applyYellowFilter (gpuImageView: GPUImageView): GPUImageView = gpuImageView.apply {
+        gpuImage.setFilter(yellowFilter)
+    }
+
+    /**
+     * applies green blur filter.
+     *
+     * @param gpuImageView the image to be blurred.
+     */
+    fun applyGreenFilter (gpuImageView: GPUImageView): GPUImageView = gpuImageView.apply {
+        gpuImage.setFilter(greenFilter)
+    }
 }
