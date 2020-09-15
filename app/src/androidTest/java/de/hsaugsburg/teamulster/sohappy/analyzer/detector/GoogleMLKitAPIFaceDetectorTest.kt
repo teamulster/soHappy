@@ -28,7 +28,6 @@ class GoogleMLKitAPIFaceDetectorTest {
         val istr = instrumentationContext.assets.open("faceDetector_test_positive.jpg")
         val detectResult = mLKitFaceDetector.detect(BitmapFactory.decodeStream(istr))
         assertTrue(detectResult != null)
-
     }
 
     @Test
