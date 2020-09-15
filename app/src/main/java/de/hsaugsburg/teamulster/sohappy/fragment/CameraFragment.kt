@@ -118,7 +118,7 @@ class CameraFragment: Fragment() {
 
 
         cameraProvider!!.bindToLifecycle(this, CameraSelector.DEFAULT_FRONT_CAMERA, imageAnalysis)
-        // imageAnalyzer.execute()
+        imageAnalyzer.execute()
     }
 
     private fun allocateBitmapIfNecessary(width: Int, height: Int): Bitmap {
