@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 import de.hsaugsburg.teamulster.sohappy.CameraActivity
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.analyzer.collector.Measurement
@@ -44,7 +44,10 @@ class ResultsFragment : Fragment() {
         stateMachine.addStateChangeListener { _, new ->
             if (this.isResumed) {
                 when (new) {
-                    is Start -> findNavController().navigate(R.id.homeFragment)
+                    is Start -> requireView().post {
+                        requireActivity().finish()
+                        startActivity(requireActivity().intent)
+                    }
                 }
             }
         }
@@ -54,5 +57,10 @@ class ResultsFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        (requireActivity() as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(false)
     }
 }

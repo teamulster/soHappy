@@ -20,7 +20,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Spinner
+        <de.hsaugsburg.teamulster.sohappy.view.SpinnerCustom
             android:id="@+id/spinner"
             style="@style/SpinnerDropdownAppearanceCustom"
             android:layout_width="260dp"

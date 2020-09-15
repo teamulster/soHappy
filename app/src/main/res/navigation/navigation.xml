@@ -148,15 +148,7 @@
         android:id="@+id/resultsFragment"
         android:name="de.hsaugsburg.teamulster.sohappy.fragment.ResultsFragment"
         android:label="@string/fragment_results_appbar_title"
-        tools:layout="@layout/fragment_results" >
-        <action
-            android:id="@+id/action_resultsFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_left"
-            app:popEnterAnim="@anim/enter_from_left"
-            app:popExitAnim="@anim/exit_to_right" />
-    </fragment>
+        tools:layout="@layout/fragment_results" />
     <fragment
         android:id="@+id/jokesFragment"
         android:name="de.hsaugsburg.teamulster.sohappy.fragment.JokesFragment"

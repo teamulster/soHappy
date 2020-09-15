@@ -94,7 +94,6 @@ class SmileFragment : Fragment() {
         // The initial animation has to be started here, otherwise the animation
         // will play even if the screen is currently not focused on this fragment
         startInitAnimation()
-
     }
 
     override fun onStop() {
@@ -113,6 +112,10 @@ class SmileFragment : Fragment() {
     }
 
     private fun startCountdown() {
+        binding.checkmarkView.animate()
+            .alpha(0f)
+            .duration = 500
+
         fadeOutText()
         requireView().postDelayed({
             fadeInText(getString(R.string.fragment_camera_face))
@@ -138,6 +141,20 @@ class SmileFragment : Fragment() {
             tickCountdown()
             stateMachine.consumeAction(Action.TakeABreathTimer)
         }, 3500)
+
+        /* requireView().postDelayed({
+            binding.countdownText.animate()
+                .alpha(0f)
+                .translationYBy(100f)
+                .setDuration(125)
+        }, 1250)
+
+        requireView().postDelayed({
+            binding.countdownText.setText("2")
+            binding.countdownText.animate()
+                .alpha(1f)
+                .setDuration(125)
+        }, 1375) */
     }
 
     private fun tickCountdown() {
@@ -155,7 +172,8 @@ class SmileFragment : Fragment() {
                 if (nextTick > 0) {
                     binding.countdownText.animate()
                         .alpha(1f)
-                        .translationYBy(100f).duration = 125
+                        .translationYBy(100f)
+                        .setDuration(125)
                 }
             }
     }
@@ -168,11 +186,13 @@ class SmileFragment : Fragment() {
         }
 
         binding.textView.animate()
-            .alpha(1f).duration = 500
+            .alpha(1f)
+            .setDuration(500)
     }
 
     private fun fadeOutText() {
         binding.textView.animate()
-            .alpha(0f).duration = 500
+            .alpha(0f)
+            .setDuration(500)
     }
 }
