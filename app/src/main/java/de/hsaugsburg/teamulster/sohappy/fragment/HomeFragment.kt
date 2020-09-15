@@ -27,7 +27,7 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        stateMachine = StateMachineUtil.getStateMachine(this)
+        stateMachine = StateMachineUtil.createStateMachine(this)
         stateMachine.addStateChangeListener { _, new ->
             if (new is WaitingForFace) {
                 findNavController().navigate(R.id.smileFragment)

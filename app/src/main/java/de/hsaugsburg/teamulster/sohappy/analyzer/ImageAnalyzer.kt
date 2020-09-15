@@ -12,6 +12,7 @@ import de.hsaugsburg.teamulster.sohappy.factories.DetectorFactory
 import de.hsaugsburg.teamulster.sohappy.stateMachine.states.*
 import de.hsaugsburg.teamulster.sohappy.fragment.CameraFragment
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
+import de.hsaugsburg.teamulster.sohappy.util.StateMachineUtil
 import kotlin.concurrent.thread
 
 /**
@@ -36,7 +37,7 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
     private var smileDetector: SmileDetector? =
         DetectorFactory.getSmileDetectorFromConfig(config, fragment.requireActivity())
     private var imageAnalyzerState: ImageAnalyzerState = ImageAnalyzerState.NONE
-    private var stateMachine = (fragment.requireActivity() as CameraActivity).stateMachine
+    private var stateMachine = StateMachineUtil.getStateMachine(fragment)
 
 
     init {
@@ -90,6 +91,9 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
     fun execute() {
         thread {
             while (true) {
+                if (imageAnalyzerState == ImageAnalyzerState.CANCEL) {
+                    break
+                }
                 val bitmap = fragment.queue.poll()
                 if (bitmap != null) {
                     val result = when (imageAnalyzerState) {
@@ -113,10 +117,12 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
                             }
                             r
                         }
-                        ImageAnalyzerState.CANCEL -> break
+                        else -> {
+                            null
+                        }
                     }
                     Log.d("Result:", result.toString())
-                    measurement.add(result)
+                    result?.let { measurement.add(it) }
                     bitmap.recycle()
                 }
             }

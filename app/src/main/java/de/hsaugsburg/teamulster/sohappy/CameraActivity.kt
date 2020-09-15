@@ -13,12 +13,11 @@ import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
  */
 class CameraActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding
-    internal lateinit var stateMachine: StateMachine
+    internal var stateMachine: StateMachine? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_camera)
-        stateMachine = StateMachine()
 
         val navController = findNavController(R.id.navHostFragment)
         NavigationUI.setupActionBarWithNavController(this, navController)
