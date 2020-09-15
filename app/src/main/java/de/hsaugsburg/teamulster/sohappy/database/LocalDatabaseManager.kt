@@ -71,4 +71,6 @@ class LocalDatabaseManager(activity: Activity) {
         )
         return cursor.toList()
     }
+
+    fun close() = db.close()
 }
