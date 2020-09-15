@@ -28,7 +28,7 @@ object ConfigManager {
     private val defaultMainConfig: MainConfig = MainConfig(
         ImageAnalyzerConfig(
             "de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.HaarCascadeFaceDetector",
-            "de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl.FerTFLiteSmileDetectorImpl"
+            "de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl.FerTFLiteSmileDetector"
         ),
         AboutConfig(
             "https://github.com/teamulster/soHappy",

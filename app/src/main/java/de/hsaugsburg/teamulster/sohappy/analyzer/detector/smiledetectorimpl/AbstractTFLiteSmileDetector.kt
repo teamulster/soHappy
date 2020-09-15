@@ -23,8 +23,8 @@ import kotlin.collections.ArrayList
  * @constructor creates a TFLite object while setting tfliteOptions/tfliteModel/tfliteInterpreter
  * */
 abstract class AbstractTFLiteSmileDetector(
-    tfliteModelPath: String, numberOfThreads: Int,
-    activity: Activity
+    tfliteModelPath: String, activity: Activity,
+    numberOfThreads: Int = 1
 ) : SmileDetector {
     // Static classes
     companion object {

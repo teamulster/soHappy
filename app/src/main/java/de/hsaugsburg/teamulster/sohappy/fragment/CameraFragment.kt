@@ -62,7 +62,7 @@ class CameraFragment: Fragment() {
         imageAnalyzer = ImageAnalyzer(
             this, requireActivity(), ImageAnalyzerConfig(
                 "de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.HaarCascadeFaceDetector",
-                "de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl.FerTFLiteSmileDetectorImpl",
+                "de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl.FerTFLiteSmileDetector",
             )
         )
 
@@ -81,7 +81,7 @@ class CameraFragment: Fragment() {
     override fun onStop() {
         super.onStop()
 
-        cameraProvider!!.unbindAll()
+        cameraProvider?.unbindAll()
     }
 
     @SuppressLint("UnsafeExperimentalUsageError")
@@ -132,7 +132,7 @@ class CameraFragment: Fragment() {
         requestCode: Int, permissions: Array<String?>, grantResults: IntArray
     ) {
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            startCameraIfReady()
+            //startCameraIfReady()
         }
     }
 
