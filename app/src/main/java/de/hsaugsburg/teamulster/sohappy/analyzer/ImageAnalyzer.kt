@@ -97,7 +97,6 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
                 val bitmap = fragment.queue.poll()
                 if (bitmap != null) {
                     val result = when (imageAnalyzerState) {
-                        ImageAnalyzerState.NONE -> DetectionResult(null, null)
                         ImageAnalyzerState.FACE_DETECTION -> {
                             val r = computeFaceDetectionResult(bitmap)
                             if (stateMachine.getCurrentMachineState() is WaitingForFace
