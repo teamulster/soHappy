@@ -2,6 +2,7 @@ package de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl
 
 import android.graphics.Bitmap
 import com.google.android.gms.vision.face.FaceDetector.*
+import com.google.common.util.concurrent.SettableFuture
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetectorOptions
@@ -32,7 +33,7 @@ class GoogleMLKitAPISmileDetectorImpl : SmileDetector {
     // Specify options for MLKit SmileDetector
     private val options = FaceDetectorOptions.Builder()
         .setPerformanceMode(ACCURATE_MODE)
-        .setLandmarkMode(NO_LANDMARKS)
+        .setLandmarkMode(ALL_LANDMARKS)
         .setClassificationMode(ALL_CLASSIFICATIONS)
         .build()
 
@@ -40,17 +41,24 @@ class GoogleMLKitAPISmileDetectorImpl : SmileDetector {
         // Init faceDetector and convert bitmap to InputImage object
         val faceDetector = FaceDetection.getClient(options)
         val inputImage = InputImage.fromBitmap(img, 0)
-        var result: SmileDetector.Companion.SmileDetectionResult? = null
+        val future = SettableFuture.create<SmileDetector.Companion.SmileDetectionResult?>()
         // process given image and store results as SmileDetectionResult
         // NOTE: predictionResults has to be stored as ArrayList to make it compliant to the TF Lite approach
         faceDetector.process(inputImage)
             .addOnSuccessListener { faces ->
-                val firstFace = faces[0]
                 val predictionResults = ArrayList<SmileDetector.Companion.Recognition>()
                 var isSmiling = false
+                // Guard clause in case no face was detected somehow
+                if (faces.size == 0) {
+                    future.set(SmileDetectionResult(isSmiling, predictionResults))
+                    return@addOnSuccessListener
+                }
+                val firstFace = faces[0]
 
-                // Add smiling probability to predictionResults if smiling confidence is above 0.75
-                if (firstFace.smilingProbability!! > 0.75f) {
+                // Add smiling probability to predictionResults if smiling confidence is above 0.7
+                if (firstFace.smilingProbability != null &&
+                    firstFace.smilingProbability!! > 0.7f
+                ) {
                     isSmiling = true
                     predictionResults.add(
                         SmileDetector.Companion.Recognition(
@@ -59,11 +67,21 @@ class GoogleMLKitAPISmileDetectorImpl : SmileDetector {
                         )
                     )
                 }
-                result = SmileDetectionResult(
-                    isSmiling,
-                    predictionResults
+                future.set(
+                    SmileDetectionResult(
+                        isSmiling,
+                        predictionResults
+                    )
                 )
             }
-        return result
+            .addOnFailureListener {
+                future.set(
+                    SmileDetectionResult(
+                        isSmiling = false,
+                        ArrayList<SmileDetector.Companion.Recognition>()
+                    )
+                )
+            }
+        return future.get()
     }
 }
