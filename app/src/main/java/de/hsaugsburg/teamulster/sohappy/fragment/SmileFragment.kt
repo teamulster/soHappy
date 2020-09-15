@@ -45,37 +45,43 @@ class SmileFragment : Fragment() {
             }
         }
         // TODO: Lambdas need to be unregistered, when new fragment is initialized
-        stateMachine.addStateChangeListener { _, new ->
-            when (new) {
-                is Start -> requireView().post {
-                    findNavController().navigate(R.id.homeFragment)
-                }
-                is TakeABreath -> requireView().post {
-                    startCountdown()
-                }
-                is Stimulus -> {
-                    requireView().post {
-                        fadeOutText()
-                        fadeInText(getString(R.string.fragment_camera_stimulus1))
+        stateMachine.addStateChangeListener { old, new ->
+            if (this.isResumed) {
+                when (new) {
+                    is Start -> requireView().post {
+                        findNavController().navigate(R.id.homeFragment)
                     }
-                    requireView().postDelayed({
-                        stateMachine.consumeAction(Action.StimulusTimer)
-                        //TODO: get sec from config
-                    }, 2_500)
-                }
-                is WaitingForSmile -> requireView().postDelayed({
-                    stateMachine.consumeAction(Action.WaitingForSmileTimer)
-                }, 10_000)
-                is SmileCountdown -> {
-                    requireView().post {
-                        (binding.checkmarkView.drawable as Animatable).start()
+                    is TakeABreath -> requireView().post {
+                        startCountdown()
                     }
-                    requireView().postDelayed({
-                        stateMachine.consumeAction(Action.SmileCountdownTimer)
-                    }, 30_000)
+                    is Stimulus -> {
+                        requireView().post {
+                            fadeOutText()
+                            fadeInText(getString(R.string.fragment_camera_stimulus1))
+                        }
+                        requireView().postDelayed({
+                            stateMachine.consumeAction(Action.StimulusTimer)
+                            //TODO: get sec from config
+                        }, 2_500)
+                    }
+                    is WaitingForSmile -> requireView().postDelayed({
+                        if (old !is WaitingForFace) {
+                            stateMachine.consumeAction(Action.WaitingForSmileTimer)
+                        }
+                    }, 10_000)
+                    is SmileCountdown -> {
+                        if (old !is SmileCountdown) {
+                            requireView().post {
+                                (binding.checkmarkView.drawable as Animatable).start()
+                            }
+                            requireView().postDelayed({
+                                stateMachine.consumeAction(Action.SmileCountdownTimer)
+                            }, 30_000)
+                        }
+                    }
+                    is Questions -> findNavController().navigate(R.id.questionnaire01Fragment)
+                    is NoSmile -> findNavController().navigate(R.id.homeFragment)
                 }
-                is Questions -> findNavController().navigate(R.id.questionnaire01Fragment)
-                is NoSmile -> findNavController().navigate(R.id.homeFragment)
             }
             //TODO: Add "end" and "question" button
         }

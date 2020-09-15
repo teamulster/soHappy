@@ -36,8 +36,10 @@ class ResultsFragment : Fragment() {
         stateMachine = StateMachineUtil.getStateMachine(this)
 
         stateMachine.addStateChangeListener { _, new ->
-            when (new) {
-                is Start -> findNavController().navigate(R.id.homeFragment)
+            if (this.isResumed) {
+                when (new) {
+                    is Start -> findNavController().navigate(R.id.homeFragment)
+                }
             }
         }
 
