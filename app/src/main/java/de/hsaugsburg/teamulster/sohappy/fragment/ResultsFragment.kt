@@ -1,10 +1,12 @@
 package de.hsaugsburg.teamulster.sohappy.fragment
 
 import android.os.Bundle
-import android.view.*
-import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.Fragment
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentResultsBinding
 
@@ -28,9 +30,15 @@ class ResultsFragment : Fragment() {
         )
 
         binding.finishButton.setOnClickListener {
-            findNavController().navigate(R.id.homeFragment)
+            requireActivity().finish()
+            startActivity(requireActivity().intent)
         }
 
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        (requireActivity() as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(false)
     }
 }

@@ -34,7 +34,7 @@
 
     <string name="fragment_nosmile_appbar_title">No Smile Detected</string>
     <string name="fragment_nosmile_title">Something went wrong.</string>
-    <string name="fragment_nosmile_description">We couldn\'t detect a smile for at least ten seconds. You can choose to retry or continue on to the questionnaire, although your results may be slightly skewed.</string>
+    <string name="fragment_nosmile_description">We couldn\'t detect a smile for at least ten seconds. Would you like to try again or continue with the questionnaire?</string>
     <string name="fragment_nosmile_retry">Retry</string>
     <string name="fragment_nosmile_continue">Continue anyway</string>
 
