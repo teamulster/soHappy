@@ -28,16 +28,6 @@ abstract class AbstractTFLiteSmileDetector(
 ) : SmileDetector {
     // Static classes
     companion object {
-        /**
-         * This data class stores prediction results based on each label a model allows.
-         *
-         * @param title the label title.
-         * @param confidence a Float value between 0 and 1 stating possible this label is
-         * @constructor creates a Recognition object containing the given params
-         * */
-        data class Recognition(
-            val title: String, val confidence: Float
-        )
 
         /**
          * This data class inherits the SmileDetector.Companion.SmileDetectionResult(isSmiling) function
@@ -49,9 +39,9 @@ abstract class AbstractTFLiteSmileDetector(
          * */
         data class SmileDetectionResult(
             override val isSmiling: Boolean,
-            override val predictionResults: ArrayList<Recognition>
+            override val predictionResults: ArrayList<SmileDetector.Companion.Recognition>
         ) :
-            SmileDetector.Companion.SmileDetectionResult
+            SmileDetector.Companion.SmileDetectionResult(isSmiling, predictionResults)
     }
 
     // Init variables
@@ -75,7 +65,7 @@ abstract class AbstractTFLiteSmileDetector(
      * @param img the current image
      * @return ArrayList<Recognition>
      * */
-    fun execute(img: Bitmap): ArrayList<Recognition> {
+    fun execute(img: Bitmap): ArrayList<SmileDetector.Companion.Recognition> {
         // Init probability val
         val probabilityTensorIndex: Int = 0
         val probabilityShape: IntArray =
@@ -108,11 +98,11 @@ abstract class AbstractTFLiteSmileDetector(
      * @param labeledProbability a map containing the confidence mapped on predicted labels
      * @return ArrayList<Recognition>
      * */
-    private fun sortMatches(labeledProbability: Map<String, Float>): ArrayList<Recognition> {
-        val recognitions: ArrayList<Recognition> = ArrayList()
+    private fun sortMatches(labeledProbability: Map<String, Float>): ArrayList<SmileDetector.Companion.Recognition> {
+        val recognitions: ArrayList<SmileDetector.Companion.Recognition> = ArrayList()
 
         for ((key, value) in labeledProbability.entries) {
-            recognitions.add(Recognition("" + key, value))
+            recognitions.add(SmileDetector.Companion.Recognition("" + key, value))
         }
         // Intentionally reversed to put high confidence at the head of the queue.
         recognitions.sortWith(Comparator { lhs, rhs -> rhs.confidence.compareTo(lhs.confidence) })

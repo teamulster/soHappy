@@ -5,13 +5,15 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.view.*
-import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.analyzer.BitmapEditor
 import de.hsaugsburg.teamulster.sohappy.analyzer.ImageAnalyzer
@@ -34,6 +36,7 @@ class CameraFragment: Fragment() {
 
     private val executor = Executors.newSingleThreadExecutor()
     private var cameraProvider: ProcessCameraProvider? = null
+    private var cameraIsRunning = false
     private lateinit var binding: FragmentCameraBinding
     private lateinit var bitmap: Bitmap
     private lateinit var converter : YuvToRgbConverter
@@ -95,6 +98,10 @@ class CameraFragment: Fragment() {
         if (!isPermissionsGranted() || cameraProvider == null) {
             return
         }
+        if (cameraIsRunning) {
+            return
+        }
+        cameraIsRunning = true
         val imageAnalysis = ImageAnalysis.Builder()
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             // TODO: take a look into .setBackgroundExecutor()

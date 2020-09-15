@@ -3,6 +3,7 @@ package de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl
 import android.app.Activity
 import android.graphics.Bitmap
 import android.graphics.Color
+import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
@@ -37,7 +38,7 @@ class FerTFLiteSmileDetectorImpl(activity: Activity) :
      * @return Companion.SmileDetectionResult
      * */
     override fun detect(bitmap: Bitmap): Companion.SmileDetectionResult {
-        val predictionResults: ArrayList<Companion.Recognition> = super.execute(bitmap)
+        val predictionResults: ArrayList<SmileDetector.Companion.Recognition> = super.execute(bitmap)
         val firstPredictionResult = predictionResults[0]
         var isSmiling = false
         // if Happy is detected, set isSmiling = true
