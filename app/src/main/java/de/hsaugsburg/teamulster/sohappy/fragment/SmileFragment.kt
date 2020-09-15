@@ -69,15 +69,13 @@ class SmileFragment : Fragment() {
                             stateMachine.consumeAction(Action.WaitingForSmileTimer)
                         }
                     }, 10_000)
-                    is SmileCountdown -> {
-                        if (old !is SmileCountdown) {
-                            requireView().post {
-                                (binding.checkmarkView.drawable as Animatable).start()
-                            }
-                            requireView().postDelayed({
-                                stateMachine.consumeAction(Action.SmileCountdownTimer)
-                            }, 30_000)
+                    is SmileCountdown -> if (old !is SmileCountdown) {
+                        requireView().post {
+                            (binding.checkmarkView.drawable as Animatable).start()
                         }
+                        requireView().postDelayed({
+                            stateMachine.consumeAction(Action.SmileCountdownTimer)
+                        }, 30_000)
                     }
                     is Questions -> findNavController().navigate(R.id.questionnaire01Fragment)
                     is NoSmile -> findNavController().navigate(R.id.homeFragment)

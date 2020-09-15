@@ -26,7 +26,7 @@ object StateMachineUtil {
      * @return the state machine
      */
     fun createStateMachine(fragment: Fragment): StateMachine {
-        val activity = (fragment.requireActivity() as CameraActivity)
+        val activity = fragment.requireActivity() as CameraActivity
         activity.stateMachine = StateMachine()
         return activity.stateMachine!!
     }

@@ -2,16 +2,15 @@ package de.hsaugsburg.teamulster.sohappy.analyzer
 
 import android.graphics.Bitmap
 import android.util.Log
-import de.hsaugsburg.teamulster.sohappy.CameraActivity
 import de.hsaugsburg.teamulster.sohappy.analyzer.collector.Measurement
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.DetectionResult
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FaceDetector
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
 import de.hsaugsburg.teamulster.sohappy.config.ImageAnalyzerConfig
 import de.hsaugsburg.teamulster.sohappy.factories.DetectorFactory
-import de.hsaugsburg.teamulster.sohappy.stateMachine.states.*
 import de.hsaugsburg.teamulster.sohappy.fragment.CameraFragment
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
+import de.hsaugsburg.teamulster.sohappy.stateMachine.states.*
 import de.hsaugsburg.teamulster.sohappy.util.StateMachineUtil
 import kotlin.concurrent.thread
 
@@ -116,9 +115,7 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
                             }
                             r
                         }
-                        else -> {
-                            null
-                        }
+                        else -> null
                     }
                     Log.d("Result:", result.toString())
                     result?.let { measurement.add(it) }
