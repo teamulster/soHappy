@@ -11,7 +11,7 @@ class TakeABreath : State {
         return when (action) {
             is Action.TakeABreathTimer -> Stimulus()
             else -> {
-                Log.d("Invalid action: ", action.toString())
+                Log.d("Ignored action: ", action.toString())
                 this
             }
         }

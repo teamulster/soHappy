@@ -11,7 +11,7 @@ class Start : State {
         return when (action) {
             is Action.StartButtonPressed -> WaitingForFace()
             else -> {
-                Log.d("Invalid action: ", action.toString())
+                Log.d("Ignored action: ", action.toString())
                 this
             }
         }

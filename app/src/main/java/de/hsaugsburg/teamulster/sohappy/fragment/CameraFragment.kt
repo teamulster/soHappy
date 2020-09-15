@@ -62,6 +62,7 @@ class CameraFragment: Fragment() {
         gpuImageView.setScaleType(GPUImage.ScaleType.CENTER_CROP)
 
         queue = BitmapQueue()
+        // TODO: Replace with real config here
         imageAnalyzer = ImageAnalyzer(
             this, ImageAnalyzerConfig(
                 "de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.HaarCascadeFaceDetector",

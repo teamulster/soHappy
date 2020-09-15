@@ -11,7 +11,7 @@ class Stimulus : State {
         return when (action) {
             is Action.StimulusTimer -> WaitingForSmile()
             else -> {
-                Log.d("Invalid action: ", action.toString())
+                Log.d("Ignored action: ", action.toString())
                 this
             }
         }

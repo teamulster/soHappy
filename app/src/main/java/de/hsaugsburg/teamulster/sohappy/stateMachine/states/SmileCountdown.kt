@@ -11,7 +11,7 @@ class SmileCountdown : State {
         return when (action) {
             is Action.SmileCountdownTimer-> Questions()
             else -> {
-                Log.d("Invalid action: ", action.toString())
+                Log.d("Ignored action: ", action.toString())
                 this
             }
         }

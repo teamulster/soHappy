@@ -12,7 +12,7 @@ class WaitingForSmile : State {
             is Action.SmileDetected -> SmileCountdown()
             is Action.WaitingForSmileTimer -> NoSmile()
             else -> {
-                Log.d("Invalid action: ", action.toString())
+                Log.d("Ignored action: ", action.toString())
                 this
             }
         }

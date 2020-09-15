@@ -11,7 +11,7 @@ class Questions : State {
         return when (action) {
             is Action.ReturnToStart -> Start()
             else -> {
-                Log.d("Invalid action: ", action.toString())
+                Log.d("Ignored action: ", action.toString())
                 this
             }
         }

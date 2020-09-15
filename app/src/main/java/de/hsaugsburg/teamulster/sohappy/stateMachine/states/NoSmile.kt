@@ -12,7 +12,7 @@ class NoSmile : State {
             is Action.ReturnToWaitingForFace -> Start()
             is Action.QuestionButtonPressed -> Questions()
             else -> {
-                Log.d("Invalid action: ", action.toString())
+                Log.d("Ignored action: ", action.toString())
                 this
             }
         }

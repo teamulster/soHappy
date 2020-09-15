@@ -13,7 +13,7 @@ class WaitingForFace : State {
             is Action.WaitingForFaceTimer -> Start()
             is Action.FaceDetected -> TakeABreath()
             else -> {
-                Log.d("Invalid action: ", action.toString())
+                Log.d("Ignored action: ", action.toString())
                 this
             }
         }
