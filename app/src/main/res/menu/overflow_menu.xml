@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/explanationFragment"
+        android:title="@string/ui_overflow_explanation" />
+
+    <item android:id="@+id/historyFragment"
+        android:title="@string/ui_overflow_history" />
+
+    <item android:id="@+id/jokesFragment"
+        android:title="@string/ui_overflow_jokes" />
+
+    <item android:id="@+id/settingsFragment"
+        android:title="@string/ui_overflow_settings" />
+
+    <item android:id="@+id/helpFragment"
+        android:title="@string/ui_overflow_help" />
+</menu>

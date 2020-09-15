@@ -22,6 +22,7 @@ detekt {
     failFast = true // fail build on any finding
     config = files("$projectDir/detekt.yml") // point to your custom config defining rules to run, overwriting default behavior
     input = files("$projectDir/app")
+    autoCorrect=true
 }
 
 allprojects {

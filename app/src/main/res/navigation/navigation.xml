@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="de.hsaugsburg.teamulster.sohappy.fragment.SettingsFragment"
+        android:label="@string/fragment_settings_name"
+        tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="de.hsaugsburg.teamulster.sohappy.fragment.HomeFragment"
+        android:label="@string/app_name">
+        <action
+            android:id="@+id/action_homeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_helpFragment2"
+            app:destination="@id/helpFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_smileFragment"
+            app:destination="@id/smileFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_jokesFragment2"
+            app:destination="@id/jokesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="de.hsaugsburg.teamulster.sohappy.fragment.HelpFragment"
+        android:label="@string/fragment_help_name"
+        tools:layout="@layout/fragment_help" />
+    <fragment
+        android:id="@+id/smileFragment"
+        android:name="de.hsaugsburg.teamulster.sohappy.fragment.SmileFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_smile">
+        <action
+            android:id="@+id/action_smileFragment_to_questionnaire01Fragment"
+            app:destination="@id/questionnaire01Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/questionnaire01Fragment"
+        android:name="de.hsaugsburg.teamulster.sohappy.fragment.Questionnaire01Fragment"
+        android:label="@string/fragment_questionnaire" >
+        <action
+            android:id="@+id/action_questionnaire01Fragment_to_questionnaire02Fragment"
+            app:destination="@id/questionnaire02Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/questionnaire02Fragment"
+        android:name="de.hsaugsburg.teamulster.sohappy.fragment.Questionnaire02Fragment"
+        android:label="@string/fragment_questionnaire" >
+        <action
+            android:id="@+id/action_questionnaire02Fragment_to_questionnaire03Fragment"
+            app:destination="@id/questionnaire03Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/questionnaire03Fragment"
+        android:name="de.hsaugsburg.teamulster.sohappy.fragment.Questionnaire03Fragment"
+        android:label="@string/fragment_questionnaire">
+        <action
+            android:id="@+id/action_questionnaire03Fragment_to_questionnaire04Fragment"
+            app:destination="@id/questionnaire04Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/questionnaire04Fragment"
+        android:name="de.hsaugsburg.teamulster.sohappy.fragment.Questionnaire04Fragment"
+        android:label="@string/fragment_questionnaire" >
+        <action
+            android:id="@+id/action_questionnaire04Fragment_to_questionnaire05Fragment"
+            app:destination="@id/questionnaire05Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/questionnaire05Fragment"
+        android:name="de.hsaugsburg.teamulster.sohappy.fragment.Questionnaire05Fragment"
+        android:label="@string/fragment_questionnaire">
+        <action
+            android:id="@+id/action_questionnaire05Fragment_to_questionnaire06Fragment"
+            app:destination="@id/questionnaire06Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/questionnaire06Fragment"
+        android:name="de.hsaugsburg.teamulster.sohappy.fragment.Questionnaire06Fragment"
+        android:label="@string/fragment_questionnaire" >
+        <action
+            android:id="@+id/action_questionnaire06Fragment_to_resultsFragment"
+            app:destination="@id/resultsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/resultsFragment"
+        android:name="de.hsaugsburg.teamulster.sohappy.fragment.ResultsFragment"
+        android:label="@string/fragment_results_appbar_title"
+        tools:layout="@layout/fragment_results" >
+        <action
+            android:id="@+id/action_resultsFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/jokesFragment"
+        android:name="de.hsaugsburg.teamulster.sohappy.fragment.JokesFragment"
+        android:label="@string/fragment_jokes_appbar_title"
+        tools:layout="@layout/fragment_jokes" />
+
+</navigation>

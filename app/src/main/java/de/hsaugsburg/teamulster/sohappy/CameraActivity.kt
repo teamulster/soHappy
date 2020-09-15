@@ -1,104 +1,29 @@
 package de.hsaugsburg.teamulster.sohappy
 
-import android.Manifest
-import android.annotation.SuppressLint
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.Matrix
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageAnalysis
-import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.core.content.ContextCompat
-import de.hsaugsburg.teamulster.sohappy.util.YuvToRgbConverter
-import jp.co.cyberagent.android.gpuimage.GPUImage
-import jp.co.cyberagent.android.gpuimage.GPUImageView
-import java.util.concurrent.Executors
+import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
+import de.hsaugsburg.teamulster.sohappy.databinding.ActivityCameraBinding
+import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 
+/**
+ * CameraActivity serves as the sole Activity and entry point for the app.
+ */
 class CameraActivity : AppCompatActivity() {
-    companion object {
-        const val REQUEST_CODE_PERMISSIONS = 10
-    }
-
-    private var cameraProvider: ProcessCameraProvider? = null
-    private val executor = Executors.newSingleThreadExecutor()
-    private var bitmap: Bitmap? = null
-    private lateinit var converter: YuvToRgbConverter
-    private lateinit var gpuImageView: GPUImageView
+    private lateinit var binding: ActivityCameraBinding
+    internal lateinit var stateMachine: StateMachine
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_camera)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_camera)
+        stateMachine = StateMachine()
 
-        gpuImageView = findViewById(R.id.gpu_image_view)
-        gpuImageView.setScaleType(GPUImage.ScaleType.CENTER_CROP)
-
-
-        converter = YuvToRgbConverter(this)
-
-        requestPermissions(arrayOf(Manifest.permission.CAMERA), REQUEST_CODE_PERMISSIONS)
-
-        val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
-        cameraProviderFuture.addListener({
-            cameraProvider = cameraProviderFuture.get()
-            startCameraIfReady()
-        }, ContextCompat.getMainExecutor(this))
+        val navController = findNavController(R.id.navHostFragment)
+        NavigationUI.setupActionBarWithNavController(this, navController)
     }
 
-    @SuppressLint("UnsafeExperimentalUsageError")
-    @Suppress("MagicNumber")
-    private fun startCameraIfReady() {
-        if(isPermissionsGranted() && cameraProvider == null) {
-           return
-        }
-        val imageAnalysis = ImageAnalysis.Builder()
-            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-            // TODO: take a lot into .setBackgroundExecutor()
-            .build()
-
-        imageAnalysis.setAnalyzer(executor, {
-            var bitmap = allocateBitmapIfNecessary(it.width, it.height)
-            //TODO: SuppressLint is dependent on it.image!! Why?
-            converter.yuvToRgb(it.image!!, bitmap)
-
-            val matrix = Matrix()
-            matrix.postRotate(-90F)
-            val scaledBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.width, bitmap.height, true)
-
-            bitmap = Bitmap.createBitmap(scaledBitmap, 0, 0,  scaledBitmap.width, scaledBitmap.height, matrix, true)
-
-            gpuImageView.post {
-                gpuImageView.setRatio((bitmap.width/ bitmap.height).toFloat())
-                Log.d("Min Height", gpuImageView.height.toString())
-                Log.d("Bitmap width", bitmap.width.toString());
-                Log.d("Bitmap height", bitmap.height.toString())
-                gpuImageView.setImage(bitmap)
-            }
-            it.close()
-        })
-
-
-        cameraProvider!!.bindToLifecycle(this, CameraSelector.DEFAULT_FRONT_CAMERA, imageAnalysis)
-    }
-
-    private fun allocateBitmapIfNecessary(width: Int, height: Int): Bitmap {
-        if (bitmap == null || bitmap!!.width != width || bitmap!!.height != height) {
-            bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-        }
-        return bitmap!!
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<String?>, grantResults: IntArray
-    ) {
-        if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            startCameraIfReady()
-        }
-    }
-
-    private fun isPermissionsGranted(): Boolean {
-        return ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
-    }
+    override fun onSupportNavigateUp(): Boolean =
+        findNavController(R.id.navHostFragment).navigateUp()
 }
