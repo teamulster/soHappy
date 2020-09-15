@@ -10,6 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentNosmileBinding
+import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
+import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
+import de.hsaugsburg.teamulster.sohappy.stateMachine.states.Questions
+import de.hsaugsburg.teamulster.sohappy.stateMachine.states.WaitingForFace
+import de.hsaugsburg.teamulster.sohappy.util.StateMachineUtil
 
 /**
  * If the user fails to smile for at least ten consecutive seconds, NoSmileFragment offers
@@ -17,6 +22,7 @@ import de.hsaugsburg.teamulster.sohappy.databinding.FragmentNosmileBinding
  */
 class NoSmileFragment : Fragment() {
     private lateinit var binding: FragmentNosmileBinding
+    private lateinit var stateMachine: StateMachine
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,12 +36,27 @@ class NoSmileFragment : Fragment() {
             false
         )
 
+        stateMachine = StateMachineUtil.getStateMachine(this)
+
+        stateMachine.addStateChangeListener { old, new ->
+            when(new) {
+                is WaitingForFace ->
+                    requireView().post {
+                        findNavController().navigate(R.id.action_noSmileFragment_to_smileFragment)
+                    }
+                is Questions ->
+                    requireView().post {
+                        findNavController().navigate(R.id.action_noSmileFragment_to_questionnaire01Fragment)
+                    }
+            }
+        }
+
         binding.retryButton.setOnClickListener {
-            findNavController().navigate(R.id.action_noSmileFragment_to_smileFragment)
+            stateMachine.consumeAction(Action.ReturnToWaitingForFace)
         }
 
         binding.continueButton.setOnClickListener {
-            findNavController().navigate(R.id.action_noSmileFragment_to_questionnaire01Fragment)
+            stateMachine.consumeAction(Action.QuestionButtonPressed)
         }
 
         return binding.root
