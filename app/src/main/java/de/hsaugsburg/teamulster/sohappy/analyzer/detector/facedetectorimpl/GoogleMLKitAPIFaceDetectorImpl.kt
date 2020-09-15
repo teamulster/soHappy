@@ -12,10 +12,12 @@ import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FaceDetector
 /**
  * This class implements a FaceDetector using the Google MLKit API.
  * */
+// TODO: remove Suppress statement when DetectorFactory is compliant
 @Suppress("UnusedPrivateMember")
 class GoogleMLKitAPIFaceDetectorImpl(activity: Activity) : FaceDetector {
     override val detectorName: String = "Google MLKit API Face Detector"
 
+    // Specify options for MLKit SmileDetector and init faceDetector
     private val options = FaceDetectorOptions.Builder()
         .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_FAST)
         .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_ALL)
@@ -24,15 +26,21 @@ class GoogleMLKitAPIFaceDetectorImpl(activity: Activity) : FaceDetector {
     private val faceDetector = FaceDetection.getClient(options)
 
     override fun detect(img: Bitmap): FaceDetector.Companion.FaceDetectionResult? {
+        // Init faceDetector and convert bitmap to InputImage object
         val inputImage = InputImage.fromBitmap(img, 0)
         val future = SettableFuture.create<FaceDetector.Companion.FaceDetectionResult?>()
+
+        // Process given image and store results as FaceDetectionResult
         faceDetector.process(inputImage)
             .addOnSuccessListener { faces ->
+                // Guard clause in case no face was detected
                 if (faces.size == 0) {
                     future.set(null)
                     return@addOnSuccessListener
                 }
                 val firstFace = faces[0]
+
+                // Convert detected face to FaceDetectionResult and set it as future
                 future.set(
                     FaceDetector.Companion.FaceDetectionResult(
                         Rect(
@@ -42,6 +50,7 @@ class GoogleMLKitAPIFaceDetectorImpl(activity: Activity) : FaceDetector {
                     )
                 )
             }
+            // Set future result null if faceDetector fails
             .addOnFailureListener {
                 future.set(null)
             }

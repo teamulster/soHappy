@@ -11,6 +11,7 @@ import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
 /**
  * This class implements a SmileDetector using the Google MLKit API.
  * */
+// TODO: remove Suppress statement when DetectorFactory is compliant
 @Suppress("UnusedPrivateMember")
 class GoogleMLKitAPISmileDetectorImpl(activity : Activity) : SmileDetector {
     companion object {
@@ -18,8 +19,8 @@ class GoogleMLKitAPISmileDetectorImpl(activity : Activity) : SmileDetector {
          * This data class inherits the SmileDetector.Companion.SmileDetectionResult(isSmiling) function
          * and overrides it.
          *
-         * @param isSmiling determines whether the image contains a smiling person or not
-         * @param predictionResults stores all top matches
+         * @param [isSmiling] determines whether the image contains a smiling person or not
+         * @param [predictionResults] stores all top matches
          * @constructor creates SmileDetectionResult object containing the given params
          * */
         data class SmileDetectionResult(
@@ -31,7 +32,7 @@ class GoogleMLKitAPISmileDetectorImpl(activity : Activity) : SmileDetector {
 
     override val detectorName: String = "Google MLKit API Smile Detector"
 
-    // Specify options for MLKit SmileDetector
+    // Specify options for MLKit SmileDetector and init faceDetector
     private val options = FaceDetectorOptions.Builder()
         .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_FAST)
         .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_ALL)
@@ -40,7 +41,8 @@ class GoogleMLKitAPISmileDetectorImpl(activity : Activity) : SmileDetector {
     private val faceDetector = FaceDetection.getClient(options)
 
     override fun detect(img: Bitmap): SmileDetector.Companion.SmileDetectionResult? {
-        // Init faceDetector and convert bitmap to InputImage object
+        // Convert bitmap to InputImage object and create SettableFuture to be able to work with
+        // ML Kit callbacks
         val inputImage = InputImage.fromBitmap(img, 0)
         val future = SettableFuture.create<SmileDetector.Companion.SmileDetectionResult?>()
 
@@ -48,6 +50,7 @@ class GoogleMLKitAPISmileDetectorImpl(activity : Activity) : SmileDetector {
         // NOTE: predictionResults has to be stored as ArrayList to make it compliant to the TF Lite approach
         faceDetector.process(inputImage)
             .addOnSuccessListener { faces ->
+                // Init result vars
                 val predictionResults = ArrayList<SmileDetector.Companion.Recognition>()
                 var isSmiling = false
                 // Guard clause in case no face was detected somehow
@@ -76,6 +79,7 @@ class GoogleMLKitAPISmileDetectorImpl(activity : Activity) : SmileDetector {
                     )
                 )
             }
+            // Set empty SmileDetectionResult if faceDetector fails
             .addOnFailureListener {
                 future.set(
                     SmileDetectionResult(
