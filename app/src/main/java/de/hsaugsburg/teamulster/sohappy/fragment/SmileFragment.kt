@@ -94,6 +94,26 @@ class SmileFragment : Fragment() {
         // The initial animation has to be started here, otherwise the animation
         // will play even if the screen is currently not focused on this fragment
         startInitAnimation()
+
+        requireView().postDelayed({
+            (binding.checkmarkView.drawable as Animatable).start()
+        }, 3000)
+
+        requireView().postDelayed({
+            startCountdown()
+        }, 4000)
+
+        requireView().postDelayed({
+            fadeOutText()
+        }, 7750)
+
+        requireView().postDelayed({
+            fadeInText(getString(R.string.fragment_camera_stimulus1))
+        }, 8250)
+
+        requireView().postDelayed({
+            findNavController().navigate(R.id.action_smileFragment_to_noSmileFragment)
+        }, 12_250)
     }
 
     override fun onStop() {

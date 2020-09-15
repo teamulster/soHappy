@@ -21,9 +21,11 @@ object ConfigManager {
     lateinit var imageAnalyzerConfig: ImageAnalyzerConfig
     lateinit var aboutConfig: AboutConfig
     lateinit var mainConfig: MainConfig
+    lateinit var settingsConfig: SettingsConfig
     private val gson = Gson()
+
     @Suppress("StringLiteralDuplication")
-    private val defaultConfig: MainConfig = MainConfig(
+    private val defaultMainConfig: MainConfig = MainConfig(
         ImageAnalyzerConfig(
             "de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.HaarCascadeFaceDetector",
             "de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl.FerTFLiteSmileDetectorImpl"
@@ -34,6 +36,7 @@ object ConfigManager {
             "https://github.com/teamulster/soHappy"
         )
     )
+    private val defaultSettingsConfig = SettingsConfig(notifications = true, databaseSync = true)
 
     /**
      * This function loads config from the config file and parses the JSON string to MainConfig(
@@ -45,17 +48,24 @@ object ConfigManager {
      * @return [MainConfig]
      * */
     fun load(context: Context): MainConfig {
-        val jsonString: String
+        val mainJsonString: String
+        val settingsJsonString: String
         try {
-            val file = getFile(context)
-            jsonString = FileInputStream(file).bufferedReader().use { it.readText() }
+            val settingsFile = getFile(context)[0]
+            settingsJsonString =
+                FileInputStream(settingsFile).bufferedReader().use { it.readText() }
+            val mainFile = getFile(context)[1]
+            mainJsonString = FileInputStream(mainFile).bufferedReader().use { it.readText() }
 
-            val parsedJson = fromJson(jsonString)
-            checkAboutConfig(parsedJson.aboutConfig)
-            checkImageAnalyzerConfig(parsedJson.imageAnalyzerConfig)
-            mainConfig = parsedJson
-            imageAnalyzerConfig = parsedJson.imageAnalyzerConfig
-            aboutConfig = parsedJson.aboutConfig
+            val parsedSettingsJson = fromJsonToSettings(settingsJsonString)
+            settingsConfig = parsedSettingsJson
+
+            val parsedMainJson = fromJsonToMain(mainJsonString)
+            checkAboutConfig(parsedMainJson.aboutConfig)
+            checkImageAnalyzerConfig(parsedMainJson.imageAnalyzerConfig)
+            mainConfig = parsedMainJson
+            imageAnalyzerConfig = parsedMainJson.imageAnalyzerConfig
+            aboutConfig = parsedMainJson.aboutConfig
         } catch (e: IOException) {
             throw e
         } catch (e: ClassNotFoundException) {
@@ -71,47 +81,55 @@ object ConfigManager {
      * @param [mainConfig] MainConfig object which contents will be stored
      * @throws [IOException]
      * */
-    fun store(context: Context, mainConfig: MainConfig) {
-        val jsonString = toJson(mainConfig)
+    fun store(context: Context, mainConfig: MainConfig, settingsConfig: SettingsConfig) {
+        val mainJsonString = toJson(mainConfig)
+        val settingsJsonString = toJson(settingsConfig)
         try {
-            val file = getFile(context)
-            file.writeText(jsonString, Charset.defaultCharset())
+            val settingsFile = getFile(context)[0]
+            settingsFile.writeText(settingsJsonString, Charset.defaultCharset())
+            val mainFile = getFile(context)[1]
+            mainFile.writeText(mainJsonString, Charset.defaultCharset())
         } catch (e: IOException) {
             throw e
         }
     }
 
     /**
-     * This private function returns the current config.json file or creates it, if it does'nt exist.
+     * This private function returns the current config.json/settingsConfig.json file or creates it,
+     * if it does not exist.
      *
      * @param [context] the current context
      * @throws [IOException]
-     * @return [File]
+     * @return [ArrayList]<File>
      * */
-    private fun getFile(context: Context): File {
+    private fun getFile(context: Context): ArrayList<File> {
         try {
             val dirPath = context.filesDir
             val configDirectory = File(dirPath, "config")
             configDirectory.mkdirs()
-            val file = File(configDirectory, "config.json")
-            if (!file.exists()) {
-                file.writeText(toJson(defaultConfig), Charset.defaultCharset())
+            val settingsFile = File(configDirectory, "settingsConfig.json")
+            val mainFile = File(configDirectory, "config.json")
+            if (!mainFile.exists()) {
+                mainFile.writeText(toJson(defaultMainConfig), Charset.defaultCharset())
             }
-            return file
+            if (!settingsFile.exists()) {
+                settingsFile.writeText(toJson(defaultSettingsConfig), Charset.defaultCharset())
+            }
+            return arrayListOf<File>(settingsFile, mainFile)
         } catch (e: IOException) {
             throw e
         }
     }
 
     /**
-     * This private function parses a given JSON string into a MainConfig object. The object is stored
-     * in class attributes mainConfig (imageAnalyzerConfig).
+     * This private function parses a given JSON string into a [MainConfig] object. The object is stored
+     * in class attributes [mainConfig] ([imageAnalyzerConfig]).
      *
      * @param [jsonString] JSON string which will be converted into MainConfig object
      * @throws [MalformedJsonException]
      * @return [MainConfig]
      * */
-    private fun fromJson(jsonString: String): MainConfig {
+    private fun fromJsonToMain(jsonString: String): MainConfig {
         try {
             return gson.fromJson<MainConfig>(jsonString, MainConfig::class.java)
         } catch (e: JsonParseException) {
@@ -123,13 +141,41 @@ object ConfigManager {
     }
 
     /**
-     * This private function parses a given MainConfig object into a JSON string. This string will
+     * This private function parses a given JSON string into a [SettingsConfig] object. The object is stored
+     * in class attributes [settingsConfig].
+     *
+     * @param [jsonString] JSON string which will be converted into MainConfig object
+     * @throws [MalformedJsonException]
+     * @return [SettingsConfig]
+     * */
+    private fun fromJsonToSettings(jsonString: String): SettingsConfig {
+        try {
+            return gson.fromJson<SettingsConfig>(jsonString, SettingsConfig::class.java)
+        } catch (e: JsonParseException) {
+            throw MalformedJsonException(
+                this::class.java.name + " : the given json string" +
+                        "is not JSON compliant."
+            )
+        }
+    }
+
+    /**
+     * This private function parses a given [MainConfig] object into a JSON string. This string will
      * be returned.
      *
-     * @param [mainConfig] MainConfig object which will be parsed to JSON
+     * @param [config] [MainConfig] object which will be parsed to JSON
      * @return [String]
      * */
-    private fun toJson(mainConfig: MainConfig): String = gson.toJson(mainConfig)
+    private fun toJson(config: MainConfig): String = gson.toJson(config)
+
+    /**
+     * This private function parses a given [SettingsConfig] object into a JSON string. This string will
+     * be returned.
+     *
+     * @param [config] [SettingsConfig] object which will be parsed to JSON
+     * @return [String]
+     * */
+    private fun toJson(config: SettingsConfig): String = gson.toJson(config)
 
     /**
      * This private function checks a given URL compliance.

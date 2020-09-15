@@ -5,9 +5,7 @@ import android.view.*
 import androidx.core.animation.doOnEnd
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.NavigationUI
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentHomeBinding
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
@@ -45,8 +43,10 @@ class HomeFragment : Fragment() {
 
         val startButton = binding.startButton
         startButton.setOnClickListener {
-            val x = (startButton.x + startButton.width / 2).toInt()
-            val y = (startButton.y + startButton.height / 2).toInt()
+            val startButtonXY = IntArray(2)
+            startButton.getLocationOnScreen(startButtonXY)
+            val x = startButtonXY[0] + startButton.width / 2
+            val y = startButtonXY[1] + startButton.height / 2
 
             animateCircle(binding.circleAnimView, x, y)
         }
@@ -60,9 +60,24 @@ class HomeFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return NavigationUI.onNavDestinationSelected(
-            item, requireView().findNavController()
-        ) || super.onOptionsItemSelected(item)
+        val navController = findNavController()
+
+        // onNavDestinationSelected() would be an alternative, but Actions defined in the
+        // Navigation Graph cannot be leveraged this way, hence the usage of a when() block
+        when (item.itemId) {
+            R.id.explanationFragment ->
+                navController.navigate(R.id.action_homeFragment_to_explanationFragment)
+            R.id.historyFragment ->
+                navController.navigate(R.id.action_homeFragment_to_historyFragment)
+            R.id.jokesFragment ->
+                navController.navigate(R.id.action_homeFragment_to_jokesFragment)
+            R.id.settingsFragment ->
+                navController.navigate(R.id.action_homeFragment_to_settingsFragment)
+            R.id.helpFragment ->
+                navController.navigate(R.id.action_homeFragment_to_helpFragment)
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     private fun animateCircle(view: View, centerX: Int, centerY: Int) {

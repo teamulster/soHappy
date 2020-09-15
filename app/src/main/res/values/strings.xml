@@ -14,6 +14,16 @@
     <string name="ui_overflow_settings">Settings</string>
     <string name="ui_overflow_help">Help &amp; Contact</string>
 
+    <string name="fragment_explanation_appbar_title">Explanation</string>
+    <string name="fragment_explanation_01_title">Introduction</string>
+    <string name="fragment_explanation_01_par1">soHappy allows you to measure and keep track of your happiness at any given time.</string>
+    <string name="fragment_explanation_01_par2">Staying happy may often be forgotten in pursuit of other goals, even though it has been proven that happiness improves both physical and mental wellbeing and should thus not be ignored.</string>
+    <string name="fragment_explanation_02_title">How to Use</string>
+    <string name="fragment_explanation_02_par1">Start the app by tapping the Start button and follow the instructions as shown on the screen.</string>
+    <string name="fragment_explanation_02_par2">You may need to move to sufficient lighting conditions in order to ensure that the app can detect your face.</string>
+    <string name="fragment_explanation_03_par1">After the app has finished tracking your smiles, you will be presented with a questionnaire consisting of six questions.</string>
+    <string name="fragment_explanation_03_par2">Answer them as honestly as possible and we\'ll tell you how likely you are genuinely happy.</string>
+
     <string name="fragment_camera_init">Move your face into the frame</string>
     <string name="fragment_camera_face">Take a deep breath and count to three</string>
     <string name="fragment_camera_stimulus1">Think about a time where someone made you laugh out loud unexpectedly</string>
@@ -21,6 +31,12 @@
     <string name="fragment_camera_checkmark_text">Success!</string>
     <string name="fragment_camera_countdown_text">Counting down…</string>
     <string name="fragment_camera_countdown_initial">3</string>
+
+    <string name="fragment_nosmile_appbar_title">No Smile Detected</string>
+    <string name="fragment_nosmile_title">Something went wrong.</string>
+    <string name="fragment_nosmile_description">We couldn\'t detect a smile for at least ten seconds. You can choose to retry or continue on to the questionnaire, although your results may be slightly skewed.</string>
+    <string name="fragment_nosmile_retry">Retry</string>
+    <string name="fragment_nosmile_continue">Continue anyway</string>
 
     <string name="fragment_jokes_appbar_title">Jokes</string>
     <string name="fragment_jokes_search_hint">Search…</string>
@@ -30,6 +46,9 @@
 
     <string name="fragment_history_appbar_title">History</string>
     <string name="fragment_history_sample_date">September 2020</string>
+    <string name="fragment_history_sample_day">Sep 05, 2020</string>
+    <string name="fragment_history_sample_time">11:47</string>
+    <string name="fragment_history_sample_result">83.61%</string>
     <string name="fragment_history_header_date">DATE</string>
     <string name="fragment_history_header_time">TIME</string>
     <string name="fragment_history_header_result">RESULT</string>
