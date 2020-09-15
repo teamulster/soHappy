@@ -41,7 +41,7 @@ class ConfigManagerTest {
                         "https://github.com/teamulster/soHappy",
                         "https://github.com/teamulster/soHappy/pulse"
                     ),
-                    TimerConfig(3000, 2500, 10000, 30000)
+                    TimerConfig(3000, 2500, 10_000, 30_000)
                 ), SettingsConfig(notifications = true, databaseSync = true)
             )
             val dirPath = cameraActivity.filesDir
@@ -61,7 +61,7 @@ class ConfigManagerTest {
                         "https://github.com/teamulster/soHappy",
                         "https://github.com/teamulster/soHappy/pulse"
                     ),
-                    TimerConfig(3000, 2500, 10000, 30000)
+                    TimerConfig(3000, 2500, 10_000, 30_000)
                 )
             )
             assertEquals(
@@ -87,7 +87,7 @@ class ConfigManagerTest {
                         "https://github.com/teamulster/soHappy",
                         "https://github.com/teamulster/soHappy/pulse"
                     ),
-                    TimerConfig(3000, 2500, 10000, 30000)
+                    TimerConfig(3000, 2500, 10_000, 30_000)
                 ), SettingsConfig(notifications = true, databaseSync = true)
             )
             val loadObject = ConfigManager.load(it)
@@ -103,7 +103,7 @@ class ConfigManagerTest {
                     "https://github.com/teamulster/soHappy",
                     "https://github.com/teamulster/soHappy/pulse"
                 ),
-                TimerConfig(3000, 2500, 10000, 30000)
+                TimerConfig(3000, 2500, 10_000, 30_000)
             )
             assertEquals(assertValue, loadObject)
         }
@@ -124,7 +124,7 @@ class ConfigManagerTest {
                         "https://github.com/teamulster/soHappy",
                         "https://github.com/teamulster/soHappy/pulse"
                     ),
-                    TimerConfig(3000, 2500, 10000, 30000)
+                    TimerConfig(3000, 2500, 10_000, 30_000)
                 ), SettingsConfig(notifications = true, databaseSync = true)
             )
             assertFailsWith(ClassNotFoundException::class) {
@@ -149,7 +149,7 @@ class ConfigManagerTest {
                         "hallo",
                         "https://github.com/teamulster/soHappy/pulse"
                     ),
-                    TimerConfig(3000, 2500, 10000, 30000)
+                    TimerConfig(3000, 2500, 10_000, 30_000)
                 ), SettingsConfig(notifications = true, databaseSync = true)
             )
             assertFailsWith(MalformedURLException::class) {

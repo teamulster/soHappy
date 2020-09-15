@@ -37,7 +37,7 @@ object ConfigManager {
             "https://github.com/teamulster/soHappy",
             "https://github.com/teamulster/soHappy"
         ),
-        TimerConfig(3000, 2500, 10000, 30000)
+        TimerConfig(3000, 2500, 10_000, 30_000)
     )
     private val defaultSettingsConfig = SettingsConfig(notifications = true, databaseSync = true)
 
