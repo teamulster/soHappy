@@ -33,8 +33,8 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
         }
     }
 
-    private val measurement : Measurement by fragment.activityViewModels()
-    private val questionnaireViewModel : QuestionnaireViewModel by fragment.activityViewModels()
+    private val measurement: Measurement by fragment.activityViewModels()
+    private val questionnaireViewModel: QuestionnaireViewModel by fragment.activityViewModels()
     private var faceDetector: FaceDetector? =
         DetectorFactory.getFaceDetectorFromConfig(config, fragment.requireActivity())
     private var smileDetector: SmileDetector? =
@@ -97,7 +97,9 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
         thread {
             while (true) {
                 if (imageAnalyzerState == ImageAnalyzerState.CANCEL) {
-                    (fragment.requireActivity() as CameraActivity).localDatabaseManager.addOrUpdateMeasurement(measurement)
+                    (fragment.requireActivity() as CameraActivity).localDatabaseManager.addOrUpdateMeasurement(
+                        measurement
+                    )
                     break
                 }
                 val bitmap = fragment.queue.poll()

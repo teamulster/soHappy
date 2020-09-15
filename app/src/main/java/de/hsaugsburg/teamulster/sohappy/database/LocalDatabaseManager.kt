@@ -11,7 +11,7 @@ import org.dizitart.no2.objects.filters.ObjectFilters
 import java.io.File
 
 /**
- * This LocalDatabaseManager manages the database stored in a local file
+ * This LocalDatabaseManager manages the database stored in a local file.
  */
 class LocalDatabaseManager(activity: Activity) {
     private val db = nitrite {
@@ -26,14 +26,26 @@ class LocalDatabaseManager(activity: Activity) {
         measurementRepository = db.getRepository()
     }
 
+    /**
+     * Adds a new measurement to the local database.
+     * @param [measurement] measurement to add
+     */
     fun addMeasurement(measurement: Measurement) {
         measurementRepository.insert(measurement)
     }
 
+    /**
+     * Updates an existing measurement in the database.
+     * @param [measurement] measurement to update
+     */
     fun updateMeasurement(measurement: Measurement) {
         measurementRepository.update(measurement)
     }
 
+    /**
+     * Adds an new measurement to the datebase. If the entry already exists, it will be updated.
+     * @param [measurement] measurement to add or update
+     */
     fun addOrUpdateMeasurement(measurement: Measurement) {
         val cursor =
             measurementRepository.find(ObjectFilters.eq("timeStamp", measurement.timeStamp))
@@ -45,6 +57,12 @@ class LocalDatabaseManager(activity: Activity) {
         }
     }
 
+    /**
+     * Returns Measurements sorted by Date in Descending Order.
+     * @param [offset] if you want to have older entries then the newest
+     * @param [size] number of Measurements
+     * @return List<Measurement>
+     */
     fun getLatestMeasurements(offset: Int = 0, size: Int = 10): List<Measurement> {
         val cursor = measurementRepository.find(
             FindOptions
