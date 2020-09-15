@@ -73,6 +73,11 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="ButtonPrimaryContour" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:background">@drawable/button_background_contour</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
     <style name="ButtonBorderlessNoDescription" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:background">@drawable/button_background_blank</item>
         <item name="android:gravity">start|center_vertical</item>
