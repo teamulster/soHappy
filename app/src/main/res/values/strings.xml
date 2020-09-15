@@ -32,6 +32,12 @@
     <string name="fragment_camera_countdown_text">Counting down…</string>
     <string name="fragment_camera_countdown_initial">3</string>
 
+    <string name="fragment_nosmile_appbar_title">No Smile Detected</string>
+    <string name="fragment_nosmile_title">Something went wrong.</string>
+    <string name="fragment_nosmile_description">We couldn\'t detect a smile for at least ten seconds. You can choose to retry or continue on to the questionnaire, although your results may be slightly skewed.</string>
+    <string name="fragment_nosmile_retry">Retry</string>
+    <string name="fragment_nosmile_continue">Continue anyway</string>
+
     <string name="fragment_jokes_appbar_title">Jokes</string>
     <string name="fragment_jokes_search_hint">Search…</string>
     <!-- TODO: Refactor jokes to be drawn from a data source rather than from this XML -->

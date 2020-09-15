@@ -68,6 +68,9 @@
         <action
             android:id="@+id/action_smileFragment_to_questionnaire01Fragment"
             app:destination="@id/questionnaire01Fragment" />
+        <action
+            android:id="@+id/action_smileFragment_to_noSmileFragment"
+            app:destination="@id/noSmileFragment" />
     </fragment>
     <fragment
         android:id="@+id/questionnaire01Fragment"
@@ -160,14 +163,16 @@
         android:label="@string/fragment_jokes_appbar_title"
         tools:layout="@layout/fragment_jokes" />
     <fragment
-        android:id="@+id/historyFragment"
-        android:name="de.hsaugsburg.teamulster.sohappy.fragment.HistoryFragment"
-        android:label="@string/fragment_history_appbar_title"
-        tools:layout="@layout/fragment_history" />
-    <fragment
-        android:id="@+id/explanationFragment"
-        android:name="de.hsaugsburg.teamulster.sohappy.fragment.ExplanationFragment"
-        android:label="@string/fragment_explanation_appbar_title"
-        tools:layout="@layout/fragment_explanation" />
+        android:id="@+id/noSmileFragment"
+        android:name="de.hsaugsburg.teamulster.sohappy.fragment.NoSmileFragment"
+        android:label="@string/fragment_nosmile_appbar_title"
+        tools:layout="@layout/fragment_nosmile" >
+        <action
+            android:id="@+id/action_noSmileFragment_to_questionnaire01Fragment"
+            app:destination="@id/questionnaire01Fragment" />
+        <action
+            android:id="@+id/action_noSmileFragment_to_smileFragment"
+            app:destination="@id/smileFragment" />
+    </fragment>
 
 </navigation>
