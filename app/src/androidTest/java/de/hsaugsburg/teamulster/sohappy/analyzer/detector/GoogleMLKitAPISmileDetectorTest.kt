@@ -6,13 +6,13 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.launchActivity
 import androidx.test.platform.app.InstrumentationRegistry
 import de.hsaugsburg.teamulster.sohappy.CameraActivity
-import de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl.GoogleMLKitAPISmileDetectorImpl
+import de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl.GoogleMLKitAPISmileDetector
 import junit.framework.Assert
 import org.junit.Before
 import org.junit.Test
 
 class GoogleMLKitAPISmileDetectorTest {
-    private lateinit var mLKitFaceDetector: GoogleMLKitAPISmileDetectorImpl
+    private lateinit var mLKitFaceDetector: GoogleMLKitAPISmileDetector
     private lateinit var scenario: ActivityScenario<CameraActivity>
     private val instrumentationContext: Context =
         InstrumentationRegistry.getInstrumentation().context
@@ -20,7 +20,7 @@ class GoogleMLKitAPISmileDetectorTest {
     @Before
     fun setUp() {
         scenario = launchActivity<CameraActivity>()
-        scenario.onActivity { mLKitFaceDetector = GoogleMLKitAPISmileDetectorImpl(it) }
+        scenario.onActivity { mLKitFaceDetector = GoogleMLKitAPISmileDetector(it) }
     }
 
     @Test

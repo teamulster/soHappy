@@ -13,7 +13,7 @@ import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
  * */
 // TODO: remove Suppress statement when DetectorFactory is compliant
 @Suppress("UnusedPrivateMember")
-class GoogleMLKitAPISmileDetectorImpl(activity : Activity) : SmileDetector {
+class GoogleMLKitAPISmileDetector(activity: Activity) : SmileDetector {
     companion object {
         /**
          * This data class inherits the SmileDetector.Companion.SmileDetectionResult(isSmiling) function

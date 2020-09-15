@@ -14,7 +14,7 @@ import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FaceDetector
  * */
 // TODO: remove Suppress statement when DetectorFactory is compliant
 @Suppress("UnusedPrivateMember")
-class GoogleMLKitAPIFaceDetectorImpl(activity: Activity) : FaceDetector {
+class GoogleMLKitAPIFaceDetector(activity: Activity) : FaceDetector {
     override val detectorName: String = "Google MLKit API Face Detector"
 
     // Specify options for MLKit SmileDetector and init faceDetector
