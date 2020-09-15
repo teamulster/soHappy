@@ -13,7 +13,7 @@ import de.hsaugsburg.teamulster.sohappy.databinding.FragmentHomeBinding
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 import de.hsaugsburg.teamulster.sohappy.stateMachine.states.WaitingForFace
-import de.hsaugsburg.teamulster.sohappy.util.StateMachineSupport
+import de.hsaugsburg.teamulster.sohappy.util.StateMachineUtil
 
 /**
  * HomeFragment is the entry point for the app.
@@ -27,7 +27,7 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        stateMachine = StateMachineSupport.getStateMachine(this)
+        stateMachine = StateMachineUtil.getStateMachine(this)
         stateMachine.addStateChangeListener { _, new ->
             if (new is WaitingForFace) {
                 findNavController().navigate(R.id.smileFragment)

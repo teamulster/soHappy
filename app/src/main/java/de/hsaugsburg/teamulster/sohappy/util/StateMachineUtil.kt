@@ -7,7 +7,7 @@ import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 /**
  * Helper to gain access to the state machine.
  */
-object StateMachineSupport {
+object StateMachineUtil {
 
     /**
      * provides the state machine instance through the given fragment.

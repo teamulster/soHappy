@@ -14,7 +14,7 @@ import de.hsaugsburg.teamulster.sohappy.databinding.FragmentSmileBinding
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 import de.hsaugsburg.teamulster.sohappy.stateMachine.states.*
-import de.hsaugsburg.teamulster.sohappy.util.StateMachineSupport
+import de.hsaugsburg.teamulster.sohappy.util.StateMachineUtil
 import kotlin.concurrent.thread
 
 // TODO: The requireView.postDelayed() calls serve as proof of concept for animations - replace!
@@ -37,7 +37,7 @@ class SmileFragment : Fragment() {
             container,
             false
         )
-        stateMachine = StateMachineSupport.getStateMachine(this)
+        stateMachine = StateMachineUtil.getStateMachine(this)
         when (stateMachine.getCurrentMachineState()) {
             is WaitingForFace -> thread {
                 Thread.sleep(10_000)

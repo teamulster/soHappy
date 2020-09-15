@@ -12,7 +12,7 @@ import de.hsaugsburg.teamulster.sohappy.databinding.FragmentResultsBinding
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 import de.hsaugsburg.teamulster.sohappy.stateMachine.states.Start
-import de.hsaugsburg.teamulster.sohappy.util.StateMachineSupport
+import de.hsaugsburg.teamulster.sohappy.util.StateMachineUtil
 
 /**
  * ResultsFragment serves as the conclusion of the smile procedure and provides the
@@ -33,7 +33,7 @@ class ResultsFragment : Fragment() {
             container,
             false
         )
-        stateMachine = StateMachineSupport.getStateMachine(this)
+        stateMachine = StateMachineUtil.getStateMachine(this)
 
         stateMachine.addStateChangeListener { _, new ->
             when (new) {
