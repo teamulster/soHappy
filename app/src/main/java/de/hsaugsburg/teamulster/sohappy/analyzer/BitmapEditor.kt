@@ -15,7 +15,7 @@ object BitmapEditor {
      * @return a cutout from the bitmap.
      */
     fun crop(bitmap: Bitmap, frame: Rect): Bitmap? {
-        var width= frame.width()
+        var width = frame.width()
         if (bitmap.width < frame.left + frame.width()) {
             width = bitmap.width - frame.left
         }
@@ -23,7 +23,15 @@ object BitmapEditor {
         if (bitmap.height < frame.top + frame.height()) {
             height = bitmap.height - frame.top
         }
-        return Bitmap.createBitmap(bitmap, frame.left, frame.top, width, height)
+        var left = frame.left
+        if (frame.left < 0) {
+            left = 0
+        }
+        var top = frame.top
+        if (frame.top < 0) {
+            top = 0
+        }
+        return Bitmap.createBitmap(bitmap, left, top, width, height)
     }
 
     /**
