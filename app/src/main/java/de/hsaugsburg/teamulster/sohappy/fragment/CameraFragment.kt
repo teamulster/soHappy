@@ -102,7 +102,6 @@ class CameraFragment: Fragment() {
 
         imageAnalysis.setAnalyzer(executor, {
             var bitmap = allocateBitmapIfNecessary(it.width, it.height)
-            //TODO: SuppressLint is dependent on it.image!! Why?
             converter.yuvToRgb(it.image!!, bitmap)
 
             bitmap = BitmapEditor.rotate(bitmap, -90f)
