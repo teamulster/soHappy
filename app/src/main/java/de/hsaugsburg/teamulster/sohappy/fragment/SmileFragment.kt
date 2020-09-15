@@ -60,7 +60,7 @@ class SmileFragment : Fragment() {
         }, 8250)
 
         requireView().postDelayed({
-            findNavController().navigate(R.id.action_smileFragment_to_noSmileFragment)
+            findNavController().navigate(R.id.action_smileFragment_to_questionnaire01Fragment)
         }, 12_250)
     }
 
@@ -82,7 +82,7 @@ class SmileFragment : Fragment() {
     private fun startCountdown() {
         binding.checkmarkView.animate()
             .alpha(0f)
-            .setDuration(500)
+            .duration = 500
 
         fadeOutText()
         requireView().postDelayed({
@@ -109,20 +109,6 @@ class SmileFragment : Fragment() {
         requireView().postDelayed({
             tickCountdown()
         }, 3500)
-
-        /* requireView().postDelayed({
-            binding.countdownText.animate()
-                .alpha(0f)
-                .translationYBy(100f)
-                .setDuration(125)
-        }, 1250)
-
-        requireView().postDelayed({
-            binding.countdownText.setText("2")
-            binding.countdownText.animate()
-                .alpha(1f)
-                .setDuration(125)
-        }, 1375) */
     }
 
     private fun tickCountdown() {
