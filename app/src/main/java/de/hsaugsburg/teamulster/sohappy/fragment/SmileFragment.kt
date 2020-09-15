@@ -53,7 +53,6 @@ class SmileFragment : Fragment() {
                     findNavController().navigate(R.id.homeFragment)
                 }
                 is TakeABreath -> requireView().post {
-                    //VideoMasker.applyYellowFilter()
                     VideoMasker.applyBlueFilter()
                     startCountdown()
                 }
@@ -72,7 +71,6 @@ class SmileFragment : Fragment() {
                 }, 10_000)
                 is SmileCountdown -> {
                     requireView().post {
-                        //VideoMasker.applyGreenFilter()
                         (binding.checkmarkView.drawable as Animatable).start()
                     }
                     requireView().postDelayed({
