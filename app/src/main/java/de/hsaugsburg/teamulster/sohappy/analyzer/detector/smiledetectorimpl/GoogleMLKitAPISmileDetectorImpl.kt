@@ -2,11 +2,9 @@ package de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl
 
 import android.app.Activity
 import android.graphics.Bitmap
-import com.google.android.gms.vision.face.FaceDetector.*
 import com.google.common.util.concurrent.SettableFuture
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.FaceDetection
-import com.google.mlkit.vision.face.FaceDetector
 import com.google.mlkit.vision.face.FaceDetectorOptions
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
 
@@ -34,16 +32,17 @@ class GoogleMLKitAPISmileDetectorImpl(activity : Activity) : SmileDetector {
 
     // Specify options for MLKit SmileDetector
     private val options = FaceDetectorOptions.Builder()
-        .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_ACCURATE)
+        .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_FAST)
         .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_ALL)
         .setClassificationMode(FaceDetectorOptions.CLASSIFICATION_MODE_ALL)
         .build()
+    private val faceDetector = FaceDetection.getClient(options)
 
     override fun detect(img: Bitmap): SmileDetector.Companion.SmileDetectionResult? {
         // Init faceDetector and convert bitmap to InputImage object
-        val faceDetector = FaceDetection.getClient(options)
         val inputImage = InputImage.fromBitmap(img, 0)
         val future = SettableFuture.create<SmileDetector.Companion.SmileDetectionResult?>()
+
         // process given image and store results as SmileDetectionResult
         // NOTE: predictionResults has to be stored as ArrayList to make it compliant to the TF Lite approach
         faceDetector.process(inputImage)

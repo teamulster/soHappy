@@ -16,13 +16,13 @@ class GoogleMLKitAPIFaceDetectorImpl(activity: Activity) : FaceDetector {
     override val detectorName: String = "Google MLKit API Face Detector"
 
     private val options = FaceDetectorOptions.Builder()
-        .setPerformanceMode(com.google.android.gms.vision.face.FaceDetector.ACCURATE_MODE)
-        .setLandmarkMode(com.google.android.gms.vision.face.FaceDetector.ALL_LANDMARKS)
-        .setClassificationMode(com.google.android.gms.vision.face.FaceDetector.ALL_CLASSIFICATIONS)
+        .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_FAST)
+        .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_ALL)
+        .setClassificationMode(FaceDetectorOptions.CLASSIFICATION_MODE_ALL)
         .build()
+    private val faceDetector = FaceDetection.getClient(options)
 
     override fun detect(img: Bitmap): FaceDetector.Companion.FaceDetectionResult? {
-        val faceDetector = FaceDetection.getClient(options)
         val inputImage = InputImage.fromBitmap(img, 0)
         val future = SettableFuture.create<FaceDetector.Companion.FaceDetectionResult?>()
         faceDetector.process(inputImage)
