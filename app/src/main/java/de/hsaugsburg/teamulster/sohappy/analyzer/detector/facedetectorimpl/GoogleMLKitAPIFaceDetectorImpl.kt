@@ -12,6 +12,7 @@ import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FaceDetector
 /**
  * This class implements a FaceDetector using the Google MLKit API.
  * */
+@Suppress("UnusedPrivateMember")
 class GoogleMLKitAPIFaceDetectorImpl(activity: Activity) : FaceDetector {
     override val detectorName: String = "Google MLKit API Face Detector"
 

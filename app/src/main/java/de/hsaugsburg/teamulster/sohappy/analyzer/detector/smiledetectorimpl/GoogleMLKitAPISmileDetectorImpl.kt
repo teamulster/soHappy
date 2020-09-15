@@ -11,6 +11,7 @@ import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
 /**
  * This class implements a SmileDetector using the Google MLKit API.
  * */
+@Suppress("UnusedPrivateMember")
 class GoogleMLKitAPISmileDetectorImpl(activity : Activity) : SmileDetector {
     companion object {
         /**
