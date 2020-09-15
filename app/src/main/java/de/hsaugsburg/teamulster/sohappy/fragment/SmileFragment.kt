@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import de.hsaugsburg.teamulster.sohappy.R
+import de.hsaugsburg.teamulster.sohappy.VideoMasker
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentSmileBinding
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
@@ -40,6 +41,7 @@ class SmileFragment : Fragment() {
         stateMachine = StateMachineSupport.getStateMachine(this)
         when (stateMachine.getCurrentMachineState()) {
             is WaitingForFace -> thread {
+                VideoMasker.applyRedFilter()
                 Thread.sleep(10_000)
                 stateMachine.consumeAction(Action.WaitingForFaceTimer)
             }
@@ -51,6 +53,8 @@ class SmileFragment : Fragment() {
                     findNavController().navigate(R.id.homeFragment)
                 }
                 is TakeABreath -> requireView().post {
+                    //VideoMasker.applyYellowFilter()
+                    VideoMasker.applyBlueFilter()
                     startCountdown()
                 }
                 is Stimulus -> {
@@ -68,6 +72,7 @@ class SmileFragment : Fragment() {
                 }, 10_000)
                 is SmileCountdown -> {
                     requireView().post {
+                        //VideoMasker.applyGreenFilter()
                         (binding.checkmarkView.drawable as Animatable).start()
                     }
                     requireView().postDelayed({
