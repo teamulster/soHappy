@@ -1,9 +1,7 @@
 package de.hsaugsburg.teamulster.sohappy.factories
 
-import android.content.Context
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.launchActivity
-import androidx.test.platform.app.InstrumentationRegistry
 import de.hsaugsburg.teamulster.sohappy.CameraActivity
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.GoogleMLKitAPIFaceDetector
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.HaarCascadeFaceDetector
@@ -24,8 +22,6 @@ class DetectorFactoryTest {
         "de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl.GoogleMLKitAPISmileDetector"
     )
     private lateinit var scenario: ActivityScenario<CameraActivity>
-    private val instrumentationContext: Context =
-        InstrumentationRegistry.getInstrumentation().context
 
     @Before
     fun setUp() {
