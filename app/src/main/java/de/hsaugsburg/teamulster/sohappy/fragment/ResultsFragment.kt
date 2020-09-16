@@ -45,6 +45,7 @@ class ResultsFragment : Fragment() {
             if (this.isResumed) {
                 when (new) {
                     is Start -> {
+                        (requireActivity() as CameraActivity).localDatabaseManager.close()
                         requireActivity().finish()
                         startActivity(requireActivity().intent)
                     }
@@ -62,10 +63,5 @@ class ResultsFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         (requireActivity() as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(false)
-    }
-
-    override fun onDestroy() {
-        (requireActivity() as CameraActivity).localDatabaseManager.close()
-        super.onDestroy()
     }
 }
