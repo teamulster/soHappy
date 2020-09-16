@@ -20,7 +20,7 @@ class GoogleMLKitAPISmileDetectorTest {
     @Before
     fun setUp() {
         scenario = launchActivity<CameraActivity>()
-        scenario.onActivity { mLKitFaceDetector = GoogleMLKitAPISmileDetector(it) }
+        scenario.onActivity { mLKitFaceDetector = GoogleMLKitAPISmileDetector() }
     }
 
     @Test
