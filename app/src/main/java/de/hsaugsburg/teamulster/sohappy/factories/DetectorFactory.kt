@@ -21,7 +21,8 @@ object DetectorFactory {
      * @return [FaceDetector]
      */
     fun getFaceDetectorFromConfig(config: ImageAnalyzerConfig, activity: Activity): FaceDetector {
-        return Class.forName(config.faceDetector).getConstructor(Activity::class.java)
+        return Class.forName(config.faceDetector)
+            .getConstructor(Activity::class.java)
             .newInstance(activity) as FaceDetector
     }
 

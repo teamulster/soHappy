@@ -66,7 +66,7 @@ class CameraFragment: Fragment() {
         imageAnalyzer = ImageAnalyzer(
             this, ImageAnalyzerConfig(
                 "de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.HaarCascadeFaceDetector",
-                "de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl.FerTFLiteSmileDetectorImpl",
+                "de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl.FerTFLiteSmileDetector",
             )
         )
 
@@ -110,6 +110,7 @@ class CameraFragment: Fragment() {
 
         imageAnalysis.setAnalyzer(executor, {
             var bitmap = allocateBitmapIfNecessary(it.width, it.height)
+            //TODO: SuppressLint is dependent on it.image!! Why?
             converter.yuvToRgb(it.image!!, bitmap)
 
             bitmap = BitmapEditor.rotate(bitmap, -90f)

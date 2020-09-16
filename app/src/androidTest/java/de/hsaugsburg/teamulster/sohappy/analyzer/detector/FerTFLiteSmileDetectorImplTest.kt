@@ -1,4 +1,4 @@
-package de.hsaugsburg.teamulster.sohappy.detector
+package de.hsaugsburg.teamulster.sohappy.analyzer.detector
 
 import android.content.Context
 import android.graphics.BitmapFactory
@@ -16,7 +16,7 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class FerTFLiteSmileDetectorImplTest {
-    lateinit var tfliteImpl: FerTFLiteSmileDetectorImpl
+    private lateinit var tfliteImpl: FerTFLiteSmileDetectorImpl
     private lateinit var scenario: ActivityScenario<CameraActivity>
     private val instrumentationContext: Context =
         InstrumentationRegistry.getInstrumentation().context
@@ -28,20 +28,24 @@ class FerTFLiteSmileDetectorImplTest {
     }
 
     @Test
-    fun useSmileDetectorWithPositiveResult() {
+    fun useDetectPositive() {
         scenario.onActivity {
-            val istr = instrumentationContext.assets.open("tflite_test.jpg")
+            val istr = instrumentationContext.assets.open("smileDetector_test_positive.jpg")
             val detectResult = tfliteImpl.detect(BitmapFactory.decodeStream(istr))
-            assertTrue(detectResult.isSmiling)
+            if (detectResult != null) {
+                assertTrue(detectResult.isSmiling)
+            }
         }
     }
 
     @Test
-    fun useSmileDetectorWithNegativeResult() {
+    fun useDetectNegative() {
         scenario.onActivity {
-            val istr = instrumentationContext.assets.open("tflite_negative_test.png")
+            val istr = instrumentationContext.assets.open("smileDetector_test_negative.png")
             val detectResult = tfliteImpl.detect(BitmapFactory.decodeStream(istr))
-            assertFalse(detectResult.isSmiling)
+            if (detectResult != null) {
+                assertFalse(detectResult.isSmiling)
+            }
         }
     }
 }
