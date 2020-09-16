@@ -1,6 +1,7 @@
 package de.hsaugsburg.teamulster.sohappy.stateMachine
 
 import android.util.Log
+import androidx.lifecycle.ViewModel
 import de.hsaugsburg.teamulster.sohappy.stateMachine.states.Start
 import de.hsaugsburg.teamulster.sohappy.stateMachine.states.State
 import kotlin.properties.Delegates
@@ -8,7 +9,7 @@ import kotlin.properties.Delegates
 /**
  * State machine to handle the different states and actions of the application.
  */
-class StateMachine {
+class StateMachine : ViewModel() {
     private val onStateChangeList = ArrayList<(State, State) -> Unit>()
     private var currentState by Delegates.observable<State>(initialValue = Start()) { _, old, new ->
         handleStateChange(old, new)

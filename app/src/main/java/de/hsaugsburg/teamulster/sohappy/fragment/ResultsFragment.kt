@@ -15,14 +15,13 @@ import de.hsaugsburg.teamulster.sohappy.databinding.FragmentResultsBinding
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 import de.hsaugsburg.teamulster.sohappy.stateMachine.states.Start
-import de.hsaugsburg.teamulster.sohappy.util.StateMachineUtil
 
 /**
  * ResultsFragment serves as the conclusion of the smile procedure and provides the
  * user with a summary of their session.
  */
 class ResultsFragment : Fragment() {
-    private lateinit var stateMachine: StateMachine
+    private val stateMachine: StateMachine by activityViewModels()
     private lateinit var binding: FragmentResultsBinding
     private val measurement: Measurement by activityViewModels()
 
@@ -40,7 +39,6 @@ class ResultsFragment : Fragment() {
 
         (this.requireActivity() as CameraActivity).localDatabaseManager.updateMeasurement(measurement)
 
-        stateMachine = StateMachineUtil.getStateMachine(this)
         stateMachine.addStateChangeListener { _, new ->
             if (this.isResumed) {
                 when (new) {
