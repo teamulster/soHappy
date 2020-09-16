@@ -125,7 +125,9 @@ class CameraFragment: Fragment() {
 
 
         cameraProvider!!.bindToLifecycle(this, CameraSelector.DEFAULT_FRONT_CAMERA, imageAnalysis)
-        imageAnalyzer.execute()
+        if (parentFragment is SmileFragment) {
+            imageAnalyzer.execute()
+        }
     }
 
     private fun allocateBitmapIfNecessary(width: Int, height: Int): Bitmap {

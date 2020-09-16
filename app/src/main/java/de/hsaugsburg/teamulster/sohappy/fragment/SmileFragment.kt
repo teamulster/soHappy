@@ -75,7 +75,7 @@ class SmileFragment : Fragment() {
                         }
                         requireView().postDelayed({
                             stateMachine.consumeAction(Action.SmileCountdownTimer)
-                        }, 15_000)
+                        }, 30_000)
                     }
                     is Questions -> findNavController().navigate(R.id.questionnaire01Fragment)
                     is NoSmile -> findNavController().navigate(R.id.action_smileFragment_to_noSmileFragment)
