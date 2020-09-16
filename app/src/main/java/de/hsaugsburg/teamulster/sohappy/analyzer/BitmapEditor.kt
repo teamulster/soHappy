@@ -14,8 +14,25 @@ object BitmapEditor {
      * @param frame is the rectangle you want to cut out.
      * @return a cutout from the bitmap.
      */
-    fun crop(bitmap: Bitmap, frame: Rect): Bitmap? =
-        Bitmap.createBitmap(bitmap, frame.left, frame.top, frame.width(), frame.height())
+    fun crop(bitmap: Bitmap, frame: Rect): Bitmap? {
+        var width = frame.width()
+        if (bitmap.width < frame.left + frame.width()) {
+            width = bitmap.width - frame.left
+        }
+        var height = frame.height()
+        if (bitmap.height < frame.top + frame.height()) {
+            height = bitmap.height - frame.top
+        }
+        var left = frame.left
+        if (frame.left < 0) {
+            left = 0
+        }
+        var top = frame.top
+        if (frame.top < 0) {
+            top = 0
+        }
+        return Bitmap.createBitmap(bitmap, left, top, width, height)
+    }
 
     /**
      * @param bitmap you want rotate.
