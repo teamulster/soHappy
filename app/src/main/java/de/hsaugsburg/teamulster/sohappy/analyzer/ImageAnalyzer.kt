@@ -52,7 +52,6 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
             print(e.message)
         }
 
-
         stateMachine.addStateChangeListener { _, new ->
             imageAnalyzerState = when (new) {
                 is Start -> ImageAnalyzerState.NONE
