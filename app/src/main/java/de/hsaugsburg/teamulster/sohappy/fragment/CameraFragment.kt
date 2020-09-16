@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import de.hsaugsburg.teamulster.sohappy.R
+import de.hsaugsburg.teamulster.sohappy.VideoMasker
 import de.hsaugsburg.teamulster.sohappy.analyzer.BitmapEditor
 import de.hsaugsburg.teamulster.sohappy.analyzer.ImageAnalyzer
 import de.hsaugsburg.teamulster.sohappy.config.ImageAnalyzerConfig
@@ -60,6 +61,7 @@ class CameraFragment: Fragment() {
         converter = YuvToRgbConverter(context)
         gpuImageView = binding.gpuImageView
         gpuImageView.setScaleType(GPUImage.ScaleType.CENTER_CROP)
+        VideoMasker.gpuImageView = gpuImageView
 
         queue = BitmapQueue()
         // TODO: Replace with real config here
@@ -120,6 +122,7 @@ class CameraFragment: Fragment() {
             gpuImageView.post {
                 gpuImageView.setRatio((bitmap.width / bitmap.height).toFloat())
                 gpuImageView.setImage(bitmap)
+
             }
             it.close()
         })

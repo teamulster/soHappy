@@ -8,6 +8,8 @@ import jp.co.cyberagent.android.gpuimage.filter.*
  */
 object VideoMasker {
 
+    lateinit var gpuImageView: GPUImageView
+
     private val blueFilter: GPUImageFilter = GPUImageFilterGroup(
         listOf(
             GPUImagePixelationFilter().apply { setPixel(5F) },
@@ -55,37 +57,29 @@ object VideoMasker {
 
     /**
      * applies blue blur filter.
-     *
-     * @param gpuImageView the image to be blurred.
      */
-    fun applyBlueFilter (gpuImageView: GPUImageView): GPUImageView = gpuImageView.apply {
-        gpuImage.setFilter(blueFilter)
+    fun applyBlueFilter () {
+        gpuImageView.filter = blueFilter
     }
 
     /**
      * applies red blur filter.
-     *
-     * @param gpuImageView the image to be blurred.
      */
-    fun applyRedFilter (gpuImageView: GPUImageView): GPUImageView = gpuImageView.apply {
-        gpuImage.setFilter(redFilter)
+    fun applyRedFilter ()  {
+        gpuImageView.filter = redFilter
     }
 
     /**
      * applies yellow blur filter.
-     *
-     * @param gpuImageView the image to be blurred.
      */
-    fun applyYellowFilter (gpuImageView: GPUImageView): GPUImageView = gpuImageView.apply {
-        gpuImage.setFilter(yellowFilter)
+    fun applyYellowFilter () {
+        gpuImageView.filter = yellowFilter
     }
 
     /**
      * applies green blur filter.
-     *
-     * @param gpuImageView the image to be blurred.
      */
-    fun applyGreenFilter (gpuImageView: GPUImageView): GPUImageView = gpuImageView.apply {
-        gpuImage.setFilter(greenFilter)
+    fun applyGreenFilter () {
+        gpuImageView.filter = greenFilter
     }
 }
