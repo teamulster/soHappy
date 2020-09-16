@@ -6,11 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import de.hsaugsburg.teamulster.sohappy.R
+import de.hsaugsburg.teamulster.sohappy.VideoMasker
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentSmileBinding
+import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
+import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
+import de.hsaugsburg.teamulster.sohappy.stateMachine.states.*
+import de.hsaugsburg.teamulster.sohappy.util.StateMachineUtil
+import kotlin.concurrent.thread
 
 // TODO: The requireView.postDelayed() calls serve as proof of concept for animations - replace!
 /**
@@ -18,6 +24,7 @@ import de.hsaugsburg.teamulster.sohappy.databinding.FragmentSmileBinding
  * procedure described in the paper.
  */
 class SmileFragment : Fragment() {
+    private lateinit var stateMachine: StateMachine
     private lateinit var binding: FragmentSmileBinding
 
     override fun onCreateView(
@@ -31,7 +38,54 @@ class SmileFragment : Fragment() {
             container,
             false
         )
-
+        stateMachine = StateMachineUtil.getStateMachine(this)
+        when (stateMachine.getCurrentMachineState()) {
+            is WaitingForFace -> thread {
+                VideoMasker.applyRedFilter()
+                Thread.sleep(10_000)
+                stateMachine.consumeAction(Action.WaitingForFaceTimer)
+            }
+        }
+        // TODO: Lambdas need to be unregistered, when new fragment is initialized
+        stateMachine.addStateChangeListener { old, new ->
+            if (this.isResumed) {
+                when (new) {
+                    is Start -> requireView().post {
+                        findNavController().navigate(R.id.homeFragment)
+                    }
+                    is TakeABreath -> requireView().post {
+                        VideoMasker.applyBlueFilter()
+                        startCountdown()
+                    }
+                    is Stimulus -> {
+                        requireView().post {
+                            fadeOutText()
+                            fadeInText(getString(R.string.fragment_camera_stimulus1))
+                        }
+                        requireView().postDelayed({
+                            stateMachine.consumeAction(Action.StimulusTimer)
+                            //TODO: get sec from config
+                        }, 2_500)
+                    }
+                    is WaitingForSmile -> requireView().postDelayed({
+                        if (old !is WaitingForFace) {
+                            stateMachine.consumeAction(Action.WaitingForSmileTimer)
+                        }
+                    }, 10_000)
+                    is SmileCountdown -> if (old !is SmileCountdown) {
+                        requireView().post {
+                            (binding.checkmarkView.drawable as Animatable).start()
+                        }
+                        requireView().postDelayed({
+                            stateMachine.consumeAction(Action.SmileCountdownTimer)
+                        }, 30_000)
+                    }
+                    is Questions -> findNavController().navigate(R.id.questionnaire01Fragment)
+                    is NoSmile -> findNavController().navigate(R.id.action_smileFragment_to_noSmileFragment)
+                }
+            }
+            //TODO: Add "end" and "question" button
+        }
         return binding.root
     }
 
@@ -42,26 +96,6 @@ class SmileFragment : Fragment() {
         // The initial animation has to be started here, otherwise the animation
         // will play even if the screen is currently not focused on this fragment
         startInitAnimation()
-
-        requireView().postDelayed({
-            (binding.checkmarkView.drawable as Animatable).start()
-        }, 3000)
-
-        requireView().postDelayed({
-            startCountdown()
-        }, 4000)
-
-        requireView().postDelayed({
-            fadeOutText()
-        }, 7750)
-
-        requireView().postDelayed({
-            fadeInText(getString(R.string.fragment_camera_stimulus1))
-        }, 8250)
-
-        requireView().postDelayed({
-            findNavController().navigate(R.id.questionnaire01Fragment)
-        }, 12_250)
     }
 
     override fun onStop() {
@@ -82,7 +116,7 @@ class SmileFragment : Fragment() {
     private fun startCountdown() {
         binding.checkmarkView.animate()
             .alpha(0f)
-            .setDuration(500)
+            .duration = 500
 
         fadeOutText()
         requireView().postDelayed({
@@ -93,8 +127,7 @@ class SmileFragment : Fragment() {
                 visibility = View.VISIBLE
             }
             binding.countdownText.animate()
-                .alpha(1f)
-                .setDuration(500)
+                .alpha(1f).duration = 500
             (binding.countdownView.drawable as Animatable).start()
         }, 750)
 
@@ -108,6 +141,7 @@ class SmileFragment : Fragment() {
 
         requireView().postDelayed({
             tickCountdown()
+            stateMachine.consumeAction(Action.TakeABreathTimer)
         }, 3500)
 
         /* requireView().postDelayed({

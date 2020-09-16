@@ -5,14 +5,17 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.view.*
-import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import de.hsaugsburg.teamulster.sohappy.R
+import de.hsaugsburg.teamulster.sohappy.VideoMasker
 import de.hsaugsburg.teamulster.sohappy.analyzer.BitmapEditor
 import de.hsaugsburg.teamulster.sohappy.analyzer.ImageAnalyzer
 import de.hsaugsburg.teamulster.sohappy.config.ImageAnalyzerConfig
@@ -34,6 +37,7 @@ class CameraFragment: Fragment() {
 
     private val executor = Executors.newSingleThreadExecutor()
     private var cameraProvider: ProcessCameraProvider? = null
+    private var cameraIsRunning = false
     private lateinit var binding: FragmentCameraBinding
     private lateinit var bitmap: Bitmap
     private lateinit var converter : YuvToRgbConverter
@@ -57,10 +61,11 @@ class CameraFragment: Fragment() {
         converter = YuvToRgbConverter(context)
         gpuImageView = binding.gpuImageView
         gpuImageView.setScaleType(GPUImage.ScaleType.CENTER_CROP)
-
+        VideoMasker.gpuImageView = gpuImageView
         queue = BitmapQueue()
+        // TODO: Replace with real config here
         imageAnalyzer = ImageAnalyzer(
-            this, requireActivity(), ImageAnalyzerConfig(
+            this, ImageAnalyzerConfig(
                 "de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.HaarCascadeFaceDetector",
                 "de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl.FerTFLiteSmileDetector",
             )
@@ -85,7 +90,6 @@ class CameraFragment: Fragment() {
     }
 
     @SuppressLint("UnsafeExperimentalUsageError")
-    @Suppress("MagicNumber")
     private fun startCameraIfReady() {
         // We need to build an ImageAnalysis, which will get binded to the cameraProvider.
         // We can register an Analyzer for the analysis, which is a callback.
@@ -95,6 +99,10 @@ class CameraFragment: Fragment() {
         if (!isPermissionsGranted() || cameraProvider == null) {
             return
         }
+        if (cameraIsRunning) {
+            return
+        }
+        cameraIsRunning = true
         val imageAnalysis = ImageAnalysis.Builder()
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             // TODO: take a look into .setBackgroundExecutor()
@@ -106,19 +114,23 @@ class CameraFragment: Fragment() {
             converter.yuvToRgb(it.image!!, bitmap)
 
             bitmap = BitmapEditor.rotate(bitmap, -90f)
+            bitmap = BitmapEditor.flipHorizontal(bitmap)
 
             queue.replace(bitmap.copy(bitmap.config, false))
 
             gpuImageView.post {
                 gpuImageView.setRatio((bitmap.width / bitmap.height).toFloat())
                 gpuImageView.setImage(bitmap)
+
             }
             it.close()
         })
 
 
         cameraProvider!!.bindToLifecycle(this, CameraSelector.DEFAULT_FRONT_CAMERA, imageAnalysis)
-        imageAnalyzer.execute()
+        if (parentFragment is SmileFragment) {
+            imageAnalyzer.execute()
+        }
     }
 
     private fun allocateBitmapIfNecessary(width: Int, height: Int): Bitmap {

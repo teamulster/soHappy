@@ -34,13 +34,14 @@ class ConfigManagerTest {
                         "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
                                 ".facedetectorimpl.HaarCascadeFaceDetector",
                         "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
-                                ".smiledetectorimpl.FerTFLiteSmileDetectorImpl"
+                                ".smiledetectorimpl.FerTFLiteSmileDetector"
                     ),
                     AboutConfig(
                         "https://github.com/teamulster/soHappy",
                         "https://github.com/teamulster/soHappy",
                         "https://github.com/teamulster/soHappy/pulse"
-                    )
+                    ),
+                    TimerConfig(3000, 2500, 10_000, 30_000)
                 ), SettingsConfig(notifications = true, databaseSync = true)
             )
             val dirPath = cameraActivity.filesDir
@@ -53,13 +54,14 @@ class ConfigManagerTest {
                         "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
                                 ".facedetectorimpl.HaarCascadeFaceDetector",
                         "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
-                                ".smiledetectorimpl.FerTFLiteSmileDetectorImpl"
+                                ".smiledetectorimpl.FerTFLiteSmileDetector"
                     ),
                     AboutConfig(
                         "https://github.com/teamulster/soHappy",
                         "https://github.com/teamulster/soHappy",
                         "https://github.com/teamulster/soHappy/pulse"
-                    )
+                    ),
+                    TimerConfig(3000, 2500, 10_000, 30_000)
                 )
             )
             assertEquals(
@@ -78,13 +80,14 @@ class ConfigManagerTest {
                         "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
                                 ".facedetectorimpl.HaarCascadeFaceDetector",
                         "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
-                                ".smiledetectorimpl.FerTFLiteSmileDetectorImpl"
+                                ".smiledetectorimpl.FerTFLiteSmileDetector"
                     ),
                     AboutConfig(
                         "https://github.com/teamulster/soHappy",
                         "https://github.com/teamulster/soHappy",
                         "https://github.com/teamulster/soHappy/pulse"
-                    )
+                    ),
+                    TimerConfig(3000, 2500, 10_000, 30_000)
                 ), SettingsConfig(notifications = true, databaseSync = true)
             )
             val loadObject = ConfigManager.load(it)
@@ -93,13 +96,14 @@ class ConfigManagerTest {
                     "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
                             ".facedetectorimpl.HaarCascadeFaceDetector",
                     "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
-                            ".smiledetectorimpl.FerTFLiteSmileDetectorImpl"
+                            ".smiledetectorimpl.FerTFLiteSmileDetector"
                 ),
                 AboutConfig(
                     "https://github.com/teamulster/soHappy",
                     "https://github.com/teamulster/soHappy",
                     "https://github.com/teamulster/soHappy/pulse"
-                )
+                ),
+                TimerConfig(3000, 2500, 10_000, 30_000)
             )
             assertEquals(assertValue, loadObject)
         }
@@ -119,7 +123,8 @@ class ConfigManagerTest {
                         "https://github.com/teamulster/soHappy",
                         "https://github.com/teamulster/soHappy",
                         "https://github.com/teamulster/soHappy/pulse"
-                    )
+                    ),
+                    TimerConfig(3000, 2500, 10_000, 30_000)
                 ), SettingsConfig(notifications = true, databaseSync = true)
             )
             assertFailsWith(ClassNotFoundException::class) {
@@ -137,13 +142,14 @@ class ConfigManagerTest {
                         "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
                                 ".facedetectorimpl.HaarCascadeFaceDetector",
                         "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
-                                ".smiledetectorimpl.FerTFLiteSmileDetectorImpl"
+                                ".smiledetectorimpl.FerTFLiteSmileDetector"
                     ),
                     AboutConfig(
                         "https://github.com/teamulster/soHappy",
                         "hallo",
                         "https://github.com/teamulster/soHappy/pulse"
-                    )
+                    ),
+                    TimerConfig(3000, 2500, 10_000, 30_000)
                 ), SettingsConfig(notifications = true, databaseSync = true)
             )
             assertFailsWith(MalformedURLException::class) {

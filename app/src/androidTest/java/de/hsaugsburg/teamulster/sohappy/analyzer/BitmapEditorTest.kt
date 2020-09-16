@@ -1,4 +1,4 @@
-package de.hsaugsburg.teamulster.sohappy
+package de.hsaugsburg.teamulster.sohappy.analyzer
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory
 import android.graphics.Rect
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import de.hsaugsburg.teamulster.sohappy.analyzer.BitmapEditor
 import junit.framework.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -21,7 +20,7 @@ class BitmapEditorTest {
 
     @Before
     fun setUp() {
-        val inputStream = instrumentationContext.assets.open("negative-test.jpg")
+        val inputStream = instrumentationContext.assets.open("faceDetector_test_negative.jpg")
         bitmap = BitmapFactory.decodeStream(inputStream)
     }
 

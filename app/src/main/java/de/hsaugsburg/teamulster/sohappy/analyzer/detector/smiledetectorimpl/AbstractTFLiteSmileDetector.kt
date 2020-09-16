@@ -11,8 +11,6 @@ import org.tensorflow.lite.support.label.TensorLabel
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import java.nio.ByteBuffer
 import java.nio.MappedByteBuffer
-import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * This abstract class inherits SmileDetector. It declares function necessary for TF lite to be run.
@@ -28,30 +26,20 @@ abstract class AbstractTFLiteSmileDetector(
 ) : SmileDetector {
     // Static classes
     companion object {
-        /**
-         * This data class stores prediction results based on each label a model allows.
-         *
-         * @param title the label title.
-         * @param confidence a Float value between 0 and 1 stating possible this label is
-         * @constructor creates a Recognition object containing the given params
-         * */
-        data class Recognition(
-            val title: String, val confidence: Float
-        )
 
         /**
          * This data class inherits the SmileDetector.Companion.SmileDetectionResult(isSmiling) function
          * and overrides it.
          *
-         * @param isSmiling determines whether the image contains a smiling person or not
-         * @param predictionResults stores all top matches
+         * @param [isSmiling] determines whether the image contains a smiling person or not
+         * @param [predictionResults] stores all top matches
          * @constructor creates SmileDetectionResult object containing the given params
          * */
         data class SmileDetectionResult(
             override val isSmiling: Boolean,
-            override val predictionResults: ArrayList<Recognition>
+            override val predictionResults: ArrayList<SmileDetector.Companion.Recognition>
         ) :
-            SmileDetector.Companion.SmileDetectionResult
+            SmileDetector.Companion.SmileDetectionResult(isSmiling, predictionResults)
     }
 
     // Init variables
@@ -72,12 +60,12 @@ abstract class AbstractTFLiteSmileDetector(
      * This function runs tfliteInterpreter detection on a given image and predicts its probability to match
      * one of the model's labels.
      *
-     * @param img the current image
-     * @return ArrayList<Recognition>
+     * @param [img] the current image
+     * @return [ArrayList]<Recognition>
      * */
-    fun execute(img: Bitmap): ArrayList<Recognition> {
+    fun execute(img: Bitmap): ArrayList<SmileDetector.Companion.Recognition> {
         // Init probability val
-        val probabilityTensorIndex: Int = 0
+        val probabilityTensorIndex = 0
         val probabilityShape: IntArray =
             tfliteInterpreter.getOutputTensor(probabilityTensorIndex).shape()
         val probabilityDataType: DataType =
@@ -99,23 +87,23 @@ abstract class AbstractTFLiteSmileDetector(
         val labeledProbability: Map<String, Float> =
             TensorLabel(labels, probabilityProcessor.process(outputProbability))
                 .mapWithFloatValue
-        return sortMatches(labeledProbability);
+        return sortMatches(labeledProbability)
     }
 
     /**
      * This private function sorts the prediction result by confidence of matching.
      *
-     * @param labeledProbability a map containing the confidence mapped on predicted labels
-     * @return ArrayList<Recognition>
+     * @param [labeledProbability] a map containing the confidence mapped on predicted labels
+     * @return [ArrayList]<Recognition>
      * */
-    private fun sortMatches(labeledProbability: Map<String, Float>): ArrayList<Recognition> {
-        val recognitions: ArrayList<Recognition> = ArrayList()
+    private fun sortMatches(labeledProbability: Map<String, Float>): ArrayList<SmileDetector.Companion.Recognition> {
+        val recognitions: ArrayList<SmileDetector.Companion.Recognition> = ArrayList()
 
         for ((key, value) in labeledProbability.entries) {
-            recognitions.add(Recognition("" + key, value))
+            recognitions.add(SmileDetector.Companion.Recognition("" + key, value))
         }
         // Intentionally reversed to put high confidence at the head of the queue.
-        recognitions.sortWith(Comparator { lhs, rhs -> rhs.confidence.compareTo(lhs.confidence) })
+        recognitions.sortWith { lhs, rhs -> rhs.confidence.compareTo(lhs.confidence) }
         return recognitions
     }
 
@@ -123,8 +111,8 @@ abstract class AbstractTFLiteSmileDetector(
      * This abstract function is implemented in FerTFLiteSmileDetectorImpl. It is used to invoke this
      * classes execute function.
      *
-     * @param img the current image
-     * @return ByteBuffer?
+     * @param [img] the current image
+     * @return [ByteBuffer]
      * */
     abstract fun prepare(img: Bitmap): ByteBuffer?
 }

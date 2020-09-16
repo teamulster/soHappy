@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorGradientLight">#9500EE</color>
+    <color name="colorPrimary">#2b3acf</color>
+    <color name="colorPrimaryDark">#1a237e</color>
+    <color name="colorRippleDark">#7982e3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="colorSeparatorLine">#E0E0E0</color>
     <color name="colorSuccess">#1FBD25</color>
+    <color name="colorFailure">#CF2626</color>
+    <color name="colorYellow">#FCBA03</color>
 </resources>

@@ -3,13 +3,14 @@ package de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl
 import android.app.Activity
 import android.graphics.Bitmap
 import de.hsaugsburg.teamulster.sohappy.analyzer.BitmapEditor.convertToByteBuffer
+import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
 import java.nio.ByteBuffer
 
 // TODO: add self-trained model
 /**
  * This class inherits AbstractTFLiteSmileDetector and prepares the image before TF lite detection is run.
  *
- * @param activity the current activity this class was invoked by (e.g. CameraActivity)
+ * @param [activity] the current activity this class was invoked by (e.g. CameraActivity)
  * @constructor creates a TFLiteImpl object with a test model
  * */
 class FerTFLiteSmileDetector(activity: Activity) :
@@ -36,11 +37,11 @@ class FerTFLiteSmileDetector(activity: Activity) :
      * It runs TF lite detection by invoking the execute method in its super class
      * (AbstractTFLiteSmileDetector).
      *
-     * @param bitmap the image which TF lite will be running detection on.
-     * @return Companion.SmileDetectionResult
+     * @param [img] the image which TF lite will be running detection on.
+     * @return [SmileDetector.Companion.SmileDetectionResult]
      * */
-    override fun detect(bitmap: Bitmap): Companion.SmileDetectionResult {
-        val predictionResults: ArrayList<Companion.Recognition> = super.execute(bitmap)
+    override fun detect(img: Bitmap): SmileDetector.Companion.SmileDetectionResult? {
+        val predictionResults: ArrayList<SmileDetector.Companion.Recognition> = super.execute(img)
         val firstPredictionResult = predictionResults[0]
         var isSmiling = false
         // if Happy is detected, set isSmiling = true
@@ -57,8 +58,8 @@ class FerTFLiteSmileDetector(activity: Activity) :
      * It scales a given bitmap and passes the result to the convertToByteBuffer function to get it ready
      * for prediction.
      *
-     * @param img the current image which will be prepared
-     * @return ByteBuffer?
+     * @param [img] the current image which will be prepared
+     * @return [ByteBuffer]
      * */
     override fun prepare(img: Bitmap): ByteBuffer? {
         // TODO: This has to be adapted depending on each model
