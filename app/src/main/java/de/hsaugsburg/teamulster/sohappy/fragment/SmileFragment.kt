@@ -47,7 +47,6 @@ class SmileFragment : Fragment() {
             }
         }
         // TODO: Lambdas need to be unregistered, when new fragment is initialized
-
         stateMachine.addStateChangeListener { old, new ->
             if (this.isResumed) {
                 when (new) {
@@ -67,7 +66,6 @@ class SmileFragment : Fragment() {
                             stateMachine.consumeAction(Action.StimulusTimer)
                             //TODO: get sec from config
                         }, 2_500)
-
                     }
                     is WaitingForSmile -> requireView().postDelayed({
                         if (old !is WaitingForFace) {
@@ -88,7 +86,6 @@ class SmileFragment : Fragment() {
             }
             //TODO: Add "end" and "question" button
         }
-
         return binding.root
     }
 
