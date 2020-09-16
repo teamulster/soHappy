@@ -11,13 +11,13 @@ import kotlin.properties.Delegates.observable
  */
 class SettingsViewModel(application: Application) : AndroidViewModel(application) {
     var notificationsEnabled: Boolean by observable(ConfigManager.settingsConfig.notifications)
-        { _, old, new ->
+        { _, _, new ->
             ConfigManager.store(application, ConfigManager.mainConfig, SettingsConfig(
                 new, ConfigManager.settingsConfig.databaseSync)
             )
         }
     var databaseEnabled: Boolean by observable(ConfigManager.settingsConfig.databaseSync)
-        { _, old, new ->
+        { _, _, new ->
             ConfigManager.store(application, ConfigManager.mainConfig, SettingsConfig(
                 ConfigManager.settingsConfig.notifications, new)
             )

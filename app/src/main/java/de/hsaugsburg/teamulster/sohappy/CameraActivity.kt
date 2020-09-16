@@ -42,4 +42,9 @@ class CameraActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean =
         findNavController(R.id.navHostFragment).navigateUp()
+
+    override fun onDestroy() {
+        localDatabaseManager.close()
+        super.onDestroy()
+    }
 }

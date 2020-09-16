@@ -7,7 +7,7 @@ import androidx.test.core.app.launchActivity
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import de.hsaugsburg.teamulster.sohappy.CameraActivity
-import de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl.FerTFLiteSmileDetectorImpl
+import de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl.FerTFLiteSmileDetector
 import junit.framework.Assert.assertFalse
 import junit.framework.Assert.assertTrue
 import org.junit.Before
@@ -15,8 +15,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class FerTFLiteSmileDetectorImplTest {
-    private lateinit var tfliteImpl: FerTFLiteSmileDetectorImpl
+class FerTFLiteSmileDetectorTest {
+    private lateinit var tfliteImpl: FerTFLiteSmileDetector
     private lateinit var scenario: ActivityScenario<CameraActivity>
     private val instrumentationContext: Context =
         InstrumentationRegistry.getInstrumentation().context
@@ -24,7 +24,7 @@ class FerTFLiteSmileDetectorImplTest {
     @Before
     fun setUp() {
         scenario = launchActivity<CameraActivity>()
-        scenario.onActivity { tfliteImpl = FerTFLiteSmileDetectorImpl(it) }
+        scenario.onActivity { tfliteImpl = FerTFLiteSmileDetector(it) }
     }
 
     @Test

@@ -38,7 +38,7 @@ class NoSmileFragment : Fragment() {
 
         stateMachine = StateMachineUtil.getStateMachine(this)
 
-        stateMachine.addStateChangeListener { old, new ->
+        stateMachine.addStateChangeListener { _, new ->
             when(new) {
                 is WaitingForFace ->
                     requireView().post {

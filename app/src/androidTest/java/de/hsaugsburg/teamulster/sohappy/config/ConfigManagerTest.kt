@@ -34,7 +34,7 @@ class ConfigManagerTest {
                         "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
                                 ".facedetectorimpl.HaarCascadeFaceDetector",
                         "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
-                                ".smiledetectorimpl.FerTFLiteSmileDetectorImpl"
+                                ".smiledetectorimpl.FerTFLiteSmileDetector"
                     ),
                     AboutConfig(
                         "https://github.com/teamulster/soHappy",
@@ -54,7 +54,7 @@ class ConfigManagerTest {
                         "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
                                 ".facedetectorimpl.HaarCascadeFaceDetector",
                         "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
-                                ".smiledetectorimpl.FerTFLiteSmileDetectorImpl"
+                                ".smiledetectorimpl.FerTFLiteSmileDetector"
                     ),
                     AboutConfig(
                         "https://github.com/teamulster/soHappy",
@@ -80,7 +80,7 @@ class ConfigManagerTest {
                         "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
                                 ".facedetectorimpl.HaarCascadeFaceDetector",
                         "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
-                                ".smiledetectorimpl.FerTFLiteSmileDetectorImpl"
+                                ".smiledetectorimpl.FerTFLiteSmileDetector"
                     ),
                     AboutConfig(
                         "https://github.com/teamulster/soHappy",
@@ -96,7 +96,7 @@ class ConfigManagerTest {
                     "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
                             ".facedetectorimpl.HaarCascadeFaceDetector",
                     "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
-                            ".smiledetectorimpl.FerTFLiteSmileDetectorImpl"
+                            ".smiledetectorimpl.FerTFLiteSmileDetector"
                 ),
                 AboutConfig(
                     "https://github.com/teamulster/soHappy",
@@ -142,7 +142,7 @@ class ConfigManagerTest {
                         "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
                                 ".facedetectorimpl.HaarCascadeFaceDetector",
                         "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
-                                ".smiledetectorimpl.FerTFLiteSmileDetectorImpl"
+                                ".smiledetectorimpl.FerTFLiteSmileDetector"
                     ),
                     AboutConfig(
                         "https://github.com/teamulster/soHappy",
