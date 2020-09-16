@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.navigateUp
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentNosmileBinding
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
@@ -41,13 +42,9 @@ class NoSmileFragment : Fragment() {
         stateMachine.addStateChangeListener { _, new ->
             when(new) {
                 is WaitingForFace ->
-                    requireView().post {
-                        findNavController().navigate(R.id.action_noSmileFragment_to_smileFragment)
-                    }
+                        findNavController().popBackStack(R.id.smileFragment, false)
                 is Questions ->
-                    requireView().post {
                         findNavController().navigate(R.id.action_noSmileFragment_to_questionnaire01Fragment)
-                    }
             }
         }
 
