@@ -36,9 +36,9 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
     private val measurement: Measurement by fragment.activityViewModels()
     private val questionnaireViewModel: QuestionnaireViewModel by fragment.activityViewModels()
     private var faceDetector: FaceDetector? =
-        DetectorFactory.getFaceDetectorFromConfig(config, fragment.requireActivity())
+        DetectorFactory.createFaceDetectorFromConfig(config, fragment.requireActivity())
     private var smileDetector: SmileDetector? =
-        DetectorFactory.getSmileDetectorFromConfig(config, fragment.requireActivity())
+        DetectorFactory.createSmileDetectorFromConfig(config, fragment.requireActivity())
     private var imageAnalyzerState: ImageAnalyzerState = ImageAnalyzerState.NONE
     private var stateMachine = StateMachineUtil.getStateMachine(fragment)
 

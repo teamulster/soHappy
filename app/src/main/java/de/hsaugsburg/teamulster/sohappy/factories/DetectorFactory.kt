@@ -21,7 +21,10 @@ object DetectorFactory {
      * @throws [NoSuchMethodException]
      * @return [FaceDetector]
      */
-    fun getFaceDetectorFromConfig(config: ImageAnalyzerConfig, activity: Activity): FaceDetector {
+    fun createFaceDetectorFromConfig(
+        config: ImageAnalyzerConfig,
+        activity: Activity
+    ): FaceDetector {
         lateinit var returnValue: FaceDetector
         try {
             val constructors = Class.forName(config.faceDetector).constructors
@@ -52,7 +55,10 @@ object DetectorFactory {
      * @throws [NoSuchMethodException]
      * @return [SmileDetector]
      */
-    fun getSmileDetectorFromConfig(config: ImageAnalyzerConfig, activity: Activity): SmileDetector {
+    fun createSmileDetectorFromConfig(
+        config: ImageAnalyzerConfig,
+        activity: Activity
+    ): SmileDetector {
         lateinit var returnValue: SmileDetector
         try {
             val constructors = Class.forName(config.smileDetector).constructors
