@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import de.hsaugsburg.teamulster.sohappy.CameraActivity
+import de.hsaugsburg.teamulster.sohappy.MainActivity
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.analyzer.collector.Measurement
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentResultsBinding
@@ -38,14 +38,14 @@ class ResultsFragment : Fragment() {
             false
         )
 
-        (this.requireActivity() as CameraActivity).localDatabaseManager.updateMeasurement(measurement)
+        (this.requireActivity() as MainActivity).localDatabaseManager.updateMeasurement(measurement)
 
         stateMachine = StateMachineUtil.getStateMachine(this)
         stateMachine.addStateChangeListener { _, new ->
             if (this.isResumed) {
                 when (new) {
                     is Start -> {
-                        (requireActivity() as CameraActivity).localDatabaseManager.close()
+                        (requireActivity() as MainActivity).localDatabaseManager.close()
                         requireActivity().finish()
                         startActivity(requireActivity().intent)
                     }
