@@ -18,7 +18,6 @@ import java.io.IOException
  */
 class CameraActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding
-    private val stateMachine: StateMachine by viewModels()
     internal lateinit var localDatabaseManager : LocalDatabaseManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
