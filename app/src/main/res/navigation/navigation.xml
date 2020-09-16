@@ -171,4 +171,15 @@
             app:destination="@id/smileFragment" />
     </fragment>
 
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="de.hsaugsburg.teamulster.sohappy.fragment.HistoryFragment"
+        android:label="@string/fragment_history_appbar_title"
+        tools:layout="@layout/fragment_history" />
+    <fragment
+        android:id="@+id/explanationFragment"
+        android:name="de.hsaugsburg.teamulster.sohappy.fragment.ExplanationFragment"
+        android:label="@string/fragment_explanation_appbar_title"
+        tools:layout="@layout/fragment_explanation" />
+
 </navigation>

@@ -26,7 +26,7 @@ class GoogleMLKitAPISmileDetector(activity: Activity) : SmileDetector {
         data class SmileDetectionResult(
             override val isSmiling: Boolean,
             override val predictionResults: ArrayList<SmileDetector.Companion.Recognition>
-        ) : SmileDetector.Companion.SmileDetectionResult
+        ) : SmileDetector.Companion.SmileDetectionResult(isSmiling, predictionResults)
     }
 
     override val detectorName: String = "Google MLKit API Smile Detector"

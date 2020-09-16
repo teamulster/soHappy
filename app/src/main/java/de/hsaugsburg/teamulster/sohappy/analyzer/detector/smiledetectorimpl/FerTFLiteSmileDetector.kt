@@ -14,7 +14,7 @@ import java.nio.ByteOrder
  * @param [activity] the current activity this class was invoked by (e.g. CameraActivity)
  * @constructor creates a TFLiteImpl object with a test model
  * */
-class FerTFLiteSmileDetectorImpl(activity: Activity) :
+class FerTFLiteSmileDetector(activity: Activity) :
     AbstractTFLiteSmileDetector(tfliteModelPath = "model.tflite", numberOfThreads = 1, activity) {
 
     init {

@@ -1,6 +1,9 @@
 package de.hsaugsburg.teamulster.sohappy.analyzer.collector
 
+import androidx.lifecycle.ViewModel
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.DetectionResult
+import de.hsaugsburg.teamulster.sohappy.viewmodel.QuestionnaireViewModel
+import org.dizitart.no2.objects.Id
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -9,16 +12,18 @@ import kotlin.collections.ArrayList
  *
  * @property [timeStamp] a Date object
  * */
-class Measurement {
+class Measurement : ViewModel() {
+    @Id
     val timeStamp: Date = Date()
-    private val results: ArrayList<DetectionResult> = ArrayList()
+    val results: ArrayList<DetectionResult> = ArrayList()
+    var questionnaire : QuestionnaireViewModel? = null
 
     /**
      * This function adds a DetectionResult to the results list.
      *
      * @param [detectionResult] a DetectionResult object which will be stored
      * */
-    fun add(detectionResult: DetectionResult) {
+    fun addDetectionResult(detectionResult: DetectionResult) {
         results.add(detectionResult)
     }
 }

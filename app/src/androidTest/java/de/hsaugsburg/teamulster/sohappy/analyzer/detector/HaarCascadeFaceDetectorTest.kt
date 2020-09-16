@@ -15,7 +15,7 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class HaarCascadeFaceDetectorTest {
-    lateinit var haarCascadeFaceDetector: HaarCascadeFaceDetector
+    private lateinit var haarCascadeFaceDetector: HaarCascadeFaceDetector
     private lateinit var scenario: ActivityScenario<CameraActivity>
     private val instrumentationContext: Context =
         InstrumentationRegistry.getInstrumentation().context

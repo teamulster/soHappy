@@ -26,6 +26,7 @@ abstract class AbstractTFLiteSmileDetector(
 ) : SmileDetector {
     // Static classes
     companion object {
+
         /**
          * This data class inherits the SmileDetector.Companion.SmileDetectionResult(isSmiling) function
          * and overrides it.
@@ -38,7 +39,7 @@ abstract class AbstractTFLiteSmileDetector(
             override val isSmiling: Boolean,
             override val predictionResults: ArrayList<SmileDetector.Companion.Recognition>
         ) :
-            SmileDetector.Companion.SmileDetectionResult
+            SmileDetector.Companion.SmileDetectionResult(isSmiling, predictionResults)
     }
 
     // Init variables
