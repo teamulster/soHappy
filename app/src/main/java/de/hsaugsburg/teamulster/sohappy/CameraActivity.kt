@@ -13,7 +13,6 @@ import de.hsaugsburg.teamulster.sohappy.databinding.ActivityCameraBinding
 import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 import java.io.IOException
 
-
 /**
  * CameraActivity serves as the sole Activity and entry point for the app.
  */
