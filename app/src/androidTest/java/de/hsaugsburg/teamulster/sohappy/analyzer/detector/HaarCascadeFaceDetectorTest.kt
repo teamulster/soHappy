@@ -1,4 +1,4 @@
-package de.hsaugsburg.teamulster.sohappy
+package de.hsaugsburg.teamulster.sohappy.analyzer.detector
 
 import android.content.Context
 import android.graphics.BitmapFactory
@@ -6,15 +6,16 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.launchActivity
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import de.hsaugsburg.teamulster.sohappy.CameraActivity
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.HaarCascadeFaceDetector
+import junit.framework.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import junit.framework.Assert.assertTrue as assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class HaarCascadeFaceDetectorTest {
-    lateinit var haarCascadeFaceDetector: HaarCascadeFaceDetector
+    private lateinit var haarCascadeFaceDetector: HaarCascadeFaceDetector
     private lateinit var scenario: ActivityScenario<CameraActivity>
     private val instrumentationContext: Context =
         InstrumentationRegistry.getInstrumentation().context
@@ -25,18 +26,23 @@ class HaarCascadeFaceDetectorTest {
         scenario.onActivity { haarCascadeFaceDetector = HaarCascadeFaceDetector(it) }
     }
 
+    // TODO: Choose better files
+
     @Test
-    fun detectTest() {
+    fun detectTestPositive() {
         scenario.onActivity {
-            // TODO: Rename files and choose better files
-            val istream = instrumentationContext.assets.open("test.jpg")
-            val bitmap = BitmapFactory.decodeStream(istream);
+            val istream = instrumentationContext.assets.open("faceDetector_test_positive.jpg")
+            val bitmap = BitmapFactory.decodeStream(istream)
             val detectResult = haarCascadeFaceDetector.detect(bitmap)
             assertTrue(detectResult != null)
         }
+    }
+
+    @Test
+    fun detectTestNegative() {
         scenario.onActivity {
-            val istream = instrumentationContext.assets.open("negative-test.jpg")
-            val bitmap = BitmapFactory.decodeStream(istream);
+            val istream = instrumentationContext.assets.open("faceDetector_test_negative.jpg")
+            val bitmap = BitmapFactory.decodeStream(istream)
             val detectResult = haarCascadeFaceDetector.detect(bitmap)
             assertTrue(detectResult == null)
         }

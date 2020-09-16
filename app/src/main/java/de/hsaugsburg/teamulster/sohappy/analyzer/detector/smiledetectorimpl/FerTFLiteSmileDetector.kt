@@ -3,6 +3,7 @@ package de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl
 import android.app.Activity
 import android.graphics.Bitmap
 import android.graphics.Color
+import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
@@ -10,10 +11,10 @@ import java.nio.ByteOrder
 /**
  * This class inherits AbstractTFLiteSmileDetector and prepares the image before TF lite detection is run.
  *
- * @param activity the current activity this class was invoked by (e.g. CameraActivity)
+ * @param [activity] the current activity this class was invoked by (e.g. CameraActivity)
  * @constructor creates a TFLiteImpl object with a test model
  * */
-class FerTFLiteSmileDetectorImpl(activity: Activity) :
+class FerTFLiteSmileDetector(activity: Activity) :
     AbstractTFLiteSmileDetector(tfliteModelPath = "model.tflite", numberOfThreads = 1, activity) {
 
     init {
@@ -33,11 +34,11 @@ class FerTFLiteSmileDetectorImpl(activity: Activity) :
      * It runs TF lite detection by invoking the execute method in its super class
      * (AbstractTFLiteSmileDetector).
      *
-     * @param bitmap the image which TF lite will be running detection on.
-     * @return Companion.SmileDetectionResult
+     * @param [img] the image which TF lite will be running detection on.
+     * @return [SmileDetector.Companion.SmileDetectionResult]
      * */
-    override fun detect(bitmap: Bitmap): Companion.SmileDetectionResult {
-        val predictionResults: ArrayList<Companion.Recognition> = super.execute(bitmap)
+    override fun detect(img: Bitmap): SmileDetector.Companion.SmileDetectionResult? {
+        val predictionResults: ArrayList<SmileDetector.Companion.Recognition> = super.execute(img)
         val firstPredictionResult = predictionResults[0]
         var isSmiling = false
         // if Happy is detected, set isSmiling = true
@@ -54,8 +55,8 @@ class FerTFLiteSmileDetectorImpl(activity: Activity) :
      * It scales a given bitmap and passes the result to the convertToByteBuffer function to get it ready
      * for prediction.
      *
-     * @param img the current image which will be prepared
-     * @return ByteBuffer?
+     * @param [img] the current image which will be prepared
+     * @return [ByteBuffer]
      * */
     override fun prepare(img: Bitmap): ByteBuffer? {
         // TODO: This has to be adapted depending on each model
@@ -66,17 +67,17 @@ class FerTFLiteSmileDetectorImpl(activity: Activity) :
     /**
      * This private function converts a given Bitmap into a ByteBuffer.
      *
-     * @param bitmap a Bitmap which will be converted into a ByteBuffer
-     * @return ByteBuffer?
+     * @param [img] a Bitmap which will be converted into a ByteBuffer
+     * @return [ByteBuffer]
      * */
-    private fun convertToByteBuffer(bitmap: Bitmap): ByteBuffer? {
-        val width = bitmap.width
-        val height = bitmap.height
+    private fun convertToByteBuffer(img: Bitmap): ByteBuffer? {
+        val width = img.width
+        val height = img.height
         val mImgData: ByteBuffer = ByteBuffer
             .allocateDirect(4 * width * height)
         mImgData.order(ByteOrder.nativeOrder())
         val pixels = IntArray(width * height)
-        bitmap.getPixels(pixels, 0, width, 0, 0, width, height)
+        img.getPixels(pixels, 0, width, 0, 0, width, height)
         for (pixel in pixels) {
             mImgData.putFloat(Color.red(pixel).toFloat())
         }

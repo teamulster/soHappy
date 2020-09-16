@@ -1,4 +1,4 @@
-# soHappy
+![soHappy](.github/banner.png)
 
 ## Motivation
 This Android app is based on the [Remember to smile - design of a mobile affective technology

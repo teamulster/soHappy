@@ -31,7 +31,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <Spinner
+        <de.hsaugsburg.teamulster.sohappy.view.SpinnerCustom
             android:id="@+id/spinner"
             style="@style/SpinnerDropdownAppearanceCustom"
             android:layout_width="260dp"
