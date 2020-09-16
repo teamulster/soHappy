@@ -39,7 +39,7 @@ class SoHappyTFLiteSmileDetector(activity: Activity) :
      * @return Companion.SmileDetectionResult
      * */
     override fun detect(img: Bitmap): SmileDetector.Companion.SmileDetectionResult? {
-        val predictionResults: ArrayList<Companion.Recognition> = super.execute(img)
+        val predictionResults: ArrayList<SmileDetector.Companion.Recognition> = super.execute(img)
         val firstPredictionResult = predictionResults[0]
         var isSmiling = false
         // if Happy is detected, set isSmiling = true

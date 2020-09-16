@@ -30,7 +30,7 @@ class SoHappyTFLiteSmileDetectorTest {
     @Test
     fun useSmileDetectorWithPositiveResult() {
         scenario.onActivity {
-            val istr = instrumentationContext.assets.open("tflite_test.jpg")
+            val istr = instrumentationContext.assets.open("smileDetector_test_positive.jpg")
             val detectResult = tfliteImpl.detect(BitmapFactory.decodeStream(istr))
             assertTrue(detectResult!!.isSmiling)
         }
@@ -39,7 +39,7 @@ class SoHappyTFLiteSmileDetectorTest {
     @Test
     fun useSmileDetectorWithNegativeResult() {
         scenario.onActivity {
-            val istr = instrumentationContext.assets.open("test.jpg")
+            val istr = instrumentationContext.assets.open("smileDetector_test_negative.png")
             val detectResult = tfliteImpl.detect(BitmapFactory.decodeStream(istr))
             assertFalse(detectResult!!.isSmiling)
         }
