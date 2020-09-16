@@ -35,15 +35,24 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
 
     private val measurement: Measurement by fragment.activityViewModels()
     private val questionnaireViewModel: QuestionnaireViewModel by fragment.activityViewModels()
-    private var faceDetector: FaceDetector? =
-        DetectorFactory.createFaceDetectorFromConfig(config, fragment.requireActivity())
-    private var smileDetector: SmileDetector? =
-        DetectorFactory.createSmileDetectorFromConfig(config, fragment.requireActivity())
+    private lateinit var faceDetector: FaceDetector
+    private lateinit var smileDetector: SmileDetector
     private var imageAnalyzerState: ImageAnalyzerState = ImageAnalyzerState.NONE
     private var stateMachine = StateMachineUtil.getStateMachine(fragment)
 
 
     init {
+        // TODO: add proper exception handling in UI
+        try {
+            faceDetector =
+                DetectorFactory.createFaceDetectorFromConfig(config, fragment.requireActivity())
+            smileDetector =
+                DetectorFactory.createSmileDetectorFromConfig(config, fragment.requireActivity())
+        } catch (e: NoSuchMethodException) {
+            print(e.message)
+        }
+
+
         stateMachine.addStateChangeListener { _, new ->
             imageAnalyzerState = when (new) {
                 is Start -> ImageAnalyzerState.NONE
@@ -71,7 +80,7 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
      * @return [DetectionResult]
      */
     fun computeFaceDetectionResult(img: Bitmap): DetectionResult {
-        val result = faceDetector?.detect(img)
+        val result = faceDetector.detect(img)
         return DetectionResult(result, null)
     }
 
@@ -83,9 +92,9 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
      * @return [DetectionResult]
      */
     fun computeSmileDetectionResult(img: Bitmap): DetectionResult {
-        val faceDetectionResult = faceDetector?.detect(img)
+        val faceDetectionResult = faceDetector.detect(img)
         val croppedOutFace = faceDetectionResult?.frame?.let { BitmapEditor.crop(img, it) }
-        val smileDR = croppedOutFace?.let { smileDetector?.detect(it) }
+        val smileDR = croppedOutFace?.let { smileDetector.detect(it) }
         return DetectionResult(faceDetectionResult, smileDR)
     }
 
