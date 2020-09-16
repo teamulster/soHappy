@@ -3,7 +3,7 @@ package de.hsaugsburg.teamulster.sohappy.analyzer
 import android.graphics.Bitmap
 import android.util.Log
 import androidx.fragment.app.activityViewModels
-import de.hsaugsburg.teamulster.sohappy.CameraActivity
+import de.hsaugsburg.teamulster.sohappy.MainActivity
 import de.hsaugsburg.teamulster.sohappy.analyzer.collector.Measurement
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.DetectionResult
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FaceDetector
@@ -105,7 +105,7 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
         thread {
             while (true) {
                 if (imageAnalyzerState == ImageAnalyzerState.CANCEL) {
-                    (fragment.requireActivity() as CameraActivity).localDatabaseManager.addOrUpdateMeasurement(
+                    (fragment.requireActivity() as MainActivity).localDatabaseManager.addOrUpdateMeasurement(
                         measurement
                     )
                     break
