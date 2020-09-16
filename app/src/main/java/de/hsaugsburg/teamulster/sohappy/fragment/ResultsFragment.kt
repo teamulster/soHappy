@@ -38,6 +38,8 @@ class ResultsFragment : Fragment() {
             false
         )
 
+        binding.measurement = measurement
+
         (this.requireActivity() as CameraActivity).localDatabaseManager.updateMeasurement(measurement)
 
         stateMachine = StateMachineUtil.getStateMachine(this)

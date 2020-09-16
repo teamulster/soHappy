@@ -3,6 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:context=".fragment.ResultsFragment">
+    <data>
+        <variable
+            name="measurement"
+            type="de.hsaugsburg.teamulster.sohappy.viewmodel.MeasurementViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -42,6 +47,16 @@
             android:textAppearance="@style/TextAppearanceHeadlineCustom2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/description" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:text="@{measurement.computePercentage()}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/resultTitle" />
 
         <Button
             android:id="@+id/finishButton"
