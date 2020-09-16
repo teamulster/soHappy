@@ -10,12 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import de.hsaugsburg.teamulster.sohappy.CameraActivity
 import de.hsaugsburg.teamulster.sohappy.R
-import de.hsaugsburg.teamulster.sohappy.analyzer.collector.Measurement
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentResultsBinding
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 import de.hsaugsburg.teamulster.sohappy.stateMachine.states.Start
 import de.hsaugsburg.teamulster.sohappy.util.StateMachineUtil
+import de.hsaugsburg.teamulster.sohappy.viewmodel.MeasurementViewModel
 
 /**
  * ResultsFragment serves as the conclusion of the smile procedure and provides the
@@ -24,7 +24,7 @@ import de.hsaugsburg.teamulster.sohappy.util.StateMachineUtil
 class ResultsFragment : Fragment() {
     private lateinit var stateMachine: StateMachine
     private lateinit var binding: FragmentResultsBinding
-    private val measurement: Measurement by activityViewModels()
+    private val measurement: MeasurementViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
