@@ -2,7 +2,6 @@ package de.hsaugsburg.teamulster.sohappy
 
 import android.os.Bundle
 import android.view.WindowManager
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
@@ -10,7 +9,6 @@ import androidx.navigation.ui.NavigationUI
 import de.hsaugsburg.teamulster.sohappy.config.ConfigManager
 import de.hsaugsburg.teamulster.sohappy.database.LocalDatabaseManager
 import de.hsaugsburg.teamulster.sohappy.databinding.ActivityCameraBinding
-import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 import java.io.IOException
 
 /**
