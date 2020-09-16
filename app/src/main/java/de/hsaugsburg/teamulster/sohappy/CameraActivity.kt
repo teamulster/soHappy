@@ -11,6 +11,8 @@ import de.hsaugsburg.teamulster.sohappy.config.ConfigManager
 import de.hsaugsburg.teamulster.sohappy.database.LocalDatabaseManager
 import de.hsaugsburg.teamulster.sohappy.databinding.ActivityCameraBinding
 import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
+import java.io.IOException
+
 
 /**
  * CameraActivity serves as the sole Activity and entry point for the app.
@@ -23,7 +25,15 @@ class CameraActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ConfigManager.load(this)
+        try {
+            ConfigManager.load(this)
+        } catch (e: IOException) {
+            // TODO: add proper exception handling
+            ConfigManager.restoreDefaults(this)
+        } catch (e: ClassNotFoundException) {
+            // TODO: add proper exception handling
+            ConfigManager.restoreDefaults(this)
+        }
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_camera)
         localDatabaseManager = LocalDatabaseManager(this)

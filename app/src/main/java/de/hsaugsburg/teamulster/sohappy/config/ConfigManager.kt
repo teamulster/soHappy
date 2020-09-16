@@ -16,10 +16,12 @@ import java.nio.charset.Charset
  * config.json is placed in internal storage and is only accessible from within the app (app-specific)
  * storage.
  * */
+@Suppress("TooManyFunctions")
 object ConfigManager {
     // Init variables
     lateinit var imageAnalyzerConfig: ImageAnalyzerConfig
     lateinit var aboutConfig: AboutConfig
+    lateinit var timerConfig: TimerConfig
     lateinit var mainConfig: MainConfig
     lateinit var settingsConfig: SettingsConfig
     private val gson = Gson()
@@ -34,7 +36,8 @@ object ConfigManager {
             "https://github.com/teamulster/soHappy",
             "https://github.com/teamulster/soHappy",
             "https://github.com/teamulster/soHappy"
-        )
+        ),
+        TimerConfig(3000, 2500, 10_000, 30_000)
     )
     private val defaultSettingsConfig = SettingsConfig(notifications = true, databaseSync = true)
 
@@ -66,6 +69,7 @@ object ConfigManager {
             mainConfig = parsedMainJson
             imageAnalyzerConfig = parsedMainJson.imageAnalyzerConfig
             aboutConfig = parsedMainJson.aboutConfig
+            timerConfig = parsedMainJson.timerConfig
         } catch (e: IOException) {
             throw e
         } catch (e: ClassNotFoundException) {
@@ -89,6 +93,24 @@ object ConfigManager {
             settingsFile.writeText(settingsJsonString, Charset.defaultCharset())
             val mainFile = getFile(context)[1]
             mainFile.writeText(mainJsonString, Charset.defaultCharset())
+        } catch (e: IOException) {
+            throw e
+        }
+    }
+
+    /**
+     * This function restores the default settings/main config.
+     *
+     * @param [context]
+     * */
+    fun restoreDefaults(context: Context) {
+        val defaultMainJsonString = toJson(defaultMainConfig)
+        val defaultSettingsJsonString = toJson(defaultSettingsConfig)
+        try {
+            val settingsFile = getFile(context)[0]
+            settingsFile.writeText(defaultSettingsJsonString, Charset.defaultCharset())
+            val mainFile = getFile(context)[1]
+            mainFile.writeText(defaultMainJsonString, Charset.defaultCharset())
         } catch (e: IOException) {
             throw e
         }
@@ -135,7 +157,7 @@ object ConfigManager {
         } catch (e: JsonParseException) {
             throw MalformedJsonException(
                 this::class.java.name + " : the given json string" +
-                        "is not JSON compliant."
+                        " is not JSON compliant."
             )
         }
     }
@@ -154,7 +176,7 @@ object ConfigManager {
         } catch (e: JsonParseException) {
             throw MalformedJsonException(
                 this::class.java.name + " : the given json string" +
-                        "is not JSON compliant."
+                        " is not JSON compliant."
             )
         }
     }
