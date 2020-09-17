@@ -16,7 +16,7 @@ import java.io.IOException
 /**
  * CameraActivity serves as the sole Activity and entry point for the app.
  */
-class CameraActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding
     internal var stateMachine: StateMachine? = null
     internal var measurement: Measurement? = null

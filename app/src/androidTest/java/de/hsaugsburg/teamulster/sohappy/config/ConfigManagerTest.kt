@@ -5,7 +5,7 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.launchActivity
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.gson.Gson
-import de.hsaugsburg.teamulster.sohappy.CameraActivity
+import de.hsaugsburg.teamulster.sohappy.MainActivity
 import junit.framework.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -18,11 +18,11 @@ import kotlin.test.assertFailsWith
 
 @RunWith(AndroidJUnit4::class)
 class ConfigManagerTest {
-    private lateinit var scenario: ActivityScenario<CameraActivity>
+    private lateinit var scenario: ActivityScenario<MainActivity>
 
     @Before
     fun setUp() {
-        scenario = launchActivity<CameraActivity>()
+        scenario = launchActivity<MainActivity>()
     }
 
     @Test
