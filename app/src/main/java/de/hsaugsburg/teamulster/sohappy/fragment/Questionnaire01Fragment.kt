@@ -15,14 +15,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentQuestionnaire01Binding
-import de.hsaugsburg.teamulster.sohappy.viewmodel.QuestionnaireViewModel
+import de.hsaugsburg.teamulster.sohappy.viewmodel.MeasurementViewModel
 
 /**
  * Questionnaire01Fragment contains the question for the first part of the questionnaire.
  */
 class Questionnaire01Fragment: Fragment() {
     private lateinit var binding: FragmentQuestionnaire01Binding
-    private val viewModel: QuestionnaireViewModel by activityViewModels()
+    private val measurement: MeasurementViewModel by activityViewModels()
     private var hasInput: Boolean = false
 
     override fun onCreateView(
@@ -49,7 +49,7 @@ class Questionnaire01Fragment: Fragment() {
                     TypedValue.COMPLEX_UNIT_DIP, 5f, resources.displayMetrics
                 )
 
-                viewModel.questionnaire01Answer = progress
+                measurement.questionnaire.questionnaire01Answer = progress
                 binding.continueButton.background = enabledBackground
                 binding.continueButton.setTextColor(resources.getColor(android.R.color.white, null))
                 binding.seekBarProgressLabel.apply {
