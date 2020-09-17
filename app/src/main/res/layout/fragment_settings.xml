@@ -4,11 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".fragment.SettingsFragment">
 
-    <data>
-        <variable name="viewModel"
-            type="de.hsaugsburg.teamulster.sohappy.viewmodel.SettingsViewModel" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
@@ -58,7 +53,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
-                android:checked="@={viewModel.notificationsEnabled}"
                 android:theme="@style/SwitchAppearanceCustom"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -111,7 +105,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
                 android:theme="@style/SwitchAppearanceCustom"
-                android:checked="@={viewModel.databaseEnabled}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>

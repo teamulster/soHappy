@@ -16,6 +16,7 @@ import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 import de.hsaugsburg.teamulster.sohappy.stateMachine.states.Start
 import de.hsaugsburg.teamulster.sohappy.viewmodel.MeasurementViewModel
+import de.hsaugsburg.teamulster.sohappy.viewmodel.SettingsViewModel
 
 /**
  * ResultsFragment serves as the conclusion of the smile procedure and provides the
@@ -25,6 +26,7 @@ class ResultsFragment : Fragment() {
     private val stateMachine: StateMachine by activityViewModels()
     private lateinit var binding: FragmentResultsBinding
     private val measurement: MeasurementViewModel by activityViewModels()
+    private val settings: SettingsViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,6 +47,11 @@ class ResultsFragment : Fragment() {
                 when (new) {
                     is Start -> {
                         (requireActivity() as MainActivity).localDatabaseManager.close()
+                        if (settings.notificationsEnabled) {
+                            (requireActivity() as MainActivity).notificationHandler
+                                .triggerNotificationAlarm()
+                        }
+
                         requireActivity().finish()
                         startActivity(requireActivity().intent)
                     }

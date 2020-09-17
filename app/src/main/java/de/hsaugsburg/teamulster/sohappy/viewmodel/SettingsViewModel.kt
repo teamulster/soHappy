@@ -13,13 +13,13 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     var notificationsEnabled: Boolean by observable(ConfigManager.settingsConfig.notifications)
         { _, _, new ->
             ConfigManager.store(application, ConfigManager.mainConfig, SettingsConfig(
-                new, ConfigManager.settingsConfig.databaseSync)
+                new, databaseEnabled)
             )
         }
     var databaseEnabled: Boolean by observable(ConfigManager.settingsConfig.databaseSync)
         { _, _, new ->
             ConfigManager.store(application, ConfigManager.mainConfig, SettingsConfig(
-                ConfigManager.settingsConfig.notifications, new)
+                notificationsEnabled, new)
             )
         }
 
