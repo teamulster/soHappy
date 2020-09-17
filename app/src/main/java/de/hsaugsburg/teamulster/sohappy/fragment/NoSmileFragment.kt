@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentNosmileBinding
@@ -14,7 +15,6 @@ import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 import de.hsaugsburg.teamulster.sohappy.stateMachine.states.Questions
 import de.hsaugsburg.teamulster.sohappy.stateMachine.states.WaitingForFace
-import de.hsaugsburg.teamulster.sohappy.util.StateMachineUtil
 
 /**
  * If the user fails to smile for at least ten consecutive seconds, NoSmileFragment offers
@@ -22,7 +22,7 @@ import de.hsaugsburg.teamulster.sohappy.util.StateMachineUtil
  */
 class NoSmileFragment : Fragment() {
     private lateinit var binding: FragmentNosmileBinding
-    private lateinit var stateMachine: StateMachine
+    private val stateMachine: StateMachine by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,8 +35,6 @@ class NoSmileFragment : Fragment() {
             container,
             false
         )
-
-        stateMachine = StateMachineUtil.getStateMachine(this)
 
         stateMachine.addStateChangeListener { _, new ->
             when(new) {

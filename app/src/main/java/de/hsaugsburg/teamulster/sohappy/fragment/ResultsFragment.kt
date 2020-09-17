@@ -14,7 +14,6 @@ import de.hsaugsburg.teamulster.sohappy.databinding.FragmentResultsBinding
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 import de.hsaugsburg.teamulster.sohappy.stateMachine.states.Start
-import de.hsaugsburg.teamulster.sohappy.util.StateMachineUtil
 import de.hsaugsburg.teamulster.sohappy.viewmodel.MeasurementViewModel
 
 /**
@@ -22,7 +21,7 @@ import de.hsaugsburg.teamulster.sohappy.viewmodel.MeasurementViewModel
  * user with a summary of their session.
  */
 class ResultsFragment : Fragment() {
-    private lateinit var stateMachine: StateMachine
+    private val stateMachine: StateMachine by activityViewModels()
     private lateinit var binding: FragmentResultsBinding
     private val measurement: MeasurementViewModel by activityViewModels()
 
@@ -40,7 +39,6 @@ class ResultsFragment : Fragment() {
 
         (this.requireActivity() as MainActivity).localDatabaseManager.updateMeasurement(measurement)
 
-        stateMachine = StateMachineUtil.getStateMachine(this)
         stateMachine.addStateChangeListener { _, new ->
             if (this.isResumed) {
                 when (new) {
