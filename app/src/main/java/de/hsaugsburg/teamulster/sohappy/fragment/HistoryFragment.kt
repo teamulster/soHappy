@@ -10,7 +10,7 @@ import android.widget.TableLayout
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import de.hsaugsburg.teamulster.sohappy.CameraActivity
+import de.hsaugsburg.teamulster.sohappy.MainActivity
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentHistoryBinding
 import kotlin.concurrent.thread
@@ -40,7 +40,7 @@ class HistoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         thread {
             val measurements =
-                (activity as CameraActivity).localDatabaseManager.getLatestMeasurements()
+                (activity as MainActivity).localDatabaseManager.getLatestMeasurements()
 
             view.post {
                 val historyTable = view.findViewById<TableLayout>(R.id.table)

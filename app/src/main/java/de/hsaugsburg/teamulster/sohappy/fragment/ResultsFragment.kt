@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import de.hsaugsburg.teamulster.sohappy.CameraActivity
+import de.hsaugsburg.teamulster.sohappy.MainActivity
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentResultsBinding
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
@@ -43,13 +43,14 @@ class ResultsFragment : Fragment() {
 
         binding.measurement = measurement
 
+        (this.requireActivity() as MainActivity).localDatabaseManager.updateMeasurement(measurement)
 
         stateMachine = StateMachineUtil.getStateMachine(this)
         stateMachine.addStateChangeListener { _, new ->
             if (this.isResumed) {
                 when (new) {
                     is Start -> {
-                        (requireActivity() as CameraActivity).localDatabaseManager.close()
+                        (requireActivity() as MainActivity).localDatabaseManager.close()
                         requireActivity().finish()
                         startActivity(requireActivity().intent)
                     }
@@ -66,7 +67,7 @@ class ResultsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         thread {
-            (this.requireActivity() as CameraActivity).localDatabaseManager.updateMeasurement(measurement)
+            (this.requireActivity() as MainActivity).localDatabaseManager.updateMeasurement(measurement)
 
             requireView().post {
                 val color = resources.getColor(R.color.colorPrimary, null)

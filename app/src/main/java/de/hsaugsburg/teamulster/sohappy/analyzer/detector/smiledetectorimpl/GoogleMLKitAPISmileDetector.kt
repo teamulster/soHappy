@@ -1,6 +1,5 @@
 package de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl
 
-import android.app.Activity
 import android.graphics.Bitmap
 import com.google.common.util.concurrent.SettableFuture
 import com.google.mlkit.vision.common.InputImage
@@ -11,9 +10,7 @@ import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
 /**
  * This class implements a SmileDetector using the Google MLKit API.
  * */
-// TODO: remove Suppress statement when DetectorFactory is compliant
-@Suppress("UnusedPrivateMember")
-class GoogleMLKitAPISmileDetector(activity: Activity) : SmileDetector {
+class GoogleMLKitAPISmileDetector : SmileDetector {
     companion object {
         /**
          * This data class inherits the SmileDetector.Companion.SmileDetectionResult(isSmiling) function
