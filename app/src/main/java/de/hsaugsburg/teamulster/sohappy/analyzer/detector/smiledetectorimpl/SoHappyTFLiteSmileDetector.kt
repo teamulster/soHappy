@@ -24,7 +24,6 @@ class SoHappyTFLiteSmileDetector(activity: Activity) :
      * @return ByteBuffer?
      * */
     override fun prepare(img: Bitmap): ByteBuffer? {
-        // TODO: This has to be adapted depending on each model
         val scaledBitmap = Bitmap.createScaledBitmap(img, 64, 64, true)
         return convertToByteBuffer(scaledBitmap)
     }
@@ -42,8 +41,6 @@ class SoHappyTFLiteSmileDetector(activity: Activity) :
         val predictionResults: ArrayList<SmileDetector.Companion.Recognition> = super.execute(img)
         val firstPredictionResult = predictionResults[0]
         var isSmiling = false
-        // if Happy is detected, set isSmiling = true
-        // TODO: This has to be adapted depending on each model
         if (firstPredictionResult.title == "smile" && firstPredictionResult.confidence > 0.75f) {
             isSmiling = true
         }
