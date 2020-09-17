@@ -9,8 +9,6 @@ import androidx.navigation.ui.NavigationUI
 import de.hsaugsburg.teamulster.sohappy.config.ConfigManager
 import de.hsaugsburg.teamulster.sohappy.database.LocalDatabaseManager
 import de.hsaugsburg.teamulster.sohappy.databinding.ActivityCameraBinding
-import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
-import de.hsaugsburg.teamulster.sohappy.viewmodel.MeasurementViewModel
 import java.io.IOException
 
 /**
