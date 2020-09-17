@@ -26,7 +26,9 @@ class MeasurementViewModel : ViewModel() {
         results.add(detectionResult)
     }
 
-    fun computePercentage(): String {
+    fun computePercentageString() = "%.2f".format(computePercentage())
+
+    fun computePercentage(): Float {
         results.filter {
             detectionResult -> detectionResult.smileDetectionResult != null
         }.map {
@@ -36,7 +38,7 @@ class MeasurementViewModel : ViewModel() {
             val positiveResults = filteredResult.filter {
                 it != null && it
             }.size
-            return "%.2f".format(positiveResults.toFloat() / length.toFloat())
+            return positiveResults.toFloat() / length.toFloat()
         }
     }
 }

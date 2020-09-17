@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TableLayout
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
@@ -41,22 +43,36 @@ class HistoryFragment : Fragment() {
                 (activity as CameraActivity).localDatabaseManager.getLatestMeasurements()
 
             view.post {
+                val historyTable = view.findViewById<TableLayout>(R.id.table)
+                val historyProgressBar = view.findViewById<ProgressBar>(R.id.historyProgressBar)
+
                 for (measurement in measurements) {
+                    // TODO: Use an adapter instead of doing this here
                     val layout =
-                        LayoutInflater.from(context).inflate(R.layout.item_history_table, null)
+                        LayoutInflater.from(context).inflate(R.layout.item_history_table, null) as LinearLayout
 
                     val timestamp = measurement.timeStamp
+
                     layout.findViewById<TextView>(R.id.textView11).text =
                         android.text.format.DateFormat.getDateFormat(context).format(timestamp)
+
                     layout.findViewById<TextView>(R.id.textView12).text =
                         android.text.format.DateFormat.getTimeFormat(context).format(timestamp)
-                    layout.findViewById<TextView>(R.id.textView13).text =
-                        measurement.computePercentage()
 
-                    val historyTable = view.findViewById<TableLayout>(R.id.table)
+                    layout.findViewById<TextView>(R.id.textView13).apply {
+                        this.text =
+                            measurement.computePercentageString()
+                        this.setTextColor(
+                            if (measurement.computePercentage() > 0.5) resources.getColor(
+                                R.color.colorSuccess
+                            ) else resources.getColor(R.color.colorYellow)
+                        )
+                    }
+
                     historyTable.addView(layout)
                 }
-
+                historyTable.visibility = View.VISIBLE
+                historyProgressBar.visibility = View.GONE
             }
         }
     }

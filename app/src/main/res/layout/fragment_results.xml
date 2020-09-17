@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
-            android:text="@{measurement.computePercentage()}"
+            android:text="@{measurement.computePercentageString()}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/resultTitle" />
 
