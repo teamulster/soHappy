@@ -10,6 +10,7 @@ import de.hsaugsburg.teamulster.sohappy.analyzer.collector.Measurement
 import de.hsaugsburg.teamulster.sohappy.config.ConfigManager
 import de.hsaugsburg.teamulster.sohappy.database.LocalDatabaseManager
 import de.hsaugsburg.teamulster.sohappy.databinding.ActivityCameraBinding
+import de.hsaugsburg.teamulster.sohappy.exceptions.ExceptionHandler
 import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 import java.io.IOException
 
@@ -20,18 +21,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding
     internal var stateMachine: StateMachine? = null
     internal var measurement: Measurement? = null
-    internal lateinit var localDatabaseManager : LocalDatabaseManager
+    internal lateinit var localDatabaseManager: LocalDatabaseManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         try {
             ConfigManager.load(this)
         } catch (e: IOException) {
-            // TODO: add proper exception handling
-            ConfigManager.restoreDefaults(this)
+            ExceptionHandler.callExceptionDialog(this, resources, e)
         } catch (e: ClassNotFoundException) {
-            // TODO: add proper exception handling
-            ConfigManager.restoreDefaults(this)
+            ExceptionHandler.callExceptionDialog(this, resources, e)
         }
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_camera)

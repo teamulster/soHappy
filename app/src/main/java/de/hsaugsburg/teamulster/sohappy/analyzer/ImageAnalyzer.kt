@@ -2,6 +2,7 @@ package de.hsaugsburg.teamulster.sohappy.analyzer
 
 import android.graphics.Bitmap
 import android.util.Log
+import android.view.InflateException
 import androidx.fragment.app.activityViewModels
 import de.hsaugsburg.teamulster.sohappy.MainActivity
 import de.hsaugsburg.teamulster.sohappy.analyzer.collector.Measurement
@@ -9,6 +10,7 @@ import de.hsaugsburg.teamulster.sohappy.analyzer.detector.DetectionResult
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FaceDetector
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
 import de.hsaugsburg.teamulster.sohappy.config.ImageAnalyzerConfig
+import de.hsaugsburg.teamulster.sohappy.exceptions.ExceptionHandler
 import de.hsaugsburg.teamulster.sohappy.factories.DetectorFactory
 import de.hsaugsburg.teamulster.sohappy.fragment.CameraFragment
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
@@ -42,14 +44,19 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
 
 
     init {
-        // TODO: add proper exception handling in UI
         try {
             faceDetector =
                 DetectorFactory.createFaceDetectorFromConfig(config, fragment.requireActivity())
             smileDetector =
                 DetectorFactory.createSmileDetectorFromConfig(config, fragment.requireActivity())
         } catch (e: NoSuchMethodException) {
-            print(e.message)
+            ExceptionHandler.callExceptionDialog(fragment.requireContext(), fragment.resources, e)
+        } catch (e: ClassCastException) {
+            ExceptionHandler.callExceptionDialog(fragment.requireContext(), fragment.resources, e)
+        } catch (e: InflateException) {
+            ExceptionHandler.callExceptionDialog(fragment.requireContext(), fragment.resources, e)
+        } catch (e: UninitializedPropertyAccessException) {
+            ExceptionHandler.callExceptionDialog(fragment.requireContext(), fragment.resources, e)
         }
 
         stateMachine.addStateChangeListener { _, new ->
@@ -78,7 +85,7 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
      * @param [img] a bitmap which will be analyzed
      * @return [DetectionResult]
      */
-    fun computeFaceDetectionResult(img: Bitmap): DetectionResult {
+    private fun computeFaceDetectionResult(img: Bitmap): DetectionResult {
         val result = faceDetector.detect(img)
         return DetectionResult(result, null)
     }
@@ -90,7 +97,7 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
      * @param [img] a bitmap which will be analyzed
      * @return [DetectionResult]
      */
-    fun computeSmileDetectionResult(img: Bitmap): DetectionResult {
+    private fun computeSmileDetectionResult(img: Bitmap): DetectionResult {
         val faceDetectionResult = faceDetector.detect(img)
         val croppedOutFace = faceDetectionResult?.frame?.let { BitmapEditor.crop(img, it) }
         val smileDR = croppedOutFace?.let { smileDetector.detect(it) }

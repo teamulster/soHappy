@@ -116,4 +116,7 @@
     <string name="fragment_results_text">Feel free to continue using the app. If you have enabled notifications, you will be reminded to open the app after a certain timeframe has passed.</string>
     <string name="fragment_results_results_overview">Your Results</string>
     <string name="fragment_results_finish">Finish</string>
+
+    <string name="config_exception_close_app">Close App</string>
+    <string name="config_exception_restore_defaults">Restore Defaults</string>
 </resources>
