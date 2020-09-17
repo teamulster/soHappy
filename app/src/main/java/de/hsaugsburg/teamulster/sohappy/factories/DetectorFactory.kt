@@ -18,12 +18,29 @@ object DetectorFactory {
      *
      * @param config [ImageAnalyzerConfig]
      * @param activity [Activity] this activity will mostly be used in order to get assets.
+     * @throws [NoSuchMethodException]
      * @return [FaceDetector]
      */
-    fun getFaceDetectorFromConfig(config: ImageAnalyzerConfig, activity: Activity): FaceDetector {
-        return Class.forName(config.faceDetector)
-            .getConstructor(Activity::class.java)
-            .newInstance(activity) as FaceDetector
+    fun createFaceDetectorFromConfig(
+        config: ImageAnalyzerConfig,
+        activity: Activity
+    ): FaceDetector {
+        lateinit var returnValue: FaceDetector
+        try {
+            val constructors = Class.forName(config.faceDetector).constructors
+            constructors.forEach { constructor ->
+                val paramTypes = constructor.parameterTypes
+                returnValue =
+                    if (paramTypes.isNotEmpty() && paramTypes[0] == Activity::class.java) {
+                        constructor.newInstance(activity) as FaceDetector
+                    } else {
+                        constructor.newInstance() as FaceDetector
+                    }
+            }
+        } catch (e: NoSuchMethodException) {
+            throw e
+        }
+        return returnValue
     }
 
     /**
@@ -35,10 +52,28 @@ object DetectorFactory {
      *
      * @param config [ImageAnalyzerConfig]
      * @param activity [Activity] this activity will mostly be used in order to get assets.
+     * @throws [NoSuchMethodException]
      * @return [SmileDetector]
      */
-    fun getSmileDetectorFromConfig(config: ImageAnalyzerConfig, activity: Activity): SmileDetector {
-        return Class.forName(config.smileDetector).getConstructor(Activity::class.java)
-            .newInstance(activity) as SmileDetector
+    fun createSmileDetectorFromConfig(
+        config: ImageAnalyzerConfig,
+        activity: Activity
+    ): SmileDetector {
+        lateinit var returnValue: SmileDetector
+        try {
+            val constructors = Class.forName(config.smileDetector).constructors
+            constructors.forEach { constructor ->
+                val paramTypes = constructor.parameterTypes
+                returnValue =
+                    if (paramTypes.isNotEmpty() && paramTypes[0] == Activity::class.java) {
+                        constructor.newInstance(activity) as SmileDetector
+                    } else {
+                        constructor.newInstance() as SmileDetector
+                    }
+            }
+        } catch (e: NoSuchMethodException) {
+            throw e
+        }
+        return returnValue
     }
 }
