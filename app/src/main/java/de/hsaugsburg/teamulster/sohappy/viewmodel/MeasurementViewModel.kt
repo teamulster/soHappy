@@ -26,8 +26,19 @@ class MeasurementViewModel : ViewModel() {
         results.add(detectionResult)
     }
 
-    fun computePercentageString() = "%.2f".format(computePercentage())
+    /**
+     * computes Percentage using [computePercentage] and returns it as decimal with an %.
+     * @return [String]
+     */
+    fun computePercentageString() = "%d%%".format((computePercentage()*100).toInt())
 
+    /**
+     * computes percentage of an [MeasurementViewModel]
+     * For this, all [DetectionResult]s containing an
+     * [de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector.Companion.SmileDetectionResult]
+     * will be counted. All SmileDetectionResults containing an Smile will be divided by all SmileDetectionResults.
+     * @return [Float]
+     */
     fun computePercentage(): Float {
         results.filter {
             detectionResult -> detectionResult.smileDetectionResult != null

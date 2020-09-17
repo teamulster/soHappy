@@ -49,7 +49,8 @@ class HistoryFragment : Fragment() {
                 for (measurement in measurements) {
                     // TODO: Use an adapter instead of doing this here
                     val layout =
-                        LayoutInflater.from(context).inflate(R.layout.item_history_table, null) as LinearLayout
+                        LayoutInflater.from(context)
+                            .inflate(R.layout.item_history_table, null) as LinearLayout
 
                     val timestamp = measurement.timeStamp
 
@@ -63,9 +64,11 @@ class HistoryFragment : Fragment() {
                         this.text =
                             measurement.computePercentageString()
                         this.setTextColor(
-                            if (measurement.computePercentage() > 0.5) resources.getColor(
-                                R.color.colorSuccess
-                            ) else resources.getColor(R.color.colorYellow)
+                            if (measurement.computePercentage() > 0.5) {
+                                resources.getColor(R.color.colorSuccess, null)
+                            } else {
+                                resources.getColor(R.color.colorYellow, null)
+                            }
                         )
                     }
 
