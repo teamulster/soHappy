@@ -13,7 +13,6 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class BitmapEditorTest {
-
     private val instrumentationContext: Context =
         InstrumentationRegistry.getInstrumentation().context
     lateinit var bitmap: Bitmap

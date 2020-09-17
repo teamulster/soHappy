@@ -7,7 +7,7 @@ import android.os.Build
 import android.os.SystemClock
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import de.hsaugsburg.teamulster.sohappy.CameraActivity
+import de.hsaugsburg.teamulster.sohappy.MainActivity
 import de.hsaugsburg.teamulster.sohappy.R
 
 /**
@@ -26,7 +26,7 @@ class NotificationHandler private constructor() {
          */
         fun scheduleNotification(context: Context, delay: Long) {
             // Create a PendingIntent that starts the app when triggered
-            val activityIntent = Intent(context, CameraActivity::class.java)
+            val activityIntent = Intent(context, MainActivity::class.java)
             val activityPendingIntent: PendingIntent? = TaskStackBuilder.create(context).run {
                 addNextIntentWithParentStack(activityIntent)
                 getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
