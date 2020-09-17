@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import android.util.Log
 import androidx.fragment.app.activityViewModels
 import de.hsaugsburg.teamulster.sohappy.MainActivity
-import de.hsaugsburg.teamulster.sohappy.analyzer.collector.Measurement
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.DetectionResult
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FaceDetector
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
@@ -14,7 +13,7 @@ import de.hsaugsburg.teamulster.sohappy.fragment.CameraFragment
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 import de.hsaugsburg.teamulster.sohappy.stateMachine.states.*
-import de.hsaugsburg.teamulster.sohappy.viewmodel.QuestionnaireViewModel
+import de.hsaugsburg.teamulster.sohappy.viewmodel.MeasurementViewModel
 import kotlin.concurrent.thread
 
 /**
@@ -33,8 +32,7 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
         }
     }
 
-    private val measurement: Measurement by fragment.activityViewModels()
-    private val questionnaireViewModel: QuestionnaireViewModel by fragment.activityViewModels()
+    private val measurement: MeasurementViewModel by fragment.activityViewModels()
     private lateinit var faceDetector: FaceDetector
     private lateinit var smileDetector: SmileDetector
     private var imageAnalyzerState: ImageAnalyzerState = ImageAnalyzerState.NONE
@@ -68,8 +66,6 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
             is Questions, is NoSmile -> ImageAnalyzerState.CANCEL
             else -> imageAnalyzerState
         }
-
-        measurement.questionnaire = questionnaireViewModel
     }
 
     /**

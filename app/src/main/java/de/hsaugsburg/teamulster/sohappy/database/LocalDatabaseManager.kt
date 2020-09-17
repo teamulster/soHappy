@@ -1,7 +1,7 @@
 package de.hsaugsburg.teamulster.sohappy.database
 
 import android.app.Activity
-import de.hsaugsburg.teamulster.sohappy.analyzer.collector.Measurement
+import de.hsaugsburg.teamulster.sohappy.viewmodel.MeasurementViewModel
 import org.dizitart.kno2.getRepository
 import org.dizitart.kno2.nitrite
 import org.dizitart.no2.FindOptions
@@ -20,7 +20,7 @@ class LocalDatabaseManager(activity: Activity) {
         compress = true
         autoCompact = false
     }
-    private val measurementRepository: ObjectRepository<Measurement>
+    private val measurementRepository: ObjectRepository<MeasurementViewModel>
 
     init {
         measurementRepository = db.getRepository()
@@ -30,7 +30,7 @@ class LocalDatabaseManager(activity: Activity) {
      * Adds a new measurement to the local database.
      * @param [measurement] measurement to add
      */
-    fun addMeasurement(measurement: Measurement) {
+    fun addMeasurement(measurement: MeasurementViewModel) {
         measurementRepository.insert(measurement)
     }
 
@@ -38,7 +38,7 @@ class LocalDatabaseManager(activity: Activity) {
      * Updates an existing measurement in the database.
      * @param [measurement] measurement to update
      */
-    fun updateMeasurement(measurement: Measurement) {
+    fun updateMeasurement(measurement: MeasurementViewModel) {
         measurementRepository.update(measurement)
     }
 
@@ -46,7 +46,7 @@ class LocalDatabaseManager(activity: Activity) {
      * Adds an new measurement to the datebase. If the entry already exists, it will be updated.
      * @param [measurement] measurement to add or update
      */
-    fun addOrUpdateMeasurement(measurement: Measurement) {
+    fun addOrUpdateMeasurement(measurement: MeasurementViewModel) {
         val cursor =
             measurementRepository.find(ObjectFilters.eq("timeStamp", measurement.timeStamp))
         val oldMeasurement = cursor.firstOrNull()
@@ -63,7 +63,7 @@ class LocalDatabaseManager(activity: Activity) {
      * @param [size] number of Measurements
      * @return List<Measurement>
      */
-    fun getLatestMeasurements(offset: Int = 0, size: Int = 10): List<Measurement> {
+    fun getLatestMeasurements(offset: Int = 0, size: Int = 10): List<MeasurementViewModel> {
         val cursor = measurementRepository.find(
             FindOptions
                 .sort("timeStamp", SortOrder.Descending)
