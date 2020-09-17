@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import android.util.Log
 import androidx.fragment.app.activityViewModels
 import de.hsaugsburg.teamulster.sohappy.MainActivity
-import de.hsaugsburg.teamulster.sohappy.analyzer.collector.Measurement
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.DetectionResult
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FaceDetector
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
@@ -14,7 +13,7 @@ import de.hsaugsburg.teamulster.sohappy.fragment.CameraFragment
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 import de.hsaugsburg.teamulster.sohappy.stateMachine.states.*
 import de.hsaugsburg.teamulster.sohappy.util.StateMachineUtil
-import de.hsaugsburg.teamulster.sohappy.viewmodel.QuestionnaireViewModel
+import de.hsaugsburg.teamulster.sohappy.viewmodel.MeasurementViewModel
 import kotlin.concurrent.thread
 
 /**
@@ -33,17 +32,24 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
         }
     }
 
-    private val measurement: Measurement by fragment.activityViewModels()
-    private val questionnaireViewModel: QuestionnaireViewModel by fragment.activityViewModels()
-    private var faceDetector: FaceDetector? =
-        DetectorFactory.getFaceDetectorFromConfig(config, fragment.requireActivity())
-    private var smileDetector: SmileDetector? =
-        DetectorFactory.getSmileDetectorFromConfig(config, fragment.requireActivity())
+    private val measurement: MeasurementViewModel by fragment.activityViewModels()
+    private lateinit var faceDetector: FaceDetector
+    private lateinit var smileDetector: SmileDetector
     private var imageAnalyzerState: ImageAnalyzerState = ImageAnalyzerState.NONE
     private var stateMachine = StateMachineUtil.getStateMachine(fragment)
 
 
     init {
+        // TODO: add proper exception handling in UI
+        try {
+            faceDetector =
+                DetectorFactory.createFaceDetectorFromConfig(config, fragment.requireActivity())
+            smileDetector =
+                DetectorFactory.createSmileDetectorFromConfig(config, fragment.requireActivity())
+        } catch (e: NoSuchMethodException) {
+            print(e.message)
+        }
+
         stateMachine.addStateChangeListener { _, new ->
             if (fragment.isVisible) {
                 imageAnalyzerState = when (new) {
@@ -62,8 +68,6 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
             is Questions, is NoSmile -> ImageAnalyzerState.CANCEL
             else -> imageAnalyzerState
         }
-
-        measurement.questionnaire = questionnaireViewModel
     }
 
     /**
@@ -73,7 +77,7 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
      * @return [DetectionResult]
      */
     fun computeFaceDetectionResult(img: Bitmap): DetectionResult {
-        val result = faceDetector?.detect(img)
+        val result = faceDetector.detect(img)
         return DetectionResult(result, null)
     }
 
@@ -85,9 +89,9 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
      * @return [DetectionResult]
      */
     fun computeSmileDetectionResult(img: Bitmap): DetectionResult {
-        val faceDetectionResult = faceDetector?.detect(img)
+        val faceDetectionResult = faceDetector.detect(img)
         val croppedOutFace = faceDetectionResult?.frame?.let { BitmapEditor.crop(img, it) }
-        val smileDR = croppedOutFace?.let { smileDetector?.detect(it) }
+        val smileDR = croppedOutFace?.let { smileDetector.detect(it) }
         return DetectionResult(faceDetectionResult, smileDR)
     }
 
