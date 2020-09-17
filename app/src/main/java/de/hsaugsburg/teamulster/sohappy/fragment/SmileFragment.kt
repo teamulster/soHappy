@@ -50,9 +50,6 @@ class SmileFragment : Fragment() {
         stateMachine.addStateChangeListener { old, new ->
             if (this.isResumed) {
                 when (new) {
-                    is Start -> requireView().post {
-                        findNavController().navigate(R.id.homeFragment)
-                    }
                     is TakeABreath -> requireView().post {
                         VideoMasker.applyBlueFilter()
                         startCountdown()

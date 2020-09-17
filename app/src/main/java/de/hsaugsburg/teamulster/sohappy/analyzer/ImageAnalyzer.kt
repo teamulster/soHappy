@@ -45,12 +45,14 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
 
     init {
         stateMachine.addStateChangeListener { _, new ->
-            imageAnalyzerState = when (new) {
-                is Start -> ImageAnalyzerState.NONE
-                is WaitingForFace, is TakeABreath -> ImageAnalyzerState.FACE_DETECTION
-                is WaitingForSmile -> ImageAnalyzerState.SMILE_DETECTION
-                is Questions, is NoSmile -> ImageAnalyzerState.CANCEL
-                else -> imageAnalyzerState
+            if (fragment.isVisible) {
+                imageAnalyzerState = when (new) {
+                    is Start -> ImageAnalyzerState.NONE
+                    is WaitingForFace, is TakeABreath -> ImageAnalyzerState.FACE_DETECTION
+                    is WaitingForSmile -> ImageAnalyzerState.SMILE_DETECTION
+                    is Questions, is NoSmile -> ImageAnalyzerState.CANCEL
+                    else -> imageAnalyzerState
+                }
             }
         }
         imageAnalyzerState = when (stateMachine.getCurrentMachineState()) {

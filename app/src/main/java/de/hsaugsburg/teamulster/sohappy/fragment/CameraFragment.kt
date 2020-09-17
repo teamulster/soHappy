@@ -82,13 +82,13 @@ class CameraFragment: Fragment() {
 
         return binding.root
     }
-
+/*
     override fun onStop() {
         super.onStop()
         // TODO: We also need to find a way to continue after onContinue or sth
 
         cameraProvider!!.unbindAll()
-    }
+    }*/
 
     @SuppressLint("UnsafeExperimentalUsageError")
     private fun startCameraIfReady() {

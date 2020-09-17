@@ -47,6 +47,9 @@ class LocalDatabaseManager(activity: Activity) {
      * @param [measurement] measurement to add or update
      */
     fun addOrUpdateMeasurement(measurement: Measurement) {
+        if (db.isClosed) {
+            return
+        }
         val cursor =
             measurementRepository.find(ObjectFilters.eq("timeStamp", measurement.timeStamp))
         val oldMeasurement = cursor.firstOrNull()
