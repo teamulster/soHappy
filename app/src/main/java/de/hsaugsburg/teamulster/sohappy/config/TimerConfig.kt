@@ -10,5 +10,5 @@ package de.hsaugsburg.teamulster.sohappy.config
  * */
 data class TimerConfig(
     val breathTimer: Long, val stimulusTimer: Long,
-    val waitingForSmileTimer: Long, val smileTimer: Long
+    val waitingForSmileTimer: Long, val waitingForFaceTimer: Long, val smileTimer: Long
 )

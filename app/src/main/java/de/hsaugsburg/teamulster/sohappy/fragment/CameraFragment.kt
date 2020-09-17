@@ -18,7 +18,7 @@ import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.VideoMasker
 import de.hsaugsburg.teamulster.sohappy.analyzer.BitmapEditor
 import de.hsaugsburg.teamulster.sohappy.analyzer.ImageAnalyzer
-import de.hsaugsburg.teamulster.sohappy.config.ImageAnalyzerConfig
+import de.hsaugsburg.teamulster.sohappy.config.ConfigManager
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentCameraBinding
 import de.hsaugsburg.teamulster.sohappy.queue.BitmapQueue
 import de.hsaugsburg.teamulster.sohappy.util.YuvToRgbConverter
@@ -63,13 +63,7 @@ class CameraFragment: Fragment() {
         gpuImageView.setScaleType(GPUImage.ScaleType.CENTER_CROP)
         VideoMasker.gpuImageView = gpuImageView
         queue = BitmapQueue()
-        // TODO: Replace with real config here
-        imageAnalyzer = ImageAnalyzer(
-            this, ImageAnalyzerConfig(
-                "de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.HaarCascadeFaceDetector",
-                "de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl.FerTFLiteSmileDetector",
-            )
-        )
+        imageAnalyzer = ImageAnalyzer(this, ConfigManager.imageAnalyzerConfig)
 
         requestPermissions(arrayOf(Manifest.permission.CAMERA), REQUEST_CODE_PERMISSIONS)
         // From the processCameraProvider, we can request a Future, which will contain the

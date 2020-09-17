@@ -37,7 +37,7 @@ object ConfigManager {
             "https://github.com/teamulster/soHappy",
             "https://github.com/teamulster/soHappy"
         ),
-        TimerConfig(3000, 2500, 10_000, 30_000)
+        TimerConfig(3000, 2500, 10_000, 10_000, 30_000)
     )
     private val defaultSettingsConfig = SettingsConfig(notifications = true, databaseSync = true)
 
@@ -214,29 +214,23 @@ object ConfigManager {
      * @param [aboutConfig] a given AboutConfig object which will be checked
      * @throws [MalformedURLException]
      */
-    @Suppress("ThrowsCount")
     private fun checkAboutConfig(aboutConfig: AboutConfig) {
         val optRecommendation = "Make sure http:// or https:// is prepended."
+        var errorString = ""
         if (!isURLValid(aboutConfig.creditsURL)) {
-            throw MalformedURLException(
-                this::class.java.name
-                        + " : aboutConfig.creditsURL is not properly formatted."
-                        + "\n" + optRecommendation
-            )
+            errorString = "aboutConfig.creditsURL is not properly formatted." +
+                    "\n" + optRecommendation
         }
         if (!isURLValid(aboutConfig.privacyURL)) {
-            throw MalformedURLException(
-                this::class.java.name
-                        + " : aboutConfig.privacyURL is not properly formatted"
-                        + "\n" + optRecommendation
-            )
+            errorString = "aboutConfig.privacyURL is not properly formatted" +
+                    "\n" + optRecommendation
         }
         if (!isURLValid(aboutConfig.imprintURL)) {
-            throw MalformedURLException(
-                this::class.java.name
-                        + " : aboutConfig.imprintURL is not properly formatted"
-                        + "\n" + optRecommendation
-            )
+            errorString = "aboutConfig.imprintURL is not properly formatted" +
+                    "\n" + optRecommendation
+        }
+        if (errorString != "") {
+            throw MalformedURLException(errorString)
         }
     }
 
@@ -251,7 +245,7 @@ object ConfigManager {
             Class.forName(imageAnalyzerConfig.faceDetector)
             Class.forName(imageAnalyzerConfig.smileDetector)
         } catch (e: ClassNotFoundException) {
-            throw e
+            throw ClassNotFoundException("Invalid package path name : " + e.message)
         }
     }
 }
