@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_camera)
         localDatabaseManager = LocalDatabaseManager(this)
         val navController = findNavController(R.id.navHostFragment)
+
         NavigationUI.setupActionBarWithNavController(this, navController)
     }
 

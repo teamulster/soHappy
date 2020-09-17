@@ -1,11 +1,10 @@
 package de.hsaugsburg.teamulster.sohappy.fragment
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -56,6 +55,10 @@ class NoSmileFragment : Fragment() {
 
         binding.continueButton.setOnClickListener {
             stateMachine.consumeAction(Action.QuestionButtonPressed)
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            // NO-OP
         }
 
         return binding.root

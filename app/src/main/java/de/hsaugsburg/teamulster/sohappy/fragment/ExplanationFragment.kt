@@ -52,6 +52,7 @@ class ExplanationFragment : Fragment() {
             }
         })
 
+
         return binding.root
     }
 }
