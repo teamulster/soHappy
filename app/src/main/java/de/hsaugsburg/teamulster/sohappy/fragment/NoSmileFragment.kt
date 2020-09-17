@@ -8,11 +8,13 @@ import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import de.hsaugsburg.teamulster.sohappy.MainActivity
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentNosmileBinding
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
+import de.hsaugsburg.teamulster.sohappy.stateMachine.states.Questions
 import de.hsaugsburg.teamulster.sohappy.stateMachine.states.Start
 import de.hsaugsburg.teamulster.sohappy.util.StateMachineUtil
 
@@ -45,6 +47,10 @@ class NoSmileFragment : Fragment() {
                         requireActivity().finish()
                         startActivity(requireActivity().intent)
                     }
+                    is Questions ->
+                        requireView().post {
+                            findNavController().navigate(R.id.action_noSmileFragment_to_questionnaire01Fragment)
+                        }
                 }
             }
         }
