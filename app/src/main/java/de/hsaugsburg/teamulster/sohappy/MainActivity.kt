@@ -1,5 +1,6 @@
 package de.hsaugsburg.teamulster.sohappy
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
             ConfigManager.restoreDefaults(this)
         }
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         binding = DataBindingUtil.setContentView(this, R.layout.activity_camera)
         localDatabaseManager = LocalDatabaseManager(this)
         val navController = findNavController(R.id.navHostFragment)
