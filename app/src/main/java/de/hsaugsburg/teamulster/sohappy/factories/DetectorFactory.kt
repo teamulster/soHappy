@@ -22,6 +22,7 @@ object DetectorFactory {
      * @throws [NoSuchMethodException]
      * @return [FaceDetector]
      */
+    @Suppress("ThrowsCount")
     fun createFaceDetectorFromConfig(
         config: ImageAnalyzerConfig,
         activity: Activity
@@ -62,6 +63,7 @@ object DetectorFactory {
      * @throws [NoSuchMethodException]
      * @return [SmileDetector]
      */
+    @Suppress("ThrowsCount")
     fun createSmileDetectorFromConfig(
         config: ImageAnalyzerConfig,
         activity: Activity

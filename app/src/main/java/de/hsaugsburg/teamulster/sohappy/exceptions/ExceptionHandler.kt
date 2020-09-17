@@ -7,6 +7,10 @@ import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.config.ConfigManager
 import kotlin.system.exitProcess
 
+/**
+ * This object allows proper exception handling by showing dialogs in the app using state of the art
+ * Material design.
+ * */
 object ExceptionHandler {
     fun callExceptionDialog(context: Context, resources: Resources, e: Throwable) {
         MaterialAlertDialogBuilder(context)
