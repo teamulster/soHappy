@@ -11,7 +11,7 @@ object BitmapEditor {
      * Note that the constructor of Rect takes right and bottom instead of height and width.
      * Right is the same as left+width and bottom is the same as top+height.
      *
-     * @param frame is the rectangle you want to cut out.
+     * @param frame is the rectangle to be cut.
      * @return a cutout from the bitmap.
      */
     fun crop(bitmap: Bitmap, frame: Rect): Bitmap? {
@@ -35,8 +35,8 @@ object BitmapEditor {
     }
 
     /**
-     * @param bitmap you want rotate.
-     * @param degree is the number of degree you rotate, positive values rotate clockwise.
+     * @param bitmap to be rotated.
+     * @param degree is the number of degrees to rotate (positive values rotate clockwise).
      * @return a new rotated bitmap.
      */
     fun rotate(bitmap: Bitmap, degree: Float): Bitmap {
@@ -46,16 +46,16 @@ object BitmapEditor {
     }
 
     /**
-     * @param bitmap you want to resize.
-     * @param width you want to have.
-     * @param height you want to have.
+     * @param bitmap to be resized.
+     * @param width of outcome bitmap.
+     * @param height of outcome bitmap.
      * @return a new scaled bitmap.
      */
     fun resize(bitmap: Bitmap, width: Int, height: Int): Bitmap =
         Bitmap.createScaledBitmap(bitmap, width, height, false)
 
     /**
-     * @param bitmap you want to greyscale.
+     * @param bitmap to be greyscaled.
      * @return a new grey scaled bitmap.
      */
     fun greyScale(bitmap: Bitmap): Bitmap {
@@ -71,4 +71,17 @@ object BitmapEditor {
         canvas.drawBitmap(copiedBitmap, 0F, 0F, paint)
         return bitmapGreyScale
     }
+
+    /**
+     * Flips a Bitmap in horizontal direction.
+     *
+     * @param bitmap to be flipped.
+     * @return the flipped bitmap.
+     */
+    fun flipHorizontal(bitmap: Bitmap): Bitmap {
+        val matrix = Matrix()
+        matrix.preScale(-1.0f, 1.0f)
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+    }
 }
+
