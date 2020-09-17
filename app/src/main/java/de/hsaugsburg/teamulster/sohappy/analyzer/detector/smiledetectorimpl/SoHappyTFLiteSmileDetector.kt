@@ -6,6 +6,9 @@ import de.hsaugsburg.teamulster.sohappy.analyzer.BitmapEditor.convertToByteBuffe
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
 import java.nio.ByteBuffer
 
+/**
+ * implementation for our self-trained model.
+ */
 class SoHappyTFLiteSmileDetector(activity: Activity) :
     AbstractTFLiteSmileDetector("model_so_happy.tflite", activity) {
 
