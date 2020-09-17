@@ -46,6 +46,7 @@ class LocalDatabaseManager(activity: Activity) {
      * Adds an new measurement to the datebase. If the entry already exists, it will be updated.
      * @param [measurement] measurement to add or update
      */
+
     fun addOrUpdateMeasurement(measurement: MeasurementViewModel) {
         if (db.isClosed) {
             return
