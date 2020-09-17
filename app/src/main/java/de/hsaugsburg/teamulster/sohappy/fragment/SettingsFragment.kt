@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import de.hsaugsburg.teamulster.sohappy.CameraActivity
+import de.hsaugsburg.teamulster.sohappy.MainActivity
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentSettingsBinding
 import de.hsaugsburg.teamulster.sohappy.viewmodel.SettingsViewModel
@@ -33,7 +33,7 @@ class SettingsFragment : Fragment() {
 
         binding.settingsNotificationSwitch.setOnCheckedChangeListener { _, new ->
             viewModel.notificationsEnabled = new
-            val activity = requireActivity() as CameraActivity
+            val activity = requireActivity() as MainActivity
             if (new) {
                 activity.notificationHandler.triggerNotificationAlarm()
             } else {
