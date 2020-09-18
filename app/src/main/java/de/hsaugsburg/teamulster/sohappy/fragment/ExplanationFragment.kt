@@ -37,7 +37,7 @@ class ExplanationFragment : Fragment() {
 
         val pagerAdapter = ExplanationPagerAdapter(requireContext(), pages)
         binding.viewPager.adapter = pagerAdapter
-        binding.viewPager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener {
+        binding.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageSelected(position: Int) {
                 (circles[position].background as TransitionDrawable).startTransition(200)
                 (activeCircle.background as TransitionDrawable).reverseTransition(200)
@@ -47,10 +47,12 @@ class ExplanationFragment : Fragment() {
             override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {
                 // no-op
             }
+
             override fun onPageScrollStateChanged(state: Int) {
                 // no-op
             }
         })
+
 
         return binding.root
     }

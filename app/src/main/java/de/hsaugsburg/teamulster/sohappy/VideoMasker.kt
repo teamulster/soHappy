@@ -58,28 +58,28 @@ object VideoMasker {
     /**
      * applies blue blur filter.
      */
-    fun applyBlueFilter () {
+    fun applyBlueFilter() {
         gpuImageView.filter = blueFilter
     }
 
     /**
      * applies red blur filter.
      */
-    fun applyRedFilter ()  {
+    fun applyRedFilter() {
         gpuImageView.filter = redFilter
     }
 
     /**
      * applies yellow blur filter.
      */
-    fun applyYellowFilter () {
+    fun applyYellowFilter() {
         gpuImageView.filter = yellowFilter
     }
 
     /**
      * applies green blur filter.
      */
-    fun applyGreenFilter () {
+    fun applyGreenFilter() {
         gpuImageView.filter = greenFilter
     }
 }
