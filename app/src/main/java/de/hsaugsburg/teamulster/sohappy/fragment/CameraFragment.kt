@@ -86,7 +86,7 @@ class CameraFragment: Fragment() {
     override fun onStop() {
         super.onStop()
 
-        cameraProvider!!.unbindAll()
+        cameraProvider?.unbindAll()
     }
 
     @SuppressLint("UnsafeExperimentalUsageError")
@@ -144,7 +144,7 @@ class CameraFragment: Fragment() {
         requestCode: Int, permissions: Array<String?>, grantResults: IntArray
     ) {
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            startCameraIfReady()
+            //startCameraIfReady()
         }
     }
 

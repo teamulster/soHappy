@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.VideoMasker
@@ -15,7 +16,6 @@ import de.hsaugsburg.teamulster.sohappy.databinding.FragmentSmileBinding
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 import de.hsaugsburg.teamulster.sohappy.stateMachine.states.*
-import de.hsaugsburg.teamulster.sohappy.util.StateMachineUtil
 import kotlin.concurrent.thread
 
 // TODO: The requireView.postDelayed() calls serve as proof of concept for animations - replace!
@@ -24,7 +24,7 @@ import kotlin.concurrent.thread
  * procedure described in the paper.
  */
 class SmileFragment : Fragment() {
-    private lateinit var stateMachine: StateMachine
+    private val stateMachine: StateMachine by activityViewModels()
     private lateinit var binding: FragmentSmileBinding
 
     override fun onCreateView(
@@ -38,7 +38,6 @@ class SmileFragment : Fragment() {
             container,
             false
         )
-        stateMachine = StateMachineUtil.getStateMachine(this)
         when (stateMachine.getCurrentMachineState()) {
             is WaitingForFace -> thread {
                 VideoMasker.applyRedFilter()

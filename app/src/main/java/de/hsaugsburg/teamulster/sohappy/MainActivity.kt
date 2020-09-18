@@ -9,8 +9,6 @@ import androidx.navigation.ui.NavigationUI
 import de.hsaugsburg.teamulster.sohappy.config.ConfigManager
 import de.hsaugsburg.teamulster.sohappy.database.LocalDatabaseManager
 import de.hsaugsburg.teamulster.sohappy.databinding.ActivityCameraBinding
-import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
-import de.hsaugsburg.teamulster.sohappy.viewmodel.MeasurementViewModel
 import java.io.IOException
 
 /**
@@ -18,8 +16,6 @@ import java.io.IOException
  */
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding
-    internal var stateMachine: StateMachine? = null
-    internal var measurement: MeasurementViewModel? = null
     internal lateinit var localDatabaseManager : LocalDatabaseManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
