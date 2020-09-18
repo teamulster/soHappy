@@ -69,10 +69,13 @@ class CameraFragment : Fragment() {
         // From the processCameraProvider, we can request a Future, which will contain the
         // camera instance, when its available
         val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
-        cameraProviderFuture.addListener({
-            cameraProvider = cameraProviderFuture.get()
-            startCameraIfReady()
-        }, ContextCompat.getMainExecutor(context))
+        cameraProviderFuture.addListener(
+            {
+                cameraProvider = cameraProviderFuture.get()
+                startCameraIfReady()
+            },
+            ContextCompat.getMainExecutor(context)
+        )
 
         return binding.root
     }
@@ -101,24 +104,25 @@ class CameraFragment : Fragment() {
             // TODO: take a look into .setBackgroundExecutor()
             .build()
 
-        imageAnalysis.setAnalyzer(executor, {
-            var bitmap = allocateBitmapIfNecessary(it.width, it.height)
-            //TODO: SuppressLint is dependent on it.image!! Why?
-            converter.yuvToRgb(it.image!!, bitmap)
+        imageAnalysis.setAnalyzer(
+            executor,
+            {
+                var bitmap = allocateBitmapIfNecessary(it.width, it.height)
+                // TODO: SuppressLint is dependent on it.image!! Why?
+                converter.yuvToRgb(it.image!!, bitmap)
 
-            bitmap = BitmapEditor.rotate(bitmap, -90f)
-            bitmap = BitmapEditor.flipHorizontal(bitmap)
+                bitmap = BitmapEditor.rotate(bitmap, -90f)
+                bitmap = BitmapEditor.flipHorizontal(bitmap)
 
-            queue.replace(bitmap.copy(bitmap.config, false))
+                queue.replace(bitmap.copy(bitmap.config, false))
 
-            gpuImageView.post {
-                gpuImageView.setRatio((bitmap.width / bitmap.height).toFloat())
-                gpuImageView.setImage(bitmap)
-
+                gpuImageView.post {
+                    gpuImageView.setRatio((bitmap.width / bitmap.height).toFloat())
+                    gpuImageView.setImage(bitmap)
+                }
+                it.close()
             }
-            it.close()
-        })
-
+        )
 
         cameraProvider!!.bindToLifecycle(this, CameraSelector.DEFAULT_FRONT_CAMERA, imageAnalysis)
         if (parentFragment is SmileFragment) {
@@ -134,10 +138,12 @@ class CameraFragment : Fragment() {
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<String?>, grantResults: IntArray
+        requestCode: Int,
+        permissions: Array<String?>,
+        grantResults: IntArray
     ) {
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            //startCameraIfReady()
+            // startCameraIfReady()
         }
     }
 

@@ -9,6 +9,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import de.hsaugsburg.teamulster.sohappy.MainActivity
 import de.hsaugsburg.teamulster.sohappy.R
+import de.hsaugsburg.teamulster.sohappy.config.ConfigManager
 
 /**
  * NotificationHandler handles all actions concerning notifications, such as creating
@@ -25,7 +26,7 @@ class NotificationHandler(private val context: Context) {
         val notificationIntent = createNotificationIntent()
 
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val delay: Long = 3 * 60 * 60 * 1000
+        val delay: Long = ConfigManager.notificationConfig.alarmDelay
 
         alarmManager.cancel(notificationIntent)
         alarmManager.setRepeating(
@@ -61,7 +62,8 @@ class NotificationHandler(private val context: Context) {
         }
 
         val notification = NotificationCompat.Builder(
-            context, context.getString(R.string.channel_id)
+            context,
+            context.getString(R.string.channel_id)
         ).apply {
             setSmallIcon(R.mipmap.ic_launcher)
             setContentTitle(context.resources.getString(R.string.notification_title))
@@ -96,7 +98,9 @@ class NotificationHandler(private val context: Context) {
             val descriptionText = context.resources.getString(R.string.channel_description)
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel(
-                context.resources.getString(R.string.channel_id), name, importance
+                context.resources.getString(R.string.channel_id),
+                name,
+                importance
             ).apply {
                 description = descriptionText
             }

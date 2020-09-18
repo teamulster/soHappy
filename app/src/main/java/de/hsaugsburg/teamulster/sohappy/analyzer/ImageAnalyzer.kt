@@ -40,7 +40,6 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
     private var imageAnalyzerState: ImageAnalyzerState = ImageAnalyzerState.NONE
     private val stateMachine: StateMachine by fragment.activityViewModels()
 
-
     init {
         try {
             faceDetector =
@@ -120,8 +119,8 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
                     val result = when (imageAnalyzerState) {
                         ImageAnalyzerState.FACE_DETECTION -> {
                             val r = computeFaceDetectionResult(bitmap)
-                            if (stateMachine.getCurrentMachineState() is WaitingForFace
-                                && r.faceDetectionResult != null
+                            if (stateMachine.getCurrentMachineState() is WaitingForFace &&
+                                r.faceDetectionResult != null
                             ) {
                                 stateMachine.consumeAction(Action.FaceDetected)
                             }
@@ -129,9 +128,9 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
                         }
                         ImageAnalyzerState.SMILE_DETECTION -> {
                             val r = computeSmileDetectionResult(bitmap)
-                            if (stateMachine.getCurrentMachineState() is WaitingForSmile
-                                && r.smileDetectionResult != null
-                                && r.smileDetectionResult.isSmiling
+                            if (stateMachine.getCurrentMachineState() is WaitingForSmile &&
+                                r.smileDetectionResult != null &&
+                                r.smileDetectionResult.isSmiling
                             ) {
                                 stateMachine.consumeAction(Action.SmileDetected)
                             }

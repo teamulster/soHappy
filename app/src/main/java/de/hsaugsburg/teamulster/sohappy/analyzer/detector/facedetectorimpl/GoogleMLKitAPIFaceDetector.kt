@@ -41,8 +41,10 @@ class GoogleMLKitAPIFaceDetector : FaceDetector {
                 future.set(
                     FaceDetector.Companion.FaceDetectionResult(
                         Rect(
-                            firstFace.boundingBox.left, firstFace.boundingBox.top,
-                            firstFace.boundingBox.right, firstFace.boundingBox.bottom
+                            firstFace.boundingBox.left,
+                            firstFace.boundingBox.top,
+                            firstFace.boundingBox.right,
+                            firstFace.boundingBox.bottom
                         )
                     )
                 )

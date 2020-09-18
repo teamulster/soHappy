@@ -4,6 +4,7 @@ import android.app.Activity
 import android.graphics.Bitmap
 import android.graphics.Rect
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FaceDetector
+import de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.HaarCascadeFaceDetector.Companion.assetFilename
 import org.opencv.android.OpenCVLoader
 import org.opencv.android.Utils
 import org.opencv.core.Mat
@@ -38,7 +39,7 @@ class HaarCascadeFaceDetector(private val activity: Activity) : FaceDetector {
     private fun setupClassifier(): CascadeClassifier {
         val inputStream = activity.assets.open(assetFilename)
 
-        val cascadeDir = activity.cacheDir;
+        val cascadeDir = activity.cacheDir
         val mCascadeFile = File.createTempFile(assetFilename, "xml", cascadeDir)
         val os = FileOutputStream(mCascadeFile)
 

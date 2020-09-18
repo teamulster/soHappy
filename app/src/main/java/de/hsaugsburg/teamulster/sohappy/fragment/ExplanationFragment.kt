@@ -29,7 +29,9 @@ class ExplanationFragment : Fragment() {
             false
         )
         val pages = listOf(
-            R.layout.page_explanation_01, R.layout.page_explanation_02, R.layout.page_explanation_03
+            R.layout.page_explanation_01,
+            R.layout.page_explanation_02,
+            R.layout.page_explanation_03
         )
         val circles = listOf(binding.circleLeft, binding.circleMiddle, binding.circleRight)
         var activeCircle = binding.circleLeft
@@ -37,22 +39,23 @@ class ExplanationFragment : Fragment() {
 
         val pagerAdapter = ExplanationPagerAdapter(requireContext(), pages)
         binding.viewPager.adapter = pagerAdapter
-        binding.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageSelected(position: Int) {
-                (circles[position].background as TransitionDrawable).startTransition(200)
-                (activeCircle.background as TransitionDrawable).reverseTransition(200)
-                activeCircle = circles[position]
-            }
+        binding.viewPager.addOnPageChangeListener(
+            object : ViewPager.OnPageChangeListener {
+                override fun onPageSelected(position: Int) {
+                    (circles[position].background as TransitionDrawable).startTransition(200)
+                    (activeCircle.background as TransitionDrawable).reverseTransition(200)
+                    activeCircle = circles[position]
+                }
 
-            override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {
-                // no-op
-            }
+                override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {
+// no-op
+                }
 
-            override fun onPageScrollStateChanged(state: Int) {
-                // no-op
+                override fun onPageScrollStateChanged(state: Int) {
+// no-op
+                }
             }
-        })
-
+        )
 
         return binding.root
     }

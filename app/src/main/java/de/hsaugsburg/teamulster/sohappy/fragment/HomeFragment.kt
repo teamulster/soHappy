@@ -18,7 +18,7 @@ import de.hsaugsburg.teamulster.sohappy.stateMachine.states.WaitingForFace
  */
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    private val stateMachine : StateMachine by activityViewModels()
+    private val stateMachine: StateMachine by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,7 +29,6 @@ class HomeFragment : Fragment() {
             if (new is WaitingForFace) {
                 findNavController().navigate(R.id.smileFragment)
             }
-
         }
 
         binding = DataBindingUtil.inflate(
@@ -92,7 +91,7 @@ class HomeFragment : Fragment() {
         view.visibility = View.VISIBLE
 
         circleAnimation.doOnEnd {
-           stateMachine.consumeAction(Action.StartButtonPressed)
+            stateMachine.consumeAction(Action.StartButtonPressed)
         }
 
         circleAnimation.start()

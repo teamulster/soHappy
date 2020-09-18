@@ -29,6 +29,8 @@ class SmileFragment : Fragment() {
     private val stateMachine: StateMachine by activityViewModels()
     private lateinit var binding: FragmentSmileBinding
 
+    // TODO: Remove when TODO in method is resolved
+    @Suppress("LongMethod")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -60,22 +62,31 @@ class SmileFragment : Fragment() {
                             fadeOutText()
                             fadeInText(getString(R.string.fragment_camera_stimulus1))
                         }
-                        requireView().postDelayed({
-                            stateMachine.consumeAction(Action.StimulusTimer)
-                        }, ConfigManager.timerConfig.stimulusTimer)
+                        requireView().postDelayed(
+                            {
+                                stateMachine.consumeAction(Action.StimulusTimer)
+                            },
+                            ConfigManager.timerConfig.stimulusTimer
+                        )
                     }
-                    is WaitingForSmile -> requireView().postDelayed({
-                        if (old !is WaitingForFace) {
-                            stateMachine.consumeAction(Action.WaitingForSmileTimer)
-                        }
-                    }, ConfigManager.timerConfig.waitingForSmileTimer)
+                    is WaitingForSmile -> requireView().postDelayed(
+                        {
+                            if (old !is WaitingForFace) {
+                                stateMachine.consumeAction(Action.WaitingForSmileTimer)
+                            }
+                        },
+                        ConfigManager.timerConfig.waitingForSmileTimer
+                    )
                     is SmileCountdown -> if (old !is SmileCountdown) {
                         requireView().post {
                             (binding.checkmarkView.drawable as Animatable).start()
                         }
-                        requireView().postDelayed({
-                            stateMachine.consumeAction(Action.SmileCountdownTimer)
-                        }, ConfigManager.timerConfig.smileTimer)
+                        requireView().postDelayed(
+                            {
+                                stateMachine.consumeAction(Action.SmileCountdownTimer)
+                            },
+                            ConfigManager.timerConfig.smileTimer
+                        )
                     }
                     is Questions -> findNavController().navigate(R.id.questionnaire01Fragment)
                     is NoSmile -> findNavController().navigate(R.id.action_smileFragment_to_noSmileFragment)
@@ -120,31 +131,43 @@ class SmileFragment : Fragment() {
             .duration = 500
 
         fadeOutText()
-        requireView().postDelayed({
-            fadeInText(getString(R.string.fragment_camera_face))
+        requireView().postDelayed(
+            {
+                fadeInText(getString(R.string.fragment_camera_face))
 
-            binding.countdownText.apply {
-                alpha = 0f
-                visibility = View.VISIBLE
-            }
-            binding.countdownText.animate()
-                .alpha(1f)
-                .duration = 500
-            (binding.countdownView.drawable as Animatable).start()
-        }, 750)
+                binding.countdownText.apply {
+                    alpha = 0f
+                    visibility = View.VISIBLE
+                }
+                binding.countdownText.animate()
+                    .alpha(1f)
+                    .duration = 500
+                (binding.countdownView.drawable as Animatable).start()
+            },
+            750
+        )
 
-        requireView().postDelayed({
-            tickCountdown()
-        }, 1500)
+        requireView().postDelayed(
+            {
+                tickCountdown()
+            },
+            1500
+        )
 
-        requireView().postDelayed({
-            tickCountdown()
-        }, 2500)
+        requireView().postDelayed(
+            {
+                tickCountdown()
+            },
+            2500
+        )
 
-        requireView().postDelayed({
-            tickCountdown()
-            stateMachine.consumeAction(Action.TakeABreathTimer)
-        }, 3500)
+        requireView().postDelayed(
+            {
+                tickCountdown()
+                stateMachine.consumeAction(Action.TakeABreathTimer)
+            },
+            3500
+        )
 
         /* requireView().postDelayed({
             binding.countdownText.animate()

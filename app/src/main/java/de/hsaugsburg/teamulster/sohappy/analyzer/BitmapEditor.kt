@@ -106,4 +106,3 @@ object BitmapEditor {
         return mImgData
     }
 }
-

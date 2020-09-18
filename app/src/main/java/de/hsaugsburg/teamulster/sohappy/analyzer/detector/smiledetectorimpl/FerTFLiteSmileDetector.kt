@@ -66,5 +66,4 @@ class FerTFLiteSmileDetector(activity: Activity) :
         val scaledBitmap = Bitmap.createScaledBitmap(img, 48, 48, true)
         return convertToByteBuffer(scaledBitmap)
     }
-
 }

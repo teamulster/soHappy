@@ -16,12 +16,10 @@ object ExceptionHandler {
         MaterialAlertDialogBuilder(context)
             .setTitle("An error occurred while loading configuration!")
             .setMessage(e.toString())
-            .setNegativeButton(resources.getString(R.string.config_exception_close_app))
-            { _, _ ->
+            .setNegativeButton(resources.getString(R.string.config_exception_close_app)) { _, _ ->
                 exitProcess(1)
             }
-            .setPositiveButton(resources.getString(R.string.config_exception_restore_defaults))
-            { dialog, _ ->
+            .setPositiveButton(resources.getString(R.string.config_exception_restore_defaults)) { dialog, _ ->
                 ConfigManager.restoreDefaults(context)
                 ConfigManager.load(context)
                 dialog.dismiss()
