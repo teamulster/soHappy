@@ -30,7 +30,7 @@ class MeasurementViewModel : ViewModel() {
      * computes Percentage using [computePercentage] and returns it as decimal with an %.
      * @return [String]
      */
-    fun computePercentageString() = "%d%%".format((computePercentage()*100).toInt())
+    fun computePercentageString() = "%d%%".format((computePercentage() * 100).toInt())
 
     /**
      * computes percentage of an [MeasurementViewModel]
@@ -41,9 +41,11 @@ class MeasurementViewModel : ViewModel() {
      */
     fun computePercentage(): Float {
         results.filter {
-            detectionResult -> detectionResult.smileDetectionResult != null
+            detectionResult ->
+            detectionResult.smileDetectionResult != null
         }.map {
-            detectionResult -> detectionResult.smileDetectionResult?.isSmiling
+            detectionResult ->
+            detectionResult.smileDetectionResult?.isSmiling
         }.let { filteredResult ->
             val length = filteredResult.size
             val positiveResults = filteredResult.filter {
