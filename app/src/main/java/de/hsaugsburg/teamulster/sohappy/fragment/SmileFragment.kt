@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -50,9 +51,6 @@ class SmileFragment : Fragment() {
         stateMachine.addStateChangeListener { old, new ->
             if (this.isResumed) {
                 when (new) {
-                    is Start -> requireView().post {
-                        findNavController().navigate(R.id.homeFragment)
-                    }
                     is TakeABreath -> requireView().post {
                         VideoMasker.applyBlueFilter()
                         startCountdown()
@@ -83,8 +81,11 @@ class SmileFragment : Fragment() {
                     is NoSmile -> findNavController().navigate(R.id.action_smileFragment_to_noSmileFragment)
                 }
             }
-            //TODO: Add "end" and "question" button
         }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            // NO-OP
+        }
+
         return binding.root
     }
 

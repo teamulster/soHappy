@@ -24,6 +24,7 @@ class NotificationBroadcastReceiver : BroadcastReceiver() {
         val notification = intent.getParcelableExtra<Notification>(
             context.getString(R.string.notification_name)
         )
+
         if (notification != null) {
             with(NotificationManagerCompat.from(context)) {
                 notify(0, notification)

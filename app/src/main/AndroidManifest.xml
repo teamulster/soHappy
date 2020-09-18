@@ -18,10 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver
-            android:process=":remote"
-            android:name=".notification.NotificationBroadcastReceiver" />
+        <receiver android:name=".notification.NotificationBroadcastReceiver" />
     </application>
-
 
 </manifest>

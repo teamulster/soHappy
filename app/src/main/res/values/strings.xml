@@ -3,7 +3,9 @@
     <string name="channel_id">soHappy</string>
     <string name="channel_name">soHappy</string>
     <string name="channel_description">soHappy Push Notifications</string>
-    <string name="notification_name">soHappy Notification</string>
+    <string name="notification_name">soHappyNotification</string>
+    <string name="notification_title">Remember to smile!</string>
+    <string name="notification_description">It\'s been a while - tap here to open soHappy.</string>
 
     <string name="ui_start_button_name">Start</string>
     <string name="ui_welcome_title">Welcome to soHappy!</string>

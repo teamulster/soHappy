@@ -67,6 +67,8 @@ class HaarCascadeFaceDetector(private val activity: Activity) : FaceDetector {
         }
         val firstFace = list[0]
 
+        detectMat.release()
+        mat.release()
         return FaceDetector.Companion.FaceDetectionResult(
             Rect(
                 firstFace.x,

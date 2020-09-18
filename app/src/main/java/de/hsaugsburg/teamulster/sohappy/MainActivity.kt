@@ -1,5 +1,6 @@
 package de.hsaugsburg.teamulster.sohappy
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,7 @@ import de.hsaugsburg.teamulster.sohappy.config.ConfigManager
 import de.hsaugsburg.teamulster.sohappy.database.LocalDatabaseManager
 import de.hsaugsburg.teamulster.sohappy.databinding.ActivityCameraBinding
 import de.hsaugsburg.teamulster.sohappy.exceptions.ExceptionHandler
+import de.hsaugsburg.teamulster.sohappy.notification.NotificationHandler
 import java.io.IOException
 
 /**
@@ -17,7 +19,8 @@ import java.io.IOException
  */
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding
-    internal lateinit var localDatabaseManager: LocalDatabaseManager
+    internal lateinit var notificationHandler: NotificationHandler
+    internal lateinit var localDatabaseManager : LocalDatabaseManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,8 +32,13 @@ class MainActivity : AppCompatActivity() {
             ExceptionHandler.callExceptionDialog(this, resources, e)
         }
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         binding = DataBindingUtil.setContentView(this, R.layout.activity_camera)
         localDatabaseManager = LocalDatabaseManager(this)
+
+        notificationHandler = NotificationHandler(this)
+        notificationHandler.createNotificationChannel()
+
         val navController = findNavController(R.id.navHostFragment)
         NavigationUI.setupActionBarWithNavController(this, navController)
     }

@@ -30,7 +30,7 @@ import java.util.concurrent.Executors
  * CameraFragment uses the device's camera in order to perform various
  * image processing operations.
  */
-class CameraFragment: Fragment() {
+class CameraFragment : Fragment() {
     companion object {
         const val REQUEST_CODE_PERMISSIONS = 10
     }
@@ -40,7 +40,7 @@ class CameraFragment: Fragment() {
     private var cameraIsRunning = false
     private lateinit var binding: FragmentCameraBinding
     private lateinit var bitmap: Bitmap
-    private lateinit var converter : YuvToRgbConverter
+    private lateinit var converter: YuvToRgbConverter
     private lateinit var gpuImageView: GPUImageView
     private lateinit var imageAnalyzer: ImageAnalyzer
     lateinit var queue: BitmapQueue
@@ -79,7 +79,6 @@ class CameraFragment: Fragment() {
 
     override fun onStop() {
         super.onStop()
-
         cameraProvider?.unbindAll()
     }
 
@@ -143,5 +142,8 @@ class CameraFragment: Fragment() {
     }
 
     private fun isPermissionsGranted(): Boolean = ContextCompat
-        .checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
+        .checkSelfPermission(
+            requireContext(),
+            Manifest.permission.CAMERA
+        ) == PackageManager.PERMISSION_GRANTED
 }

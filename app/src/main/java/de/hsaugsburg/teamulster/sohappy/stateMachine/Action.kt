@@ -54,15 +54,10 @@ sealed class Action {
 
     /**
      * when the user finishes the questions phase and returns to start screen (end of circle).
-     * transition between Questions and Start state.
+     * or if the user decide to restart the app flow after no smile was found.
+     * transition between Questions and Start state as well as NoSmile and Start
      */
     object ReturnToStart : Action()
-
-    /**
-     * if the user decide to start the app flow again after no smile was found (restart detection circle).
-     * transition between NoSmile and WaitingForFace state.
-     */
-    object ReturnToWaitingForFace : Action()
 
     /**
      * if the user decide to end the app flow and continue with the questions after no smile was found.
