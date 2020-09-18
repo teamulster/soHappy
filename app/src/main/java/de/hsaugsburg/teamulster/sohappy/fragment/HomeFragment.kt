@@ -83,7 +83,7 @@ class HomeFragment : Fragment() {
         val circleAnimation = ViewAnimationUtils.createCircularReveal(
             view,
             centerX,
-            view.height - centerY,
+            centerY,
             0f,
             radius * 1.1f
         )

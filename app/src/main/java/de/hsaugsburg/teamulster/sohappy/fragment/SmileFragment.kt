@@ -1,10 +1,13 @@
 package de.hsaugsburg.teamulster.sohappy.fragment
 
+import android.animation.ObjectAnimator
 import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.view.animation.LinearInterpolator
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -64,6 +67,7 @@ class SmileFragment : Fragment() {
                         }
                         requireView().postDelayed(
                             {
+                                startProgressBar()
                                 stateMachine.consumeAction(Action.StimulusTimer)
                             },
                             ConfigManager.timerConfig.stimulusTimer
@@ -79,7 +83,7 @@ class SmileFragment : Fragment() {
                     )
                     is SmileCountdown -> if (old !is SmileCountdown) {
                         requireView().post {
-                            (binding.checkmarkView.drawable as Animatable).start()
+                            showSmileDetected()
                         }
                         requireView().postDelayed(
                             {
@@ -106,15 +110,6 @@ class SmileFragment : Fragment() {
 
         // The initial animation has to be started here, otherwise the animation
         // will play even if the screen is currently not focused on this fragment
-        startInitAnimation()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        (requireActivity() as AppCompatActivity).supportActionBar!!.show()
-    }
-
-    private fun startInitAnimation() {
         binding.fadeInView.animate()
             .alpha(0f)
             .setDuration(1500)
@@ -124,12 +119,12 @@ class SmileFragment : Fragment() {
             }
     }
 
-    private fun startCountdown() {
-        // TODO: get sec from config
-        binding.checkmarkView.animate()
-            .alpha(0f)
-            .duration = 500
+    override fun onStop() {
+        super.onStop()
+        (requireActivity() as AppCompatActivity).supportActionBar!!.show()
+    }
 
+    private fun startCountdown() {
         fadeOutText()
         requireView().postDelayed(
             {
@@ -168,20 +163,6 @@ class SmileFragment : Fragment() {
             },
             3500
         )
-
-        /* requireView().postDelayed({
-            binding.countdownText.animate()
-                .alpha(0f)
-                .translationYBy(100f)
-                .setDuration(125)
-        }, 1250)
-
-        requireView().postDelayed({
-            binding.countdownText.setText("2")
-            binding.countdownText.animate()
-                .alpha(1f)
-                .setDuration(125)
-        }, 1375) */
     }
 
     private fun tickCountdown() {
@@ -221,5 +202,48 @@ class SmileFragment : Fragment() {
         binding.textView.animate()
             .alpha(0f)
             .duration = 500
+    }
+
+    private fun startProgressBar() {
+        binding.progressBar.apply {
+            alpha = 0f
+            progress = 0
+            visibility = View.VISIBLE
+            animate()
+                .alpha(1f)
+                .duration = 200
+        }
+        val progressAnimation =
+            ObjectAnimator.ofInt(binding.progressBar, "progress", 10_000)
+        progressAnimation.duration = 30_000
+        progressAnimation.interpolator = LinearInterpolator()
+        progressAnimation.start()
+    }
+
+    private fun showSmileDetected() {
+        binding.smileDetectedView.apply {
+            visibility = View.VISIBLE
+            startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.scale_up_fade))
+        }
+        binding.smileDetectedViewInner.apply {
+            visibility = View.VISIBLE
+            startAnimation(
+                AnimationUtils.loadAnimation(requireContext(), R.anim.scale_up_fade_small)
+            )
+        }
+
+        requireView().postDelayed({
+            binding.smileDetectedLogoView.apply {
+                visibility = View.VISIBLE
+                startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.scale_up_logo))
+            }
+        }, 350)
+
+        requireView().postDelayed({
+            binding.smileDetectedPulse.apply {
+                visibility = View.VISIBLE
+                startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.pulse))
+            }
+        }, 850)
     }
 }
