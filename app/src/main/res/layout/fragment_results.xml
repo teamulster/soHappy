@@ -29,8 +29,8 @@
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:lineSpacingExtra="4sp"
             android:gravity="center"
+            android:lineSpacingExtra="4sp"
             android:text="@string/fragment_results_text"
             android:textAppearance="@style/TextAppearanceBodyCustom"
             app:layout_constraintEnd_toEndOf="parent"
@@ -53,13 +53,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
             android:text="@{measurement.computePercentageString()}"
             android:textSize="36sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/resultTitle" />
+
+        <TextView
+            android:id="@+id/resultExplanation"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="@string/fragment_results_explanation"
+            app:layout_constraintBottom_toTopOf="@+id/finishButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/finishButton"
