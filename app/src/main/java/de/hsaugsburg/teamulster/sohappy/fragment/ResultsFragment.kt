@@ -18,8 +18,8 @@ import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 import de.hsaugsburg.teamulster.sohappy.stateMachine.states.Start
 import de.hsaugsburg.teamulster.sohappy.viewmodel.MeasurementViewModel
-import kotlin.concurrent.thread
 import de.hsaugsburg.teamulster.sohappy.viewmodel.SettingsViewModel
+import kotlin.concurrent.thread
 
 /**
  * ResultsFragment serves as the conclusion of the smile procedure and provides the
@@ -45,13 +45,13 @@ class ResultsFragment : Fragment() {
 
         binding.measurement = measurement
 
-        (this.requireActivity() as MainActivity).localDatabaseManager.updateMeasurement(measurement)
+        (this.requireActivity() as MainActivity).localDatabaseManager?.updateMeasurement(measurement)
 
         stateMachine.addStateChangeListener { _, new ->
             if (this.isResumed) {
                 when (new) {
                     is Start -> {
-                        (requireActivity() as MainActivity).localDatabaseManager.close()
+                        (requireActivity() as MainActivity).localDatabaseManager?.close()
                         if (settings.notificationsEnabled) {
                             (requireActivity() as MainActivity).notificationHandler
                                 .triggerNotificationAlarm()
@@ -77,7 +77,7 @@ class ResultsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         thread {
-            (this.requireActivity() as MainActivity).localDatabaseManager.updateMeasurement(measurement)
+            (this.requireActivity() as MainActivity).localDatabaseManager?.updateMeasurement(measurement)
 
             requireView().post {
                 val color = resources.getColor(R.color.colorPrimary, null)

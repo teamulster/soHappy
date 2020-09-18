@@ -47,13 +47,13 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
             smileDetector =
                 DetectorFactory.createSmileDetectorFromConfig(config, fragment.requireActivity())
         } catch (e: NoSuchMethodException) {
-            ExceptionHandler.callExceptionDialog(fragment.requireContext(), fragment.resources, e)
+            ExceptionHandler.callExceptionDialog(fragment.requireActivity(), fragment.resources, e)
         } catch (e: ClassCastException) {
-            ExceptionHandler.callExceptionDialog(fragment.requireContext(), fragment.resources, e)
+            ExceptionHandler.callExceptionDialog(fragment.requireActivity(), fragment.resources, e)
         } catch (e: InflateException) {
-            ExceptionHandler.callExceptionDialog(fragment.requireContext(), fragment.resources, e)
+            ExceptionHandler.callExceptionDialog(fragment.requireActivity(), fragment.resources, e)
         } catch (e: UninitializedPropertyAccessException) {
-            ExceptionHandler.callExceptionDialog(fragment.requireContext(), fragment.resources, e)
+            ExceptionHandler.callExceptionDialog(fragment.requireActivity(), fragment.resources, e)
         }
 
         stateMachine.addStateChangeListener { _, new ->
@@ -109,7 +109,7 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
         thread {
             while (true) {
                 if (imageAnalyzerState == ImageAnalyzerState.CANCEL) {
-                    (fragment.requireActivity() as MainActivity).localDatabaseManager.addOrUpdateMeasurement(
+                    (fragment.requireActivity() as MainActivity).localDatabaseManager?.addOrUpdateMeasurement(
                         measurement
                     )
                     break
