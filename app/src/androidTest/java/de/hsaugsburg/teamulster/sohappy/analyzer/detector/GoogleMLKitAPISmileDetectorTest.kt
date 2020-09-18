@@ -19,7 +19,7 @@ class GoogleMLKitAPISmileDetectorTest {
 
     @Before
     fun setUp() {
-        scenario = launchActivity<CameraActivity>()
+        scenario = launchActivity<MainActivity>()
         scenario.onActivity { mLKitFaceDetector = GoogleMLKitAPISmileDetector() }
     }
 
@@ -34,7 +34,7 @@ class GoogleMLKitAPISmileDetectorTest {
 
     @Test
     fun useDetectNegative() {
-        val istr = instrumentationContext.assets.open("smileDetector_test_negative.png")
+        val istr = instrumentationContext.assets.open("smileDetector_test_negative.webp")
         val detectResult = mLKitFaceDetector.detect(BitmapFactory.decodeStream(istr))
         if (detectResult != null) {
             Assert.assertFalse(detectResult.isSmiling)

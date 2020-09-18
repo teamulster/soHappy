@@ -29,20 +29,23 @@ class ConfigManagerTest {
     fun useStore() {
         scenario.onActivity { cameraActivity ->
             ConfigManager.store(
-                cameraActivity, MainConfig(
+                cameraActivity,
+                MainConfig(
                     ImageAnalyzerConfig(
                         "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
-                                ".facedetectorimpl.HaarCascadeFaceDetector",
+                            ".facedetectorimpl.HaarCascadeFaceDetector",
                         "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
-                                ".smiledetectorimpl.FerTFLiteSmileDetector"
+                            ".smiledetectorimpl.FerTFLiteSmileDetector"
                     ),
                     AboutConfig(
                         "https://github.com/teamulster/soHappy",
                         "https://github.com/teamulster/soHappy",
                         "https://github.com/teamulster/soHappy/pulse"
                     ),
-                    TimerConfig(3000, 2500, 10_000, 30_000)
-                ), SettingsConfig(notifications = true, databaseSync = true)
+                    TimerConfig(3000, 2500, 10_000, 10_000, 30_000),
+                    NotificationConfig(3 * 60 * 60 * 1000)
+                ),
+                SettingsConfig(notifications = true, databaseSync = true)
             )
             val dirPath = cameraActivity.filesDir
             val configDirectory = File(dirPath, "config")
@@ -52,16 +55,17 @@ class ConfigManagerTest {
                 MainConfig(
                     ImageAnalyzerConfig(
                         "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
-                                ".facedetectorimpl.HaarCascadeFaceDetector",
+                            ".facedetectorimpl.HaarCascadeFaceDetector",
                         "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
-                                ".smiledetectorimpl.FerTFLiteSmileDetector"
+                            ".smiledetectorimpl.FerTFLiteSmileDetector"
                     ),
                     AboutConfig(
                         "https://github.com/teamulster/soHappy",
                         "https://github.com/teamulster/soHappy",
                         "https://github.com/teamulster/soHappy/pulse"
                     ),
-                    TimerConfig(3000, 2500, 10_000, 30_000)
+                    TimerConfig(3000, 2500, 10_000, 10_000, 30_000),
+                    NotificationConfig(3 * 60 * 60 * 1000)
                 )
             )
             assertEquals(
@@ -75,35 +79,39 @@ class ConfigManagerTest {
     fun useLoad() {
         scenario.onActivity {
             ConfigManager.store(
-                it, MainConfig(
+                it,
+                MainConfig(
                     ImageAnalyzerConfig(
                         "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
-                                ".facedetectorimpl.HaarCascadeFaceDetector",
+                            ".facedetectorimpl.HaarCascadeFaceDetector",
                         "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
-                                ".smiledetectorimpl.FerTFLiteSmileDetector"
+                            ".smiledetectorimpl.FerTFLiteSmileDetector"
                     ),
                     AboutConfig(
                         "https://github.com/teamulster/soHappy",
                         "https://github.com/teamulster/soHappy",
                         "https://github.com/teamulster/soHappy/pulse"
                     ),
-                    TimerConfig(3000, 2500, 10_000, 30_000)
-                ), SettingsConfig(notifications = true, databaseSync = true)
+                    TimerConfig(3000, 2500, 10_000, 10_000, 30_000),
+                    NotificationConfig(3 * 60 * 60 * 1000)
+                ),
+                SettingsConfig(notifications = true, databaseSync = true)
             )
             val loadObject = ConfigManager.load(it)
             val assertValue = MainConfig(
                 ImageAnalyzerConfig(
                     "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
-                            ".facedetectorimpl.HaarCascadeFaceDetector",
+                        ".facedetectorimpl.HaarCascadeFaceDetector",
                     "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
-                            ".smiledetectorimpl.FerTFLiteSmileDetector"
+                        ".smiledetectorimpl.FerTFLiteSmileDetector"
                 ),
                 AboutConfig(
                     "https://github.com/teamulster/soHappy",
                     "https://github.com/teamulster/soHappy",
                     "https://github.com/teamulster/soHappy/pulse"
                 ),
-                TimerConfig(3000, 2500, 10_000, 30_000)
+                TimerConfig(3000, 2500, 10_000, 10_000, 30_000),
+                NotificationConfig(3 * 60 * 60 * 1000)
             )
             assertEquals(assertValue, loadObject)
         }
@@ -113,10 +121,11 @@ class ConfigManagerTest {
     fun useLoadClassNotFoundException() {
         scenario.onActivity {
             ConfigManager.store(
-                it, MainConfig(
+                it,
+                MainConfig(
                     ImageAnalyzerConfig(
                         "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
-                                ".facedetectorimpl.HaarCascadeFaceDetector",
+                            ".facedetectorimpl.HaarCascadeFaceDetector",
                         "bla"
                     ),
                     AboutConfig(
@@ -124,8 +133,10 @@ class ConfigManagerTest {
                         "https://github.com/teamulster/soHappy",
                         "https://github.com/teamulster/soHappy/pulse"
                     ),
-                    TimerConfig(3000, 2500, 10_000, 30_000)
-                ), SettingsConfig(notifications = true, databaseSync = true)
+                    TimerConfig(3000, 2500, 10_000, 10_000, 30_000),
+                    NotificationConfig(3 * 60 * 60 * 1000)
+                ),
+                SettingsConfig(notifications = true, databaseSync = true)
             )
             assertFailsWith(ClassNotFoundException::class) {
                 ConfigManager.load(it)
@@ -137,20 +148,23 @@ class ConfigManagerTest {
     fun useLoadMalformedURLExceptionLoad() {
         scenario.onActivity {
             ConfigManager.store(
-                it, MainConfig(
+                it,
+                MainConfig(
                     ImageAnalyzerConfig(
                         "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
-                                ".facedetectorimpl.HaarCascadeFaceDetector",
+                            ".facedetectorimpl.HaarCascadeFaceDetector",
                         "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
-                                ".smiledetectorimpl.FerTFLiteSmileDetector"
+                            ".smiledetectorimpl.FerTFLiteSmileDetector"
                     ),
                     AboutConfig(
                         "https://github.com/teamulster/soHappy",
                         "hallo",
                         "https://github.com/teamulster/soHappy/pulse"
                     ),
-                    TimerConfig(3000, 2500, 10_000, 30_000)
-                ), SettingsConfig(notifications = true, databaseSync = true)
+                    TimerConfig(3000, 2500, 10_000, 10_000, 30_000),
+                    NotificationConfig(3 * 60 * 60 * 1000)
+                ),
+                SettingsConfig(notifications = true, databaseSync = true)
             )
             assertFailsWith(MalformedURLException::class) {
                 ConfigManager.load(it)

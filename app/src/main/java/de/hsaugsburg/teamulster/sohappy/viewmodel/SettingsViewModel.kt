@@ -10,18 +10,26 @@ import kotlin.properties.Delegates.observable
  * SettingsViewModel contain information about which settings are enabled / disabled.
  */
 class SettingsViewModel(application: Application) : AndroidViewModel(application) {
-    var notificationsEnabled: Boolean by observable(ConfigManager.settingsConfig.notifications)
-        { _, _, new ->
-            ConfigManager.store(application, ConfigManager.mainConfig, SettingsConfig(
-                new, databaseEnabled)
+    var notificationsEnabled: Boolean by observable(ConfigManager.settingsConfig.notifications) { _, _, new ->
+        ConfigManager.store(
+            application,
+            ConfigManager.mainConfig,
+            SettingsConfig(
+                new,
+                databaseEnabled
             )
-        }
-    var databaseEnabled: Boolean by observable(ConfigManager.settingsConfig.databaseSync)
-        { _, _, new ->
-            ConfigManager.store(application, ConfigManager.mainConfig, SettingsConfig(
-                notificationsEnabled, new)
+        )
+    }
+    var databaseEnabled: Boolean by observable(ConfigManager.settingsConfig.databaseSync) { _, _, new ->
+        ConfigManager.store(
+            application,
+            ConfigManager.mainConfig,
+            SettingsConfig(
+                notificationsEnabled,
+                new
             )
-        }
+        )
+    }
 
     init {
         notificationsEnabled = ConfigManager.settingsConfig.notifications

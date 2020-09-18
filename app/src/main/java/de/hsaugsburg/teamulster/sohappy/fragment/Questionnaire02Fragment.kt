@@ -46,7 +46,9 @@ class Questionnaire02Fragment : Fragment() {
                         intArrayOf(color, color)
                     )
                     enabledBackground.cornerRadius = TypedValue.applyDimension(
-                        TypedValue.COMPLEX_UNIT_DIP, 5f, resources.displayMetrics
+                        TypedValue.COMPLEX_UNIT_DIP,
+                        5f,
+                        resources.displayMetrics
                     )
 
                     binding.continueButton.background = enabledBackground

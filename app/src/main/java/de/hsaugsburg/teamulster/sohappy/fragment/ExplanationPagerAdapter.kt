@@ -9,7 +9,7 @@ import androidx.viewpager.widget.PagerAdapter
 /**
  * ExplanationPagerAdapter serves as the required adapter for the ViewPager in ExplanationFragment.
  */
-class ExplanationPagerAdapter(private val context: Context, val pages: List<Int>): PagerAdapter() {
+class ExplanationPagerAdapter(private val context: Context, val pages: List<Int>) : PagerAdapter() {
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val page = pages.get(position)
         val inflater = LayoutInflater.from(context)

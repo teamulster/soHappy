@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import de.hsaugsburg.teamulster.sohappy.MainActivity
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.VideoMasker
+import de.hsaugsburg.teamulster.sohappy.config.ConfigManager
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentSmileBinding
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
@@ -29,6 +30,8 @@ class SmileFragment : Fragment() {
     private val stateMachine: StateMachine by activityViewModels()
     private lateinit var binding: FragmentSmileBinding
 
+    // TODO: Remove when TODO in method is resolved
+    @Suppress("LongMethod")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,7 +46,7 @@ class SmileFragment : Fragment() {
         when (stateMachine.getCurrentMachineState()) {
             is WaitingForFace -> thread {
                 VideoMasker.applyRedFilter()
-                Thread.sleep(10_000)
+                Thread.sleep(ConfigManager.timerConfig.waitingForFaceTimer)
                 stateMachine.consumeAction(Action.WaitingForFaceTimer)
             }
         }
@@ -65,23 +68,31 @@ class SmileFragment : Fragment() {
                             fadeOutText()
                             fadeInText(getString(R.string.fragment_camera_stimulus1))
                         }
-                        requireView().postDelayed({
-                            stateMachine.consumeAction(Action.StimulusTimer)
-                            //TODO: get sec from config
-                        }, 2_500)
+                        requireView().postDelayed(
+                            {
+                                stateMachine.consumeAction(Action.StimulusTimer)
+                            },
+                            ConfigManager.timerConfig.stimulusTimer
+                        )
                     }
-                    is WaitingForSmile -> requireView().postDelayed({
-                        if (old !is WaitingForFace) {
-                            stateMachine.consumeAction(Action.WaitingForSmileTimer)
-                        }
-                    }, 10_000)
+                    is WaitingForSmile -> requireView().postDelayed(
+                        {
+                            if (old !is WaitingForFace) {
+                                stateMachine.consumeAction(Action.WaitingForSmileTimer)
+                            }
+                        },
+                        ConfigManager.timerConfig.waitingForSmileTimer
+                    )
                     is SmileCountdown -> if (old !is SmileCountdown) {
                         requireView().post {
                             (binding.checkmarkView.drawable as Animatable).start()
                         }
-                        requireView().postDelayed({
-                            stateMachine.consumeAction(Action.SmileCountdownTimer)
-                        }, 30_000)
+                        requireView().postDelayed(
+                            {
+                                stateMachine.consumeAction(Action.SmileCountdownTimer)
+                            },
+                            ConfigManager.timerConfig.smileTimer
+                        )
                     }
                     is Questions -> findNavController().navigate(R.id.questionnaire01Fragment)
                     is NoSmile -> findNavController().navigate(R.id.action_smileFragment_to_noSmileFragment)
@@ -120,35 +131,49 @@ class SmileFragment : Fragment() {
     }
 
     private fun startCountdown() {
+        // TODO: get sec from config
         binding.checkmarkView.animate()
             .alpha(0f)
             .duration = 500
 
         fadeOutText()
-        requireView().postDelayed({
-            fadeInText(getString(R.string.fragment_camera_face))
+        requireView().postDelayed(
+            {
+                fadeInText(getString(R.string.fragment_camera_face))
 
-            binding.countdownText.apply {
-                alpha = 0f
-                visibility = View.VISIBLE
-            }
-            binding.countdownText.animate()
-                .alpha(1f).duration = 500
-            (binding.countdownView.drawable as Animatable).start()
-        }, 750)
+                binding.countdownText.apply {
+                    alpha = 0f
+                    visibility = View.VISIBLE
+                }
+                binding.countdownText.animate()
+                    .alpha(1f)
+                    .duration = 500
+                (binding.countdownView.drawable as Animatable).start()
+            },
+            750
+        )
 
-        requireView().postDelayed({
-            tickCountdown()
-        }, 1500)
+        requireView().postDelayed(
+            {
+                tickCountdown()
+            },
+            1500
+        )
 
-        requireView().postDelayed({
-            tickCountdown()
-        }, 2500)
+        requireView().postDelayed(
+            {
+                tickCountdown()
+            },
+            2500
+        )
 
-        requireView().postDelayed({
-            tickCountdown()
-            stateMachine.consumeAction(Action.TakeABreathTimer)
-        }, 3500)
+        requireView().postDelayed(
+            {
+                tickCountdown()
+                stateMachine.consumeAction(Action.TakeABreathTimer)
+            },
+            3500
+        )
 
         /* requireView().postDelayed({
             binding.countdownText.animate()
@@ -181,7 +206,7 @@ class SmileFragment : Fragment() {
                     binding.countdownText.animate()
                         .alpha(1f)
                         .translationYBy(100f)
-                        .setDuration(125)
+                        .duration = 125
                 }
             }
     }
@@ -195,12 +220,12 @@ class SmileFragment : Fragment() {
 
         binding.textView.animate()
             .alpha(1f)
-            .setDuration(500)
+            .duration = 500
     }
 
     private fun fadeOutText() {
         binding.textView.animate()
             .alpha(0f)
-            .setDuration(500)
+            .duration = 500
     }
 }

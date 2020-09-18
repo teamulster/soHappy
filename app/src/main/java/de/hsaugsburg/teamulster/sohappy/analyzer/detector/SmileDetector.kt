@@ -12,11 +12,10 @@ import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector.Companio
  */
 interface SmileDetector {
     companion object {
-        open class SmileDetectionResult (
+        open class SmileDetectionResult(
             open val isSmiling: Boolean,
             open val predictionResults: ArrayList<Recognition>
-            )
-
+        )
 
         /**
          * This data class stores prediction results based on each label a model allows.
@@ -26,7 +25,8 @@ interface SmileDetector {
          * @constructor creates a Recognition object containing the given params
          * */
         data class Recognition(
-            val title: String, val confidence: Float
+            val title: String,
+            val confidence: Float
         )
     }
 

@@ -21,7 +21,8 @@ import java.nio.MappedByteBuffer
  * @constructor creates a TFLite object while setting tfliteOptions/tfliteModel/tfliteInterpreter
  * */
 abstract class AbstractTFLiteSmileDetector(
-    tfliteModelPath: String, activity: Activity,
+    tfliteModelPath: String,
+    activity: Activity,
     numberOfThreads: Int = 1
 ) : SmileDetector {
     // Static classes
