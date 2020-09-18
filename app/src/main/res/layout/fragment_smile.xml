@@ -39,16 +39,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/checkmarkView"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_marginBottom="48dp"
-            android:contentDescription="@string/fragment_camera_checkmark_text"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="220dp"
+            android:layout_height="4dp"
+            android:layout_marginTop="32dp"
+            android:indeterminate="false"
+            android:max="10000"
+            android:progress="0"
+            android:progressDrawable="@drawable/progress_background"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/animated_checkmark" />
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <TextView
             android:id="@+id/countdownText"
@@ -67,12 +71,56 @@
             android:id="@+id/countdownView"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:contentDescription="@string/fragment_camera_countdown_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/animated_countdown" />
+
+        <ImageView
+            android:id="@+id/smileDetectedView"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginBottom="48dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_smile_detected" />
+
+        <ImageView
+            android:id="@+id/smileDetectedViewInner"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginBottom="48dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_smile_detected" />
+
+        <ImageView
+            android:id="@+id/smileDetectedLogoView"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginBottom="48dp"
+            android:visibility="invisible"
+            android:translationZ="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@mipmap/ic_launcher_round" />
+
+        <ImageView
+            android:id="@+id/smileDetectedPulse"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginBottom="48dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_pulse" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
