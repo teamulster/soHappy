@@ -1,6 +1,8 @@
 package de.hsaugsburg.teamulster.sohappy.fragment
 
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +18,7 @@ import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 import de.hsaugsburg.teamulster.sohappy.stateMachine.states.Start
 import de.hsaugsburg.teamulster.sohappy.viewmodel.MeasurementViewModel
+import kotlin.concurrent.thread
 import de.hsaugsburg.teamulster.sohappy.viewmodel.SettingsViewModel
 
 /**
@@ -39,6 +42,8 @@ class ResultsFragment : Fragment() {
             container,
             false
         )
+
+        binding.measurement = measurement
 
         (this.requireActivity() as MainActivity).localDatabaseManager.updateMeasurement(measurement)
 
@@ -68,6 +73,34 @@ class ResultsFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        thread {
+            (this.requireActivity() as MainActivity).localDatabaseManager.updateMeasurement(measurement)
+
+            requireView().post {
+                val color = resources.getColor(R.color.colorPrimary, null)
+                val enabledBackground = GradientDrawable(
+                    GradientDrawable.Orientation.TOP_BOTTOM,
+                    intArrayOf(color, color)
+                )
+                enabledBackground.cornerRadius = TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP, 5f, resources.displayMetrics
+                )
+
+                binding.finishButton.background = enabledBackground
+                binding.finishButton.setTextColor(
+                    resources.getColor(
+                        android.R.color.white,
+                        null
+                    )
+                )
+                binding.updateProgressBar.visibility = View.GONE
+            }
+        }
+
+        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onStart() {

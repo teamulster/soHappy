@@ -3,6 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:context=".fragment.ResultsFragment">
+    <data>
+        <variable
+            name="measurement"
+            type="de.hsaugsburg.teamulster.sohappy.viewmodel.MeasurementViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -24,8 +29,8 @@
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:lineSpacingExtra="4sp"
             android:gravity="center"
+            android:lineSpacingExtra="4sp"
             android:text="@string/fragment_results_text"
             android:textAppearance="@style/TextAppearanceBodyCustom"
             app:layout_constraintEnd_toEndOf="parent"
@@ -43,16 +48,50 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/description" />
 
+        <TextView
+            android:id="@+id/measurementValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:text="@{measurement.computePercentageString()}"
+            android:textSize="36sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/resultTitle" />
+
+        <TextView
+            android:id="@+id/resultExplanation"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="@string/fragment_results_explanation"
+            app:layout_constraintBottom_toTopOf="@+id/finishButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <Button
             android:id="@+id/finishButton"
+            style="@style/ButtonDisabled"
             android:layout_width="160dp"
             android:layout_height="45dp"
             android:layout_marginBottom="32dp"
             android:text="@string/fragment_results_finish"
-            style="@style/ButtonPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/updateProgressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:elevation="2dp"
+            app:layout_constraintBottom_toBottomOf="@+id/finishButton"
+            app:layout_constraintEnd_toEndOf="@+id/finishButton"
+            app:layout_constraintStart_toStartOf="@+id/finishButton"
+            app:layout_constraintTop_toTopOf="@+id/finishButton" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

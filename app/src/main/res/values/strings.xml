@@ -116,6 +116,7 @@
     <string name="fragment_results_appbar_title">Results</string>
     <string name="fragment_results_title">Thank you for your time!</string>
     <string name="fragment_results_text">Feel free to continue using the app. If you have enabled notifications, you will be reminded to open the app after a certain timeframe has passed.</string>
-    <string name="fragment_results_results_overview">Your Results</string>
+    <string name="fragment_results_results_overview">Your Result:</string>
+    <string name="fragment_results_explanation">This result is an approximation how long you smiled during the measurement after you are requested to smile. A bad score does not mean that you are bad at being soHappy.</string>
     <string name="fragment_results_finish">Finish</string>
 </resources>
