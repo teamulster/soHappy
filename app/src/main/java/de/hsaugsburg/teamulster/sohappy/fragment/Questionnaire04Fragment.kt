@@ -13,14 +13,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentQuestionnaire04Binding
-import de.hsaugsburg.teamulster.sohappy.viewmodel.QuestionnaireViewModel
+import de.hsaugsburg.teamulster.sohappy.viewmodel.MeasurementViewModel
 
 /**
  * Questionnaire04Fragment contains the question for the fourth part of the questionnaire.
  */
 class Questionnaire04Fragment : Fragment() {
     private lateinit var binding: FragmentQuestionnaire04Binding
-    private val viewModel: QuestionnaireViewModel by activityViewModels()
+    private val measurement: MeasurementViewModel by activityViewModels()
     private var hasInput: Boolean = false
 
     override fun onCreateView(
@@ -56,7 +56,7 @@ class Questionnaire04Fragment : Fragment() {
                             null
                         )
                     )
-                    viewModel.questionnaire04Answer = p2
+                    measurement.questionnaire.questionnaire04Answer = p2
                 }
                 initialItem = true
             }
