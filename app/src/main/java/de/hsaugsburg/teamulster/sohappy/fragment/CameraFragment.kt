@@ -83,6 +83,11 @@ class CameraFragment: Fragment() {
         return binding.root
     }
 
+    override fun onStop() {
+        super.onStop()
+        cameraProvider?.unbindAll()
+    }
+
     @SuppressLint("UnsafeExperimentalUsageError")
     private fun startCameraIfReady() {
         // We need to build an ImageAnalysis, which will get binded to the cameraProvider.
@@ -138,7 +143,7 @@ class CameraFragment: Fragment() {
         requestCode: Int, permissions: Array<String?>, grantResults: IntArray
     ) {
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            startCameraIfReady()
+            //startCameraIfReady()
         }
     }
 

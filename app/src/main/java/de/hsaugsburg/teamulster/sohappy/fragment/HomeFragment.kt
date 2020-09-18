@@ -5,27 +5,26 @@ import android.view.*
 import androidx.core.animation.doOnEnd
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentHomeBinding
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 import de.hsaugsburg.teamulster.sohappy.stateMachine.states.WaitingForFace
-import de.hsaugsburg.teamulster.sohappy.util.StateMachineUtil
 
 /**
  * HomeFragment is the entry point for the app.
  */
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var stateMachine : StateMachine
+    private val stateMachine : StateMachine by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        stateMachine = StateMachineUtil.createStateMachine(this)
         stateMachine.addStateChangeListener { _, new ->
             if (new is WaitingForFace) {
                 findNavController().navigate(R.id.smileFragment)

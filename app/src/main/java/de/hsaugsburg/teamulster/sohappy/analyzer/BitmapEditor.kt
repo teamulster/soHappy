@@ -1,6 +1,8 @@
 package de.hsaugsburg.teamulster.sohappy.analyzer
 
 import android.graphics.*
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
 
 /**
  * Provides a toolbox for editing a bitmap, like cropping, rotating, resizing and grey scaling.
@@ -82,6 +84,26 @@ object BitmapEditor {
         val matrix = Matrix()
         matrix.preScale(-1.0f, 1.0f)
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+    }
+
+    /**
+     * This function converts a given Bitmap into a ByteBuffer.
+     *
+     * @param bitmap a Bitmap which will be converted into a ByteBuffer
+     * @return ByteBuffer?
+     * */
+    fun convertToByteBuffer(bitmap: Bitmap): ByteBuffer? {
+        val width = bitmap.width
+        val height = bitmap.height
+        val mImgData: ByteBuffer = ByteBuffer
+            .allocateDirect(4 * width * height)
+        mImgData.order(ByteOrder.nativeOrder())
+        val pixels = IntArray(width * height)
+        bitmap.getPixels(pixels, 0, width, 0, 0, width, height)
+        for (pixel in pixels) {
+            mImgData.putFloat(Color.red(pixel).toFloat())
+        }
+        return mImgData
     }
 }
 
