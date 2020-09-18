@@ -25,4 +25,4 @@ jobs:
       - name: "Run test suite"
         uses: docker://thyrlian/android-sdk
         with:
-          args: ./gradlew dependencies detekt test
+          args: ./gradlew dependencies detekt test -P-PautoCorrect=false

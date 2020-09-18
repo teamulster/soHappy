@@ -37,35 +37,39 @@ class Questionnaire01Fragment : Fragment() {
             false
         )
 
-        binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                hasInput = true
-                val color = resources.getColor(R.color.colorPrimary, null)
-                val enabledBackground = GradientDrawable(
-                    GradientDrawable.Orientation.TOP_BOTTOM,
-                    intArrayOf(color, color)
-                )
-                enabledBackground.cornerRadius = TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP, 5f, resources.displayMetrics
-                )
+        binding.seekBar.setOnSeekBarChangeListener(
+            object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                    hasInput = true
+                    val color = resources.getColor(R.color.colorPrimary, null)
+                    val enabledBackground = GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        intArrayOf(color, color)
+                    )
+                    enabledBackground.cornerRadius = TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_DIP,
+                        5f,
+                        resources.displayMetrics
+                    )
 
-                measurement.questionnaire.questionnaire01Answer = progress
-                binding.continueButton.background = enabledBackground
-                binding.continueButton.setTextColor(resources.getColor(android.R.color.white, null))
-                binding.seekBarProgressLabel.apply {
-                    text = progress.toString()
-                    visibility = View.VISIBLE
+                    measurement.questionnaire.questionnaire01Answer = progress
+                    binding.continueButton.background = enabledBackground
+                    binding.continueButton.setTextColor(resources.getColor(android.R.color.white, null))
+                    binding.seekBarProgressLabel.apply {
+                        text = progress.toString()
+                        visibility = View.VISIBLE
+                    }
+                }
+
+                override fun onStartTrackingTouch(p0: SeekBar?) {
+// no-op
+                }
+
+                override fun onStopTrackingTouch(p0: SeekBar?) {
+// no-op
                 }
             }
-
-            override fun onStartTrackingTouch(p0: SeekBar?) {
-                // no-op
-            }
-
-            override fun onStopTrackingTouch(p0: SeekBar?) {
-                // no-op
-            }
-        })
+        )
         binding.continueButton.setOnClickListener {
             if (hasInput) {
                 findNavController().navigate(
@@ -90,5 +94,4 @@ class Questionnaire01Fragment : Fragment() {
         super.onStop()
         (requireActivity() as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
-
 }

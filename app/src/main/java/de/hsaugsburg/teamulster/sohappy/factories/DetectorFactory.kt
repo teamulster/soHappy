@@ -1,6 +1,7 @@
 package de.hsaugsburg.teamulster.sohappy.factories
 
 import android.app.Activity
+import android.view.InflateException
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.FaceDetector
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
 import de.hsaugsburg.teamulster.sohappy.config.ImageAnalyzerConfig
@@ -21,6 +22,7 @@ object DetectorFactory {
      * @throws [NoSuchMethodException]
      * @return [FaceDetector]
      */
+    @Suppress("ThrowsCount")
     fun createFaceDetectorFromConfig(
         config: ImageAnalyzerConfig,
         activity: Activity
@@ -39,6 +41,12 @@ object DetectorFactory {
             }
         } catch (e: NoSuchMethodException) {
             throw e
+        } catch (e: ClassCastException) {
+            throw e
+        } catch (e: InflateException) {
+            throw e
+        } catch (e: UninitializedPropertyAccessException) {
+            throw e
         }
         return returnValue
     }
@@ -55,6 +63,7 @@ object DetectorFactory {
      * @throws [NoSuchMethodException]
      * @return [SmileDetector]
      */
+    @Suppress("ThrowsCount")
     fun createSmileDetectorFromConfig(
         config: ImageAnalyzerConfig,
         activity: Activity
@@ -72,6 +81,12 @@ object DetectorFactory {
                     }
             }
         } catch (e: NoSuchMethodException) {
+            throw e
+        } catch (e: ClassCastException) {
+            throw e
+        } catch (e: InflateException) {
+            throw e
+        } catch (e: UninitializedPropertyAccessException) {
             throw e
         }
         return returnValue

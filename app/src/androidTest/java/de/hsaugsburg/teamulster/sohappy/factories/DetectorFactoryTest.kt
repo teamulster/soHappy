@@ -2,7 +2,7 @@ package de.hsaugsburg.teamulster.sohappy.factories
 
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.launchActivity
-import de.hsaugsburg.teamulster.sohappy.CameraActivity
+import de.hsaugsburg.teamulster.sohappy.MainActivity
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.GoogleMLKitAPIFaceDetector
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.HaarCascadeFaceDetector
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl.FerTFLiteSmileDetector
@@ -21,11 +21,11 @@ class DetectorFactoryTest {
         "de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.GoogleMLKitAPIFaceDetector",
         "de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl.GoogleMLKitAPISmileDetector"
     )
-    private lateinit var scenario: ActivityScenario<CameraActivity>
+    private lateinit var scenario: ActivityScenario<MainActivity>
 
     @Before
     fun setUp() {
-        scenario = launchActivity<CameraActivity>()
+        scenario = launchActivity<MainActivity>()
     }
 
     @Test
@@ -38,7 +38,7 @@ class DetectorFactoryTest {
                 ) as HaarCascadeFaceDetector
             val faceDetectorInstanceGoogle =
                 DetectorFactory.createFaceDetectorFromConfig(imageAnalyzerConfigGoogle, it)
-                        as GoogleMLKitAPIFaceDetector
+                    as GoogleMLKitAPIFaceDetector
             assertEquals(HaarCascadeFaceDetector::class.java, faceDetectorInstance.javaClass)
             assertEquals(
                 GoogleMLKitAPIFaceDetector::class.java,
@@ -57,7 +57,7 @@ class DetectorFactoryTest {
                 ) as FerTFLiteSmileDetector
             val smileDetectorInstanceGoogle =
                 DetectorFactory.createSmileDetectorFromConfig(imageAnalyzerConfigGoogle, it)
-                        as GoogleMLKitAPISmileDetector
+                    as GoogleMLKitAPISmileDetector
             assertEquals(FerTFLiteSmileDetector::class.java, smileDetectorInstance.javaClass)
             assertEquals(
                 GoogleMLKitAPISmileDetector::class.java,

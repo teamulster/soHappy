@@ -9,6 +9,9 @@ package de.hsaugsburg.teamulster.sohappy.config
  * @property [smileTimer] amount of seconds a smile should endure
  * */
 data class TimerConfig(
-    val breathTimer: Long, val stimulusTimer: Long,
-    val waitingForSmileTimer: Long, val smileTimer: Long
+    val breathTimer: Long,
+    val stimulusTimer: Long,
+    val waitingForSmileTimer: Long,
+    val waitingForFaceTimer: Long,
+    val smileTimer: Long
 )

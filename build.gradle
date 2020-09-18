@@ -4,10 +4,15 @@ buildscript {
     repositories {
         google()
         jcenter()
+        maven {
+            url = uri("https://plugins.gradle.org/m2/")
+        }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.0.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.13.1")
+
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -15,14 +20,29 @@ buildscript {
 }
 
 plugins {
-    id("io.gitlab.arturbosch.detekt").version("1.12.0")
+    id("io.gitlab.arturbosch.detekt").version("1.13.1")
 }
+
+apply plugin: "io.gitlab.arturbosch.detekt"
+
+dependencies {
+    //Detekt formatting
+    detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:1.13.1"
+}
+if (project.properties["autoCorrect"] == null) {
+    ext.detektAutoCorrect = true
+} else {
+    ext.detektAutoCorrect = Boolean.parseBoolean(project.properties["autoCorrect"])
+}
+
+
 
 detekt {
     failFast = true // fail build on any finding
-    config = files("$projectDir/detekt.yml") // point to your custom config defining rules to run, overwriting default behavior
+    config = files("$projectDir/detekt.yml")
+    // point to your custom config defining rules to run, overwriting default behavior
     input = files("$projectDir/app")
-    autoCorrect=true
+    autoCorrect = detektAutoCorrect
 }
 
 allprojects {
@@ -31,7 +51,6 @@ allprojects {
         jcenter()
     }
 }
-
 
 task clean(type: Delete) {
     delete rootProject.buildDir

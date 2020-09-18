@@ -8,7 +8,7 @@ import android.graphics.Bitmap
 class BitmapQueue {
     companion object {
         internal class BitmapWrapper {
-            var bitmap : Bitmap? = null
+            var bitmap: Bitmap? = null
 
             fun poll(): Bitmap? {
                 val tmp = bitmap

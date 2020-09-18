@@ -9,7 +9,7 @@ import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 class SmileCountdown : State {
     override fun consumeAction(action: Action): State {
         return when (action) {
-            is Action.SmileCountdownTimer-> Questions()
+            is Action.SmileCountdownTimer -> Questions()
             else -> {
                 Log.d("Ignored action: ", action.toString())
                 this

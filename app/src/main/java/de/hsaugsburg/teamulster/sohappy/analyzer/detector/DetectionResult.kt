@@ -13,5 +13,5 @@ data class DetectionResult(
     val faceDetectionResult: FaceDetector.Companion.FaceDetectionResult?,
     val smileDetectionResult: SmileDetector.Companion.SmileDetectionResult?,
 ) {
-    val timeStamp : Date = Date()
+    val timeStamp: Date = Date()
 }

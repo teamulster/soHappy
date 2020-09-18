@@ -119,4 +119,7 @@
     <string name="fragment_results_results_overview">Your Result:</string>
     <string name="fragment_results_explanation">This result is an approximation how long you smiled during the measurement after you are requested to smile. A bad score does not mean that you are bad at being soHappy.</string>
     <string name="fragment_results_finish">Finish</string>
+
+    <string name="config_exception_close_app">Close App</string>
+    <string name="config_exception_restore_defaults">Restore Defaults</string>
 </resources>

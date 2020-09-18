@@ -22,6 +22,7 @@ object ConfigManager {
     lateinit var imageAnalyzerConfig: ImageAnalyzerConfig
     lateinit var aboutConfig: AboutConfig
     lateinit var timerConfig: TimerConfig
+    lateinit var notificationConfig: NotificationConfig
     lateinit var mainConfig: MainConfig
     lateinit var settingsConfig: SettingsConfig
     private val gson = Gson()
@@ -37,7 +38,8 @@ object ConfigManager {
             "https://github.com/teamulster/soHappy",
             "https://github.com/teamulster/soHappy"
         ),
-        TimerConfig(3000, 2500, 10_000, 30_000)
+        TimerConfig(3000, 2500, 10_000, 10_000, 30_000),
+        NotificationConfig(3 * 60 * 60 * 1000)
     )
     private val defaultSettingsConfig = SettingsConfig(notifications = true, databaseSync = true)
 
@@ -70,6 +72,7 @@ object ConfigManager {
             imageAnalyzerConfig = parsedMainJson.imageAnalyzerConfig
             aboutConfig = parsedMainJson.aboutConfig
             timerConfig = parsedMainJson.timerConfig
+            notificationConfig = parsedMainJson.notificationConfig
         } catch (e: IOException) {
             throw e
         } catch (e: ClassNotFoundException) {
@@ -157,7 +160,7 @@ object ConfigManager {
         } catch (e: JsonParseException) {
             throw MalformedJsonException(
                 this::class.java.name + " : the given json string" +
-                        " is not JSON compliant."
+                    " is not JSON compliant."
             )
         }
     }
@@ -176,7 +179,7 @@ object ConfigManager {
         } catch (e: JsonParseException) {
             throw MalformedJsonException(
                 this::class.java.name + " : the given json string" +
-                        " is not JSON compliant."
+                    " is not JSON compliant."
             )
         }
     }
@@ -205,8 +208,8 @@ object ConfigManager {
      * @param [url] a String which will be checked
      * @return [Boolean]
      * */
-    private fun isURLValid(url: String): Boolean = URLUtil.isValidUrl(url)
-            && (URLUtil.isHttpUrl(url) || URLUtil.isHttpsUrl(url))
+    private fun isURLValid(url: String): Boolean = URLUtil.isValidUrl(url) &&
+        (URLUtil.isHttpUrl(url) || URLUtil.isHttpsUrl(url))
 
     /**
      * This private function checks a given AboutConfig object for its property value compliance.
@@ -214,29 +217,23 @@ object ConfigManager {
      * @param [aboutConfig] a given AboutConfig object which will be checked
      * @throws [MalformedURLException]
      */
-    @Suppress("ThrowsCount")
     private fun checkAboutConfig(aboutConfig: AboutConfig) {
         val optRecommendation = "Make sure http:// or https:// is prepended."
+        var errorString = ""
         if (!isURLValid(aboutConfig.creditsURL)) {
-            throw MalformedURLException(
-                this::class.java.name
-                        + " : aboutConfig.creditsURL is not properly formatted."
-                        + "\n" + optRecommendation
-            )
+            errorString = "aboutConfig.creditsURL is not properly formatted." +
+                "\n" + optRecommendation
         }
         if (!isURLValid(aboutConfig.privacyURL)) {
-            throw MalformedURLException(
-                this::class.java.name
-                        + " : aboutConfig.privacyURL is not properly formatted"
-                        + "\n" + optRecommendation
-            )
+            errorString = "aboutConfig.privacyURL is not properly formatted" +
+                "\n" + optRecommendation
         }
         if (!isURLValid(aboutConfig.imprintURL)) {
-            throw MalformedURLException(
-                this::class.java.name
-                        + " : aboutConfig.imprintURL is not properly formatted"
-                        + "\n" + optRecommendation
-            )
+            errorString = "aboutConfig.imprintURL is not properly formatted" +
+                "\n" + optRecommendation
+        }
+        if (errorString != "") {
+            throw MalformedURLException(errorString)
         }
     }
 
@@ -251,7 +248,7 @@ object ConfigManager {
             Class.forName(imageAnalyzerConfig.faceDetector)
             Class.forName(imageAnalyzerConfig.smileDetector)
         } catch (e: ClassNotFoundException) {
-            throw e
+            throw ClassNotFoundException("Invalid package path name : " + e.message)
         }
     }
 }
