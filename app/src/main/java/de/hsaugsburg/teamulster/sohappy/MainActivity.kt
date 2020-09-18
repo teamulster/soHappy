@@ -17,7 +17,7 @@ import java.io.IOException
  */
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding
-    internal lateinit var localDatabaseManager : LocalDatabaseManager
+    internal lateinit var localDatabaseManager: LocalDatabaseManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
