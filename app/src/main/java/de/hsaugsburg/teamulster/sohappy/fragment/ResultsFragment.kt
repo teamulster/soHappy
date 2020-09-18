@@ -65,7 +65,7 @@ class ResultsFragment : Fragment() {
         }
 
         binding.finishButton.setOnClickListener {
-            stateMachine.consumeAction(Action.ReturnToStart)
+            stateMachine.consumeAction(Action.ReturnButtonPressed)
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
@@ -86,7 +86,9 @@ class ResultsFragment : Fragment() {
                     intArrayOf(color, color)
                 )
                 enabledBackground.cornerRadius = TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP, 5f, resources.displayMetrics
+                    TypedValue.COMPLEX_UNIT_DIP,
+                    5f,
+                    resources.displayMetrics
                 )
 
                 binding.finishButton.background = enabledBackground

@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import de.hsaugsburg.teamulster.sohappy.MainActivity
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.VideoMasker
 import de.hsaugsburg.teamulster.sohappy.config.ConfigManager
@@ -53,6 +54,11 @@ class SmileFragment : Fragment() {
         stateMachine.addStateChangeListener { old, new ->
             if (this.isResumed) {
                 when (new) {
+                    is Start -> {
+                        (requireActivity() as MainActivity).localDatabaseManager.close()
+                        requireActivity().finish()
+                        startActivity(requireActivity().intent)
+                    }
                     is TakeABreath -> requireView().post {
                         VideoMasker.applyBlueFilter()
                         startCountdown()
