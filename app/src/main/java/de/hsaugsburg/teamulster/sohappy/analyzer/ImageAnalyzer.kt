@@ -13,8 +13,8 @@ import de.hsaugsburg.teamulster.sohappy.exceptions.ExceptionHandler
 import de.hsaugsburg.teamulster.sohappy.factories.DetectorFactory
 import de.hsaugsburg.teamulster.sohappy.fragment.CameraFragment
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
+import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 import de.hsaugsburg.teamulster.sohappy.stateMachine.states.*
-import de.hsaugsburg.teamulster.sohappy.util.StateMachineUtil
 import de.hsaugsburg.teamulster.sohappy.viewmodel.MeasurementViewModel
 import kotlin.concurrent.thread
 
@@ -38,7 +38,7 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
     private lateinit var faceDetector: FaceDetector
     private lateinit var smileDetector: SmileDetector
     private var imageAnalyzerState: ImageAnalyzerState = ImageAnalyzerState.NONE
-    private var stateMachine = StateMachineUtil.getStateMachine(fragment)
+    private val stateMachine: StateMachine by fragment.activityViewModels()
 
 
     init {

@@ -2,10 +2,9 @@ package de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl
 
 import android.app.Activity
 import android.graphics.Bitmap
-import android.graphics.Color
+import de.hsaugsburg.teamulster.sohappy.analyzer.BitmapEditor.convertToByteBuffer
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
 import java.nio.ByteBuffer
-import java.nio.ByteOrder
 
 // TODO: add self-trained model
 /**
@@ -15,7 +14,11 @@ import java.nio.ByteOrder
  * @constructor creates a TFLiteImpl object with a test model
  * */
 class FerTFLiteSmileDetector(activity: Activity) :
-    AbstractTFLiteSmileDetector(tfliteModelPath = "model.tflite", numberOfThreads = 1, activity) {
+    AbstractTFLiteSmileDetector(
+        tfliteModelPath = "model_fer.tflite",
+        activity = activity,
+        numberOfThreads = 1
+    ) {
 
     init {
         // TODO: This has to be adapted depending on each model
@@ -64,23 +67,4 @@ class FerTFLiteSmileDetector(activity: Activity) :
         return convertToByteBuffer(scaledBitmap)
     }
 
-    /**
-     * This private function converts a given Bitmap into a ByteBuffer.
-     *
-     * @param [img] a Bitmap which will be converted into a ByteBuffer
-     * @return [ByteBuffer]
-     * */
-    private fun convertToByteBuffer(img: Bitmap): ByteBuffer? {
-        val width = img.width
-        val height = img.height
-        val mImgData: ByteBuffer = ByteBuffer
-            .allocateDirect(4 * width * height)
-        mImgData.order(ByteOrder.nativeOrder())
-        val pixels = IntArray(width * height)
-        img.getPixels(pixels, 0, width, 0, 0, width, height)
-        for (pixel in pixels) {
-            mImgData.putFloat(Color.red(pixel).toFloat())
-        }
-        return mImgData
-    }
 }

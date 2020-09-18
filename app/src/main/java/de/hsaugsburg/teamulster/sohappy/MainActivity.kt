@@ -19,8 +19,6 @@ import java.io.IOException
  */
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding
-    internal var stateMachine: StateMachine? = null
-    internal var measurement: MeasurementViewModel? = null
     internal lateinit var localDatabaseManager : LocalDatabaseManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
