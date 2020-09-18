@@ -57,7 +57,7 @@ sealed class Action {
      * or if the user decide to restart the app flow after no smile was found.
      * transition between Questions and Start state as well as NoSmile and Start
      */
-    object ReturnToStart : Action()
+    object ReturnButtonPressed : Action()
 
     /**
      * if the user decide to end the app flow and continue with the questions after no smile was found.

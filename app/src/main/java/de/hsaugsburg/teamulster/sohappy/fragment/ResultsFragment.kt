@@ -60,7 +60,7 @@ class ResultsFragment : Fragment() {
         }
 
         binding.finishButton.setOnClickListener {
-            stateMachine.consumeAction(Action.ReturnToStart)
+            stateMachine.consumeAction(Action.ReturnButtonPressed)
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
