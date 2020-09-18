@@ -41,7 +41,7 @@ class FerTFLiteSmileDetectorTest {
     @Test
     fun useDetectNegative() {
         scenario.onActivity {
-            val istr = instrumentationContext.assets.open("smileDetector_test_negative.png")
+            val istr = instrumentationContext.assets.open("smileDetector_test_negative.webp")
             val detectResult = tfliteImpl.detect(BitmapFactory.decodeStream(istr))
             if (detectResult != null) {
                 assertFalse(detectResult.isSmiling)
