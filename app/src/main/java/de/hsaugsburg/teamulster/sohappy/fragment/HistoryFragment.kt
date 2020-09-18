@@ -40,7 +40,7 @@ class HistoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         thread {
             val measurements =
-                (activity as MainActivity).localDatabaseManager.getLatestMeasurements()
+                (activity as MainActivity).localDatabaseManager!!.getLatestMeasurements()
 
             view.post {
                 val historyTable = view.findViewById<TableLayout>(R.id.table)

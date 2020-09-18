@@ -20,7 +20,7 @@ import java.io.IOException
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding
     internal lateinit var notificationHandler: NotificationHandler
-    internal lateinit var localDatabaseManager: LocalDatabaseManager
+    internal var localDatabaseManager: LocalDatabaseManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,8 +28,10 @@ class MainActivity : AppCompatActivity() {
             ConfigManager.load(this)
         } catch (e: IOException) {
             ExceptionHandler.callExceptionDialog(this, resources, e)
+            return
         } catch (e: ClassNotFoundException) {
             ExceptionHandler.callExceptionDialog(this, resources, e)
+            return
         }
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
@@ -47,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         findNavController(R.id.navHostFragment).navigateUp()
 
     override fun onDestroy() {
-        localDatabaseManager.close()
+        localDatabaseManager?.close()
         super.onDestroy()
     }
 }
