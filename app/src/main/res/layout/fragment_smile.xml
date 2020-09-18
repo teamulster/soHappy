@@ -67,12 +67,12 @@
             android:id="@+id/countdownView"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:contentDescription="@string/fragment_camera_countdown_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/animated_countdown"
-            android:contentDescription="@string/fragment_camera_countdown_text" />
+            app:srcCompat="@drawable/animated_countdown" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

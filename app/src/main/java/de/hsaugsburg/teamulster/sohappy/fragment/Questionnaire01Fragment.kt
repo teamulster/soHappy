@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -19,7 +20,7 @@ import de.hsaugsburg.teamulster.sohappy.viewmodel.MeasurementViewModel
 /**
  * Questionnaire01Fragment contains the question for the first part of the questionnaire.
  */
-class Questionnaire01Fragment: Fragment() {
+class Questionnaire01Fragment : Fragment() {
     private lateinit var binding: FragmentQuestionnaire01Binding
     private val measurement: MeasurementViewModel by activityViewModels()
     private var hasInput: Boolean = false
@@ -36,7 +37,7 @@ class Questionnaire01Fragment: Fragment() {
             false
         )
 
-        binding.seekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+        binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 hasInput = true
                 val color = resources.getColor(R.color.colorPrimary, null)
@@ -73,6 +74,10 @@ class Questionnaire01Fragment: Fragment() {
             }
         }
 
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            // NO-OP
+        }
+
         return binding.root
     }
 
@@ -85,4 +90,5 @@ class Questionnaire01Fragment: Fragment() {
         super.onStop()
         (requireActivity() as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
+
 }

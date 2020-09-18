@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import de.hsaugsburg.teamulster.sohappy.MainActivity
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentSettingsBinding
 import de.hsaugsburg.teamulster.sohappy.viewmodel.SettingsViewModel
@@ -29,7 +30,19 @@ class SettingsFragment : Fragment() {
             container,
             false
         )
-        binding.viewModel = viewModel
+
+        binding.settingsNotificationSwitch.setOnCheckedChangeListener { _, new ->
+            viewModel.notificationsEnabled = new
+            val activity = requireActivity() as MainActivity
+            if (new) {
+                activity.notificationHandler.triggerNotificationAlarm()
+            } else {
+                activity.notificationHandler.cancelNotificationAlarm()
+            }
+        }
+        binding.settingsDatabaseSwitch.setOnCheckedChangeListener { _, new ->
+            viewModel.databaseEnabled = new
+        }
 
         return binding.root
     }
@@ -37,7 +50,7 @@ class SettingsFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        binding.settingsNotificationSwitch.isActivated = viewModel.notificationsEnabled
-        binding.settingsDatabaseSwitch.isActivated = viewModel.databaseEnabled
+        binding.settingsNotificationSwitch.isChecked = viewModel.notificationsEnabled
+        binding.settingsDatabaseSwitch.isChecked = viewModel.databaseEnabled
     }
 }

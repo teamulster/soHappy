@@ -6,6 +6,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -18,6 +19,7 @@ import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 import de.hsaugsburg.teamulster.sohappy.stateMachine.states.Start
 import de.hsaugsburg.teamulster.sohappy.viewmodel.MeasurementViewModel
 import kotlin.concurrent.thread
+import de.hsaugsburg.teamulster.sohappy.viewmodel.SettingsViewModel
 
 /**
  * ResultsFragment serves as the conclusion of the smile procedure and provides the
@@ -27,6 +29,7 @@ class ResultsFragment : Fragment() {
     private val stateMachine: StateMachine by activityViewModels()
     private lateinit var binding: FragmentResultsBinding
     private val measurement: MeasurementViewModel by activityViewModels()
+    private val settings: SettingsViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,6 +52,11 @@ class ResultsFragment : Fragment() {
                 when (new) {
                     is Start -> {
                         (requireActivity() as MainActivity).localDatabaseManager.close()
+                        if (settings.notificationsEnabled) {
+                            (requireActivity() as MainActivity).notificationHandler
+                                .triggerNotificationAlarm()
+                        }
+
                         requireActivity().finish()
                         startActivity(requireActivity().intent)
                     }
@@ -58,6 +66,10 @@ class ResultsFragment : Fragment() {
 
         binding.finishButton.setOnClickListener {
             stateMachine.consumeAction(Action.ReturnToStart)
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            // NO-OP
         }
 
         return binding.root
