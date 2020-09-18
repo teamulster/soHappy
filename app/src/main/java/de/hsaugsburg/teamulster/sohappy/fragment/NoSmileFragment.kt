@@ -55,7 +55,7 @@ class NoSmileFragment : Fragment() {
         }
 
         binding.retryButton.setOnClickListener {
-            stateMachine.consumeAction(Action.ReturnToStart)
+            stateMachine.consumeAction(Action.ReturnButtonPressed)
         }
 
         binding.continueButton.setOnClickListener {
