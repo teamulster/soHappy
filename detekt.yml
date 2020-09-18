@@ -224,32 +224,32 @@ exceptions:
 formatting:
   active: true
   android: false
-  autoCorrect: false
+  autoCorrect: true
   AnnotationOnSeparateLine:
     active: true
-    autoCorrect: false
+    autoCorrect: true
   ChainWrapping:
     active: true
-    autoCorrect: false
+    autoCorrect: true
   CommentSpacing:
     active: true
-    autoCorrect: false
+    autoCorrect: true
   EnumEntryNameCase:
     active: true
-    autoCorrect: false
+    autoCorrect: true
   Filename:
     active: true
   FinalNewline:
     active: true
-    autoCorrect: false
+    autoCorrect: true
     insertFinalNewLine: true
   ImportOrdering:
     active: false
-    autoCorrect: false
+    autoCorrect: true
     layout: 'idea'
   Indentation:
     active: true
-    autoCorrect: false
+    autoCorrect: true
     indentSize: 4
     continuationIndentSize: 4
   MaximumLineLength:
@@ -257,88 +257,88 @@ formatting:
     maxLineLength: 120
   ModifierOrdering:
     active: true
-    autoCorrect: false
+    autoCorrect: true
   MultiLineIfElse:
     active: true
-    autoCorrect: false
+    autoCorrect: true
   NoBlankLineBeforeRbrace:
     active: true
-    autoCorrect: false
+    autoCorrect: true
   NoConsecutiveBlankLines:
     active: true
-    autoCorrect: false
+    autoCorrect: true
   NoEmptyClassBody:
     active: true
-    autoCorrect: false
+    autoCorrect: true
   NoEmptyFirstLineInMethodBlock:
     active: true
-    autoCorrect: false
+    autoCorrect: true
   NoLineBreakAfterElse:
     active: true
-    autoCorrect: false
+    autoCorrect: true
   NoLineBreakBeforeAssignment:
     active: true
-    autoCorrect: false
+    autoCorrect: true
   NoMultipleSpaces:
     active: true
-    autoCorrect: false
+    autoCorrect: true
   NoSemicolons:
     active: true
-    autoCorrect: false
+    autoCorrect: true
   NoTrailingSpaces:
     active: true
-    autoCorrect: false
+    autoCorrect: true
   NoUnitReturn:
     active: true
-    autoCorrect: false
+    autoCorrect: true
   NoUnusedImports:
     active: true
-    autoCorrect: false
+    autoCorrect: true
   NoWildcardImports:
     active: false
   PackageName:
     active: true
-    autoCorrect: false
+    autoCorrect: true
   ParameterListWrapping:
     active: true
-    autoCorrect: false
+    autoCorrect: true
     indentSize: 4
   SpacingAroundColon:
     active: true
-    autoCorrect: false
+    autoCorrect: true
   SpacingAroundComma:
     active: true
-    autoCorrect: false
+    autoCorrect: true
   SpacingAroundCurly:
     active: true
-    autoCorrect: false
+    autoCorrect: true
   SpacingAroundDot:
     active: true
-    autoCorrect: false
+    autoCorrect: true
   SpacingAroundDoubleColon:
     active: true
-    autoCorrect: false
+    autoCorrect: true
   SpacingAroundKeyword:
     active: true
-    autoCorrect: false
+    autoCorrect: true
   SpacingAroundOperators:
     active: true
-    autoCorrect: false
+    autoCorrect: true
   SpacingAroundParens:
     active: true
-    autoCorrect: false
+    autoCorrect: true
   SpacingAroundRangeOperator:
     active: true
-    autoCorrect: false
+    autoCorrect: true
   SpacingBetweenDeclarationsWithAnnotations:
     active: false
-    autoCorrect: false
+    autoCorrect: true
   SpacingBetweenDeclarationsWithComments:
     active: false
-    autoCorrect: false
+    autoCorrect: true
   StringTemplate:
     active: true
-    autoCorrect: false
+    autoCorrect: true
 
 naming:
   active: true
