@@ -221,7 +221,7 @@ class SmileFragment : Fragment() {
         }
         val progressAnimation =
             ObjectAnimator.ofInt(binding.progressBar, "progress", 10_000)
-        progressAnimation.duration = 30_000
+        progressAnimation.duration = ConfigManager.timerConfig.smileTimer
         progressAnimation.interpolator = LinearInterpolator()
         progressAnimation.start()
     }
