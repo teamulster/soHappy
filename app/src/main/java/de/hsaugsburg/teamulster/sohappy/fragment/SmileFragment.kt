@@ -58,7 +58,7 @@ class SmileFragment : Fragment() {
             if (this.isResumed) {
                 when (new) {
                     is Start -> {
-                        (requireActivity() as MainActivity).localDatabaseManager.close()
+                        (requireActivity() as MainActivity).localDatabaseManager!!.close()
                         requireActivity().finish()
                         startActivity(requireActivity().intent)
                     }
@@ -238,18 +238,24 @@ class SmileFragment : Fragment() {
             )
         }
 
-        requireView().postDelayed({
-            binding.smileDetectedLogoView.apply {
-                visibility = View.VISIBLE
-                startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.scale_up_logo))
-            }
-        }, 350)
+        requireView().postDelayed(
+            {
+                binding.smileDetectedLogoView.apply {
+                    visibility = View.VISIBLE
+                    startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.scale_up_logo))
+                }
+            },
+            350
+        )
 
-        requireView().postDelayed({
-            binding.smileDetectedPulse.apply {
-                visibility = View.VISIBLE
-                startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.pulse))
-            }
-        }, 850)
+        requireView().postDelayed(
+            {
+                binding.smileDetectedPulse.apply {
+                    visibility = View.VISIBLE
+                    startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.pulse))
+                }
+            },
+            850
+        )
     }
 }
