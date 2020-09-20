@@ -42,9 +42,8 @@
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="220dp"
+            android:layout_width="match_parent"
             android:layout_height="4dp"
-            android:layout_marginTop="32dp"
             android:indeterminate="false"
             android:max="10000"
             android:progress="0"
@@ -52,7 +51,7 @@
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toTopOf="@+id/gpuImageView" />
 
         <TextView
             android:id="@+id/countdownText"
