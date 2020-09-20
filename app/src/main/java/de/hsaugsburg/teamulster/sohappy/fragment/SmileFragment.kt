@@ -73,7 +73,6 @@ class SmileFragment : Fragment() {
                         }
                         requireView().postDelayed(
                             {
-                                startProgressBar()
                                 stateMachine.consumeAction(Action.StimulusTimer)
                             },
                             ConfigManager.timerConfig.stimulusTimer
@@ -89,6 +88,7 @@ class SmileFragment : Fragment() {
                     )
                     is SmileCountdown -> if (old !is SmileCountdown) {
                         requireView().post {
+                            startProgressBar()
                             showSmileDetected()
                         }
                         requireView().postDelayed(
