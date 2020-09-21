@@ -1,21 +1,26 @@
 package de.hsaugsburg.teamulster.sohappy.viewmodel
 
-import androidx.lifecycle.ViewModel
+import android.annotation.SuppressLint
+import android.app.Application
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.DetectionResult
 import org.dizitart.no2.objects.Id
 import java.util.*
 import kotlin.collections.ArrayList
+import android.provider.Settings
+import androidx.lifecycle.AndroidViewModel
 
 /**
  * This class hold a list of DetectionResults.
  *
  * @property [timeStamp] a Date object
  * */
-class MeasurementViewModel : ViewModel() {
+class MeasurementViewModel(application: Application) : AndroidViewModel(application) {
     @Id
     val timeStamp: Date = Date()
-    val results: ArrayList<DetectionResult> = ArrayList()
     var questionnaire = QuestionnaireViewModel()
+    private val results: ArrayList<DetectionResult> = ArrayList()
+    @SuppressLint("HardwareIds")
+    val id: String = Settings.Secure.getString(application.contentResolver, Settings.Secure.ANDROID_ID)
 
     /**
      * This function adds a DetectionResult to the results list.
