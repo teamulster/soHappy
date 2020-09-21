@@ -40,7 +40,10 @@ class ConfigManagerTest {
                     AboutConfig(
                         "https://github.com/teamulster/soHappy",
                         "https://github.com/teamulster/soHappy",
-                        "https://github.com/teamulster/soHappy/pulse"
+                        "https://github.com/teamulster/soHappy/pulse",
+                        "https://github.com/teamulster/soHappy",
+                        "https://github.com/teamulster/soHappy",
+                        "https://github.com/teamulster/soHappy"
                     ),
                     TimerConfig(3000, 2500, 10_000, 10_000, 30_000),
                     NotificationConfig(3 * 60 * 60 * 1000)
@@ -62,7 +65,10 @@ class ConfigManagerTest {
                     AboutConfig(
                         "https://github.com/teamulster/soHappy",
                         "https://github.com/teamulster/soHappy",
-                        "https://github.com/teamulster/soHappy/pulse"
+                        "https://github.com/teamulster/soHappy/pulse",
+                        "https://github.com/teamulster/soHappy",
+                        "https://github.com/teamulster/soHappy",
+                        "https://github.com/teamulster/soHappy"
                     ),
                     TimerConfig(3000, 2500, 10_000, 10_000, 30_000),
                     NotificationConfig(3 * 60 * 60 * 1000)
@@ -90,7 +96,10 @@ class ConfigManagerTest {
                     AboutConfig(
                         "https://github.com/teamulster/soHappy",
                         "https://github.com/teamulster/soHappy",
-                        "https://github.com/teamulster/soHappy/pulse"
+                        "https://github.com/teamulster/soHappy/pulse",
+                        "https://github.com/teamulster/soHappy",
+                        "https://github.com/teamulster/soHappy",
+                        "https://github.com/teamulster/soHappy"
                     ),
                     TimerConfig(3000, 2500, 10_000, 10_000, 30_000),
                     NotificationConfig(3 * 60 * 60 * 1000)
@@ -108,7 +117,10 @@ class ConfigManagerTest {
                 AboutConfig(
                     "https://github.com/teamulster/soHappy",
                     "https://github.com/teamulster/soHappy",
-                    "https://github.com/teamulster/soHappy/pulse"
+                    "https://github.com/teamulster/soHappy/pulse",
+                    "https://github.com/teamulster/soHappy",
+                    "https://github.com/teamulster/soHappy",
+                    "https://github.com/teamulster/soHappy"
                 ),
                 TimerConfig(3000, 2500, 10_000, 10_000, 30_000),
                 NotificationConfig(3 * 60 * 60 * 1000)
@@ -131,7 +143,10 @@ class ConfigManagerTest {
                     AboutConfig(
                         "https://github.com/teamulster/soHappy",
                         "https://github.com/teamulster/soHappy",
-                        "https://github.com/teamulster/soHappy/pulse"
+                        "https://github.com/teamulster/soHappy/pulse",
+                        "https://github.com/teamulster/soHappy",
+                        "https://github.com/teamulster/soHappy",
+                        "https://github.com/teamulster/soHappy"
                     ),
                     TimerConfig(3000, 2500, 10_000, 10_000, 30_000),
                     NotificationConfig(3 * 60 * 60 * 1000)
@@ -159,7 +174,10 @@ class ConfigManagerTest {
                     AboutConfig(
                         "https://github.com/teamulster/soHappy",
                         "hallo",
-                        "https://github.com/teamulster/soHappy/pulse"
+                        "https://github.com/teamulster/soHappy/pulse",
+                        "https://github.com/teamulster/soHappy",
+                        "https://github.com/teamulster/soHappy",
+                        "https://github.com/teamulster/soHappy"
                     ),
                     TimerConfig(3000, 2500, 10_000, 10_000, 30_000),
                     NotificationConfig(3 * 60 * 60 * 1000)
