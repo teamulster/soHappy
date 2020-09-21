@@ -36,6 +36,9 @@ object ConfigManager {
         AboutConfig(
             "https://github.com/teamulster/soHappy",
             "https://github.com/teamulster/soHappy",
+            "https://github.com/teamulster/soHappy",
+            "https://github.com/teamulster/soHappy",
+            "https://github.com/teamulster/soHappy",
             "https://github.com/teamulster/soHappy"
         ),
         TimerConfig(3000, 2500, 10_000, 10_000, 30_000),
@@ -230,6 +233,18 @@ object ConfigManager {
         }
         if (!isURLValid(aboutConfig.imprintURL)) {
             errorString = "aboutConfig.imprintURL is not properly formatted" +
+                "\n" + optRecommendation
+        }
+        if (!isURLValid(aboutConfig.licenseURL)) {
+            errorString = "aboutConfig.licenseURL is not properly formatted" +
+                "\n" + optRecommendation
+        }
+        if (!isURLValid(aboutConfig.feedbackURL)) {
+            errorString = "aboutConfig.feedbackURL is not properly formatted" +
+                "\n" + optRecommendation
+        }
+        if (!isURLValid(aboutConfig.issueURL)) {
+            errorString = "aboutConfig.issueURL is not properly formatted" +
                 "\n" + optRecommendation
         }
         if (errorString != "") {

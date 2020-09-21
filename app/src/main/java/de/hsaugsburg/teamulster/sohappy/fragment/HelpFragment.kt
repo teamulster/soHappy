@@ -38,6 +38,15 @@ class HelpFragment : Fragment() {
         binding.button3.setOnClickListener {
             openURL(ConfigManager.aboutConfig.privacyURL)
         }
+        binding.button7.setOnClickListener {
+            openURL(ConfigManager.aboutConfig.licenseURL)
+        }
+        binding.button8.setOnClickListener {
+            openURL(ConfigManager.aboutConfig.feedbackURL)
+        }
+        binding.button10.setOnClickListener {
+            openURL(ConfigManager.aboutConfig.issueURL)
+        }
 
         return binding.root
     }
