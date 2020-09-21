@@ -1,7 +1,5 @@
 package de.hsaugsburg.teamulster.sohappy.config
 
-import de.hsaugsburg.teamulster.sohappy.config.NotificationConfig.Builder
-
 /**
  * This data class stores URLs to credits/privacy/imprint references.
  *
