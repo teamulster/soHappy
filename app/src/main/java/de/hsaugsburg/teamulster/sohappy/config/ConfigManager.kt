@@ -154,7 +154,7 @@ object ConfigManager {
      * @throws [MalformedJsonException]
      * @return [MainConfig]
      * */
-    private fun fromJsonToMain(jsonString: String): MainConfig {
+    internal fun fromJsonToMain(jsonString: String): MainConfig {
         try {
             return gson.fromJson<MainConfig>(jsonString, MainConfig::class.java)
         } catch (e: JsonParseException) {
