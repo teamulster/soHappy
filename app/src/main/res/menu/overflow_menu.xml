@@ -8,9 +8,6 @@
     <item android:id="@+id/historyFragment"
         android:title="@string/ui_overflow_history" />
 
-    <item android:id="@+id/jokesFragment"
-        android:title="@string/ui_overflow_jokes" />
-
     <item android:id="@+id/settingsFragment"
         android:title="@string/ui_overflow_settings" />
 
