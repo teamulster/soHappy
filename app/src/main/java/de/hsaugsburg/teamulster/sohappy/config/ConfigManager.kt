@@ -237,15 +237,15 @@ object ConfigManager {
         }
         if (!isURLValid(aboutConfig.licenseURL)) {
             errorString = "aboutConfig.licenseURL is not properly formatted" +
-                    "\n" + optRecommendation
+                "\n" + optRecommendation
         }
         if (!isURLValid(aboutConfig.feedbackURL)) {
             errorString = "aboutConfig.feedbackURL is not properly formatted" +
-                    "\n" + optRecommendation
+                "\n" + optRecommendation
         }
         if (!isURLValid(aboutConfig.issueURL)) {
             errorString = "aboutConfig.issueURL is not properly formatted" +
-                    "\n" + optRecommendation
+                "\n" + optRecommendation
         }
         if (errorString != "") {
             throw MalformedURLException(errorString)

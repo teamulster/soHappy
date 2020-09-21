@@ -58,7 +58,6 @@ class SmileFragment : Fragment() {
             if (this.isResumed) {
                 when (new) {
                     is Start -> {
-
                         (requireActivity() as MainActivity).localDatabaseManager?.close()
                         requireActivity().finish()
                         startActivity(requireActivity().intent)
