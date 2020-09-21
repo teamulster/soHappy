@@ -26,17 +26,22 @@ class ConfigManagerTest {
     }
 
     @Test
+    @Suppress("LongMethod")
     fun useStore() {
         scenario.onActivity { cameraActivity ->
             ConfigManager.store(
                 cameraActivity,
                 MainConfig(
-                    ImageAnalyzerConfig(
-                        "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
-                            ".facedetectorimpl.HaarCascadeFaceDetector",
-                        "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
-                            ".smiledetectorimpl.FerTFLiteSmileDetector"
-                    ),
+                    ImageAnalyzerConfig.Builder()
+                        .setFaceDetector(
+                            "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
+                                ".facedetectorimpl.HaarCascadeFaceDetector"
+                        )
+                        .setSmileDetector(
+                            "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
+                                ".smiledetectorimpl.FerTFLiteSmileDetector"
+                        )
+                        .build(),
                     AboutConfig(
                         "https://github.com/teamulster/soHappy",
                         "https://github.com/teamulster/soHappy",
@@ -71,7 +76,9 @@ class ConfigManagerTest {
                         "https://github.com/teamulster/soHappy"
                     ),
                     TimerConfig(3000, 2500, 10_000, 10_000, 30_000),
-                    NotificationConfig(3 * 60 * 60 * 1000)
+                    NotificationConfig.Builder()
+                        .setAlarmDelay(3 * 60 * 60 * 1000)
+                        .build()
                 )
             )
             assertEquals(
@@ -101,7 +108,13 @@ class ConfigManagerTest {
                         "https://github.com/teamulster/soHappy",
                         "https://github.com/teamulster/soHappy"
                     ),
-                    TimerConfig(3000, 2500, 10_000, 10_000, 30_000),
+                    TimerConfig.Builder()
+                        .setBreathTimer(3000)
+                        .setStimulusTimer(2500)
+                        .setWaitingForSmileTimer(10_000)
+                        .setWaitingForFaceTimer(10_000)
+                        .setSmileTimer(30_000)
+                        .build(),
                     NotificationConfig(3 * 60 * 60 * 1000)
                 ),
                 SettingsConfig(notifications = true, databaseSync = true)
@@ -134,23 +147,27 @@ class ConfigManagerTest {
         scenario.onActivity {
             ConfigManager.store(
                 it,
-                MainConfig(
-                    ImageAnalyzerConfig(
-                        "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
-                            ".facedetectorimpl.HaarCascadeFaceDetector",
-                        "bla"
-                    ),
-                    AboutConfig(
-                        "https://github.com/teamulster/soHappy",
-                        "https://github.com/teamulster/soHappy",
-                        "https://github.com/teamulster/soHappy/pulse",
-                        "https://github.com/teamulster/soHappy",
-                        "https://github.com/teamulster/soHappy",
-                        "https://github.com/teamulster/soHappy"
-                    ),
-                    TimerConfig(3000, 2500, 10_000, 10_000, 30_000),
-                    NotificationConfig(3 * 60 * 60 * 1000)
-                ),
+                MainConfig.Builder()
+                    .setImageAnalyzerConfig(
+                        ImageAnalyzerConfig(
+                            "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
+                                ".facedetectorimpl.HaarCascadeFaceDetector",
+                            "bla"
+                        )
+                    )
+                    .setAboutConfig(
+                        AboutConfig(
+                            "https://github.com/teamulster/soHappy",
+                            "https://github.com/teamulster/soHappy",
+                            "https://github.com/teamulster/soHappy/pulse",
+                            "https://github.com/teamulster/soHappy",
+                            "https://github.com/teamulster/soHappy",
+                            "https://github.com/teamulster/soHappy"
+                        )
+                    )
+                    .setTimerConfig(TimerConfig(3000, 2500, 10_000, 10_000, 30_000))
+                    .setNotificationConfig(NotificationConfig(3 * 60 * 60 * 1000))
+                    .build(),
                 SettingsConfig(notifications = true, databaseSync = true)
             )
             assertFailsWith(ClassNotFoundException::class) {

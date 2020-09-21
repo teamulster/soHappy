@@ -56,7 +56,7 @@ data class TimerConfig(
          *
          * @param [waitingForSmileTimer]
          * */
-        fun setWaitingSmileTimer(waitingForSmileTimer: Long) =
+        fun setWaitingForSmileTimer(waitingForSmileTimer: Long) =
             apply { this.waitingForSmileTimer = waitingForSmileTimer }
 
         /**
@@ -65,7 +65,7 @@ data class TimerConfig(
          *
          * @param [waitingForFaceTimer]
          * */
-        fun setWaitingFaceTimer(waitingForFaceTimer: Long) =
+        fun setWaitingForFaceTimer(waitingForFaceTimer: Long) =
             apply { this.waitingForFaceTimer = waitingForFaceTimer }
 
         /**
