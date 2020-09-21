@@ -26,8 +26,6 @@ class HaarCascadeFaceDetectorTest {
         scenario.onActivity { haarCascadeFaceDetector = HaarCascadeFaceDetector(it) }
     }
 
-    // TODO: Choose better files
-
     @Test
     fun detectTestPositive() {
         scenario.onActivity {

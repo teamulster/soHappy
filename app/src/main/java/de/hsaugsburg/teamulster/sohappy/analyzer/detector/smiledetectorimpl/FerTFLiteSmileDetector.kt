@@ -6,7 +6,6 @@ import de.hsaugsburg.teamulster.sohappy.analyzer.BitmapEditor.convertToByteBuffe
 import de.hsaugsburg.teamulster.sohappy.analyzer.detector.SmileDetector
 import java.nio.ByteBuffer
 
-// TODO: add self-trained model
 /**
  * This class inherits AbstractTFLiteSmileDetector and prepares the image before TF lite detection is run.
  *
@@ -21,7 +20,6 @@ class FerTFLiteSmileDetector(activity: Activity) :
     ) {
 
     init {
-        // TODO: This has to be adapted depending on each model
         labels.add("Angry")
         labels.add("Disgust")
         labels.add("Fear")
@@ -45,7 +43,6 @@ class FerTFLiteSmileDetector(activity: Activity) :
         val firstPredictionResult = predictionResults[0]
         var isSmiling = false
         // if Happy is detected, set isSmiling = true
-        // TODO: This has to be adapted depending on each model
         if (firstPredictionResult.title == "Happy" && firstPredictionResult.confidence > 0.75f) {
             isSmiling = true
         }
@@ -62,7 +59,6 @@ class FerTFLiteSmileDetector(activity: Activity) :
      * @return [ByteBuffer]
      * */
     override fun prepare(img: Bitmap): ByteBuffer? {
-        // TODO: This has to be adapted depending on each model
         val scaledBitmap = Bitmap.createScaledBitmap(img, 48, 48, true)
         return convertToByteBuffer(scaledBitmap)
     }
