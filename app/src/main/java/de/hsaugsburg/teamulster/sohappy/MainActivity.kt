@@ -52,4 +52,8 @@ class MainActivity : AppCompatActivity() {
         localDatabaseManager?.close()
         super.onDestroy()
     }
+    override fun onStop() {
+        super.onStop()
+        finish()
+    }
 }
