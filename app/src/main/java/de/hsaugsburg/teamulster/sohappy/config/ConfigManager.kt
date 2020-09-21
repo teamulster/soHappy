@@ -28,23 +28,30 @@ object ConfigManager {
     private val gson = Gson()
 
     @Suppress("StringLiteralDuplication")
-    private val defaultMainConfig: MainConfig = MainConfig(
-        ImageAnalyzerConfig(
-            "de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.HaarCascadeFaceDetector",
-            "de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl.FerTFLiteSmileDetector"
-        ),
-        AboutConfig(
-            "https://github.com/teamulster/soHappy",
-            "https://github.com/teamulster/soHappy",
-            "https://github.com/teamulster/soHappy",
-            "https://github.com/teamulster/soHappy",
-            "https://github.com/teamulster/soHappy",
-            "https://github.com/teamulster/soHappy"
-        ),
-        TimerConfig(3000, 2500, 10_000, 10_000, 30_000),
-        NotificationConfig(3 * 60 * 60 * 1000)
-    )
-    private val defaultSettingsConfig = SettingsConfig(notifications = true, databaseSync = true)
+    private val defaultMainConfig: MainConfig = MainConfig.Builder()
+        .setImageAnalyzerConfig(
+            ImageAnalyzerConfig(
+                "de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.HaarCascadeFaceDetector",
+                "de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl.FerTFLiteSmileDetector"
+            )
+        )
+        .setAboutConfig(
+            AboutConfig(
+                "https://github.com/teamulster/soHappy",
+                "https://github.com/teamulster/soHappy",
+                "https://github.com/teamulster/soHappy",
+                "https://github.com/teamulster/soHappy",
+                "https://github.com/teamulster/soHappy",
+                "https://github.com/teamulster/soHappy"
+            )
+        )
+        .setTimerConfig(TimerConfig(3000, 2500, 10_000, 10_000, 30_000))
+        .setNotificationConfig(NotificationConfig(3 * 60 * 60 * 1000))
+        .build()
+    private val defaultSettingsConfig = SettingsConfig.Builder()
+        .setNotifications(true)
+        .setDatabaseSync(true)
+        .build()
 
     /**
      * This function loads config from the config file and parses the JSON string to MainConfig(
