@@ -56,7 +56,6 @@ abstract class AbstractTFLiteSmileDetector(
         tfliteInterpreter = Interpreter(tfliteModel, tfliteOptions)
     }
 
-    // TODO: Choose whether model is quantized or not / probabilityProcessor is necessary
     /**
      * This function runs tfliteInterpreter detection on a given image and predicts its probability to match
      * one of the model's labels.

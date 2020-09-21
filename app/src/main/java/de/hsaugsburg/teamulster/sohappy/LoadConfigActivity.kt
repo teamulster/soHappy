@@ -16,7 +16,6 @@ import kotlin.system.exitProcess
 
 /**
  * This Activity gets started, if a '.sohappy' file gets opened.
- *
  */
 class LoadConfigActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -22,7 +22,6 @@ import de.hsaugsburg.teamulster.sohappy.databinding.FragmentSmileBinding
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 import de.hsaugsburg.teamulster.sohappy.stateMachine.states.*
-import kotlin.concurrent.thread
 
 // TODO: The requireView.postDelayed() calls serve as proof of concept for animations - replace!
 /**
@@ -46,13 +45,7 @@ class SmileFragment : Fragment() {
             container,
             false
         )
-        when (stateMachine.getCurrentMachineState()) {
-            is WaitingForFace -> thread {
-                VideoMasker.applyRedFilter()
-                Thread.sleep(ConfigManager.timerConfig.waitingForFaceTimer)
-                stateMachine.consumeAction(Action.WaitingForFaceTimer)
-            }
-        }
+
         // TODO: Lambdas need to be unregistered, when new fragment is initialized
         stateMachine.addStateChangeListener { old, new ->
             if (this.isResumed) {
@@ -80,7 +73,7 @@ class SmileFragment : Fragment() {
                     }
                     is WaitingForSmile -> requireView().postDelayed(
                         {
-                            if (old !is WaitingForFace) {
+                            if (old !is WaitingForSmile) {
                                 stateMachine.consumeAction(Action.WaitingForSmileTimer)
                             }
                         },
@@ -110,6 +103,21 @@ class SmileFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        VideoMasker.applyRedFilter()
+        fadeInText(getString(R.string.fragment_camera_init))
+        when (stateMachine.getCurrentMachineState()) {
+            is WaitingForFace ->
+                requireView().postDelayed(
+                    {
+                        stateMachine.consumeAction(Action.WaitingForFaceTimer)
+                    },
+                    ConfigManager.timerConfig.waitingForFaceTimer
+                )
+        }
+    }
+
     override fun onStart() {
         super.onStart()
         (requireActivity() as AppCompatActivity).supportActionBar!!.hide()
@@ -121,7 +129,6 @@ class SmileFragment : Fragment() {
             .setDuration(1500)
             .withEndAction {
                 binding.fadeInView.visibility = View.INVISIBLE
-                fadeInText(getString(R.string.fragment_camera_init))
             }
     }
 
@@ -242,7 +249,12 @@ class SmileFragment : Fragment() {
             {
                 binding.smileDetectedLogoView.apply {
                     visibility = View.VISIBLE
-                    startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.scale_up_logo))
+                    startAnimation(
+                        AnimationUtils.loadAnimation(
+                            requireContext(),
+                            R.anim.scale_up_logo
+                        )
+                    )
                 }
             },
             350
