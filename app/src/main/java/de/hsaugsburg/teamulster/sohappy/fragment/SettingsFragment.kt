@@ -1,5 +1,6 @@
 package de.hsaugsburg.teamulster.sohappy.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,7 @@ class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
     private val viewModel: SettingsViewModel by activityViewModels()
 
+    @SuppressLint("HardwareIds")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

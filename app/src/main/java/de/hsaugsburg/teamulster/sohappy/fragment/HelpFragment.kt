@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import de.hsaugsburg.teamulster.sohappy.BuildConfig
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.config.ConfigManager
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentHelpBinding
@@ -17,6 +18,7 @@ import de.hsaugsburg.teamulster.sohappy.databinding.FragmentHelpBinding
  */
 class HelpFragment : Fragment() {
     private lateinit var binding: FragmentHelpBinding
+    private val version = BuildConfig.VERSION_NAME
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,6 +49,7 @@ class HelpFragment : Fragment() {
         binding.button10.setOnClickListener {
             openURL(ConfigManager.aboutConfig.issueURL)
         }
+        binding.textView4.text = version
 
         return binding.root
     }

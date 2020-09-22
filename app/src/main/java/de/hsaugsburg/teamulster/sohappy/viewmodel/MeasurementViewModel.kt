@@ -14,8 +14,9 @@ import kotlin.collections.ArrayList
 class MeasurementViewModel : ViewModel() {
     @Id
     val timeStamp: Date = Date()
-    val results: ArrayList<DetectionResult> = ArrayList()
     var questionnaire = QuestionnaireViewModel()
+    private val results: ArrayList<DetectionResult> = ArrayList()
+    lateinit var id: String
 
     /**
      * This function adds a DetectionResult to the results list.

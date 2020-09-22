@@ -96,7 +96,6 @@ class CameraFragment : Fragment() {
         cameraIsRunning = true
         val imageAnalysis = ImageAnalysis.Builder()
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-            // TODO: take a look into .setBackgroundExecutor()
             .build()
 
         imageAnalysis.setAnalyzer(

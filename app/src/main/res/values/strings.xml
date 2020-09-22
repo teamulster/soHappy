@@ -58,8 +58,6 @@
     <string name="fragment_help_name">Help &amp; Contact</string>
     <string name="fragment_help_credits">Credits</string>
     <string name="fragment_help_version">Version</string>
-    <!-- TODO: Do not hardcode version -->
-    <string name="fragment_help_version_value">1.0</string>
     <string name="fragment_help_imprint">Imprint</string>
     <string name="fragment_help_privacy">Privacy</string>
     <string name="fragment_help_license">License</string>
