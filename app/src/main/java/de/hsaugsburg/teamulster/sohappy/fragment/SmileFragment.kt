@@ -28,6 +28,7 @@ import de.hsaugsburg.teamulster.sohappy.stateMachine.states.*
  * SmileFragment is the main Fragment and serves as the user interface for the
  * procedure described in the paper.
  */
+@Suppress("TooManyFunctions")
 class SmileFragment : Fragment() {
     private val stateMachine: StateMachine by activityViewModels()
     private lateinit var binding: FragmentSmileBinding
@@ -133,8 +134,23 @@ class SmileFragment : Fragment() {
     }
 
     override fun onStop() {
+        if (isApplicationSentToBackground()) {
+            (requireActivity() as MainActivity).localDatabaseManager?.close()
+            requireActivity().finish()
+        }
         super.onStop()
         (requireActivity() as AppCompatActivity).supportActionBar!!.show()
+    }
+
+    /**
+     * checks weather the application is in the background (Smile Fragment must not be interrupted,
+     * so the app will then return to start screen).
+     */
+    private fun isApplicationSentToBackground(): Boolean {
+        if (!(requireActivity() as MainActivity).isActivityVisible) {
+            return true
+        }
+        return false
     }
 
     private fun startCountdown() {
