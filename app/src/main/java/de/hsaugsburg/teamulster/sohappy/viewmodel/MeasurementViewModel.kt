@@ -18,7 +18,6 @@ class MeasurementViewModel : ViewModel() {
     private val results: ArrayList<DetectionResult> = ArrayList()
     lateinit var id: String
 
-
     /**
      * This function adds a DetectionResult to the results list.
      *

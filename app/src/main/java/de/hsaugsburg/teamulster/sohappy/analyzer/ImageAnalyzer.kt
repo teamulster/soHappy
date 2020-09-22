@@ -112,7 +112,10 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
         thread {
             while (true) {
                 if (imageAnalyzerState == ImageAnalyzerState.CANCEL) {
-                    measurement.id = Settings.Secure.getString(fragment.context?.contentResolver, Settings.Secure.ANDROID_ID)
+                    measurement.id = Settings.Secure.getString(
+                        fragment.context?.contentResolver,
+                        Settings.Secure.ANDROID_ID
+                    )
                     (fragment.requireActivity() as MainActivity).localDatabaseManager?.addOrUpdateMeasurement(
                         measurement
                     )

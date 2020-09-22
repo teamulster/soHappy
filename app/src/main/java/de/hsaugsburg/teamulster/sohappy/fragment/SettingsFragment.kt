@@ -11,7 +11,6 @@ import androidx.fragment.app.activityViewModels
 import de.hsaugsburg.teamulster.sohappy.MainActivity
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentSettingsBinding
-import de.hsaugsburg.teamulster.sohappy.sync.RemoteSite
 import de.hsaugsburg.teamulster.sohappy.viewmodel.SettingsViewModel
 
 /**
@@ -19,7 +18,6 @@ import de.hsaugsburg.teamulster.sohappy.viewmodel.SettingsViewModel
  */
 class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
-    private val remoteSite = RemoteSite()
     private val viewModel: SettingsViewModel by activityViewModels()
 
     @SuppressLint("HardwareIds")

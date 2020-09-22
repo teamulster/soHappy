@@ -22,6 +22,7 @@ class LocalDatabaseManager(activity: Activity) {
         autoCompact = false
     }
     private val measurementRepository: ObjectRepository<MeasurementViewModel>
+    private val timeStampFilter = "timeStamp"
 
     init {
         measurementRepository = db.getRepository()
@@ -53,7 +54,7 @@ class LocalDatabaseManager(activity: Activity) {
             return
         }
         val cursor =
-            measurementRepository.find(ObjectFilters.eq("timeStamp", measurement.timeStamp))
+            measurementRepository.find(ObjectFilters.eq(timeStampFilter, measurement.timeStamp))
         val oldMeasurement = cursor.firstOrNull()
         if (oldMeasurement == null) {
             measurementRepository.insert(measurement)
@@ -71,7 +72,7 @@ class LocalDatabaseManager(activity: Activity) {
     fun getLatestMeasurements(offset: Int = 0, size: Int = 10): List<MeasurementViewModel> {
         val cursor = measurementRepository.find(
             FindOptions
-                .sort("timeStamp", SortOrder.Descending)
+                .sort(timeStampFilter, SortOrder.Descending)
                 .thenLimit(offset, size)
         )
         return cursor.toList()
@@ -80,12 +81,12 @@ class LocalDatabaseManager(activity: Activity) {
     /**
      * */
     @Synchronized
-    fun getMeasurementsByTimeStamp(timeStamp: Date) : List<MeasurementViewModel> {
+    fun getMeasurementsByTimeStamp(timeStamp: Date): List<MeasurementViewModel> {
         val cursor = measurementRepository.find(
-            ObjectFilters.gt("timeStamp", timeStamp),
+            ObjectFilters.gt(timeStampFilter, timeStamp),
             FindOptions
-                .sort("timeStamp", SortOrder.Descending)
-            )
+                .sort(timeStampFilter, SortOrder.Descending)
+        )
         return cursor.toList()
     }
 

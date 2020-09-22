@@ -11,12 +11,15 @@ import java.io.IOException
 import java.time.Instant
 import java.util.*
 
+/**
+ * This class represents a sample implementation for a remote site.
+ * */
 class RemoteSite : RemoteSync {
-    private val server : String = "https://lively.craftam.app/"
+    private val server: String = "https://lively.craftam.app/"
     private val client = OkHttpClient()
     private val gson = Gson()
 
-    override fun synchronise(measurements: ArrayList<MeasurementViewModel>) {
+    override fun synchronise(measurements: List<MeasurementViewModel>) {
         for (measurement in measurements) {
             val postJsonObject = gson.toJson(measurement)
             val json: MediaType? = "application/json; charset=utf-8".toMediaTypeOrNull()
@@ -35,7 +38,7 @@ class RemoteSite : RemoteSync {
 
     override fun getLatestSyncTimeStamp(id: String): Date {
         val request = Request.Builder()
-            .url("${server}latest?userId=${id}")
+            .url("${server}latest?userId=$id")
             .get()
             .build()
         val response = client.newCall(request).execute()
@@ -44,5 +47,4 @@ class RemoteSite : RemoteSync {
         }
         return Date.from(Instant.parse(gson.fromJson(response.body?.string(), String::class.java)))
     }
-
 }
