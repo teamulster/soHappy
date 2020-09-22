@@ -1,6 +1,8 @@
 package de.hsaugsburg.teamulster.sohappy.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,15 +12,20 @@ import androidx.fragment.app.activityViewModels
 import de.hsaugsburg.teamulster.sohappy.MainActivity
 import de.hsaugsburg.teamulster.sohappy.R
 import de.hsaugsburg.teamulster.sohappy.databinding.FragmentSettingsBinding
+import de.hsaugsburg.teamulster.sohappy.sync.RemoteSite
+import de.hsaugsburg.teamulster.sohappy.viewmodel.MeasurementViewModel
 import de.hsaugsburg.teamulster.sohappy.viewmodel.SettingsViewModel
+import java.util.*
 
 /**
  * SettingsFragment contains all UI elements concerning app settings.
  */
 class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
+    private val remoteSite = RemoteSite()
     private val viewModel: SettingsViewModel by activityViewModels()
 
+    @SuppressLint("HardwareIds")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,6 +49,13 @@ class SettingsFragment : Fragment() {
         }
         binding.settingsDatabaseSwitch.setOnCheckedChangeListener { _, new ->
             viewModel.databaseEnabled = new
+        }
+
+        binding.syncButton.setOnClickListener {
+            val id: String = Settings.Secure.getString(context?.contentResolver, Settings.Secure.ANDROID_ID)
+            val measurements = (requireActivity() as MainActivity).localDatabaseManager
+                ?.getMeasurementsByTimeStamp(remoteSite.getLatestSyncTimeStamp(id))
+            remoteSite.synchronise(measurements as ArrayList<MeasurementViewModel>)
         }
 
         return binding.root
