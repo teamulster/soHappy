@@ -33,7 +33,6 @@ class SmileFragment : Fragment() {
     private val stateMachine: StateMachine by activityViewModels()
     private lateinit var binding: FragmentSmileBinding
 
-    // TODO: Remove when TODO in method is resolved
     @Suppress("LongMethod")
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,7 +46,6 @@ class SmileFragment : Fragment() {
             false
         )
 
-        // TODO: Lambdas need to be unregistered, when new fragment is initialized
         stateMachine.addStateChangeListener { old, new ->
             if (this.isResumed) {
                 when (new) {

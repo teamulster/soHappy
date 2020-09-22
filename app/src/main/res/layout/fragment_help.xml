@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="30dp"
                     android:elevation="1dp"
-                    android:text="@string/fragment_help_version_value"
+                    android:text=""
                     android:textColor="@android:color/darker_gray"
                     android:textStyle="bold"
                     android:translationZ="2dp"
