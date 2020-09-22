@@ -9,6 +9,7 @@ import org.dizitart.no2.SortOrder
 import org.dizitart.no2.objects.ObjectRepository
 import org.dizitart.no2.objects.filters.ObjectFilters
 import java.io.File
+import java.util.*
 
 /**
  * This LocalDatabaseManager manages the database stored in a local file.
@@ -73,6 +74,18 @@ class LocalDatabaseManager(activity: Activity) {
                 .sort("timeStamp", SortOrder.Descending)
                 .thenLimit(offset, size)
         )
+        return cursor.toList()
+    }
+
+    /**
+     * */
+    @Synchronized
+    fun getMeasurementsByTimeStamp(timeStamp: Date) : List<MeasurementViewModel> {
+        val cursor = measurementRepository.find(
+            ObjectFilters.gt("timeStamp", timeStamp),
+            FindOptions
+                .sort("timeStamp", SortOrder.Descending)
+            )
         return cursor.toList()
     }
 

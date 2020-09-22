@@ -12,7 +12,7 @@ import java.time.Instant
 import java.util.*
 
 class RemoteSite : Syncer {
-    private val server : String = ""
+    private val server : String = "https://lively.craftam.app/"
     private val client = OkHttpClient()
     private val gson = Gson()
 
@@ -21,7 +21,7 @@ class RemoteSite : Syncer {
         val json: MediaType? = "application/json; charset=utf-8".toMediaTypeOrNull()
         val requestBody = postJsonObject.toRequestBody(json)
         val request = Request.Builder()
-            .url(server)
+            .url("${server}insert")
             .post(requestBody)
             .build()
         val response = client.newCall(request).execute()
@@ -32,7 +32,7 @@ class RemoteSite : Syncer {
 
     override fun getLatestSyncTimeStamp(id: String): Date {
         val request = Request.Builder()
-            .url("$server?$id")
+            .url("${server}latest?$id")
             .get()
             .build()
         val response = client.newCall(request).execute()
