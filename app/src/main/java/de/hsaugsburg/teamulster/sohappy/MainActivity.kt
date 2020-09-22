@@ -18,6 +18,7 @@ import java.io.IOException
  * CameraActivity serves as the sole Activity and entry point for the app.
  */
 class MainActivity : AppCompatActivity() {
+    var isActivityVisible = true
     private lateinit var binding: ActivityCameraBinding
     internal lateinit var notificationHandler: NotificationHandler
     internal var localDatabaseManager: LocalDatabaseManager? = null
@@ -52,8 +53,20 @@ class MainActivity : AppCompatActivity() {
         localDatabaseManager?.close()
         super.onDestroy()
     }
-    override fun onStop() {
-        super.onStop()
-        finish()
+
+    /**
+     * change the variable 'isActivityVisible' on true, when the app becomes active (again).
+     */
+    override fun onResume() {
+        super.onResume()
+        isActivityVisible = true
+    }
+
+    /**
+     * change the variable 'isActivityVisible' on false, when the app is moved into the background.
+     */
+    override fun onPause() {
+        super.onPause()
+        isActivityVisible = false
     }
 }
