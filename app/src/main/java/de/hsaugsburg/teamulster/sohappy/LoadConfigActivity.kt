@@ -35,7 +35,8 @@ class LoadConfigActivity : AppCompatActivity() {
         } catch (e: Exception) {
             MaterialAlertDialogBuilder(this@LoadConfigActivity)
                 .setTitle(R.string.load_config_activity_invalid_config)
-                .setMessage(R.string.load_config_activity_invalid_config_message
+                .setMessage(
+                    R.string.load_config_activity_invalid_config_message
                 )
                 .setNegativeButton(R.string.close_app) { _, _ ->
                     exitProcess(1)
@@ -88,7 +89,7 @@ class LoadConfigActivity : AppCompatActivity() {
                     Intent(this, MainActivity::class.java)
                 startActivity(mainActivityIntent)
             }
-            .setNegativeButton(R.string.close_app){ _, _ ->
+            .setNegativeButton(R.string.close_app) { _, _ ->
                 exitProcess(1)
             }.show()
     }

@@ -30,6 +30,7 @@ class LocalDatabaseManager(activity: Activity) {
      * Adds a new measurement to the local database.
      * @param [measurement] measurement to add
      */
+    @Synchronized
     fun addMeasurement(measurement: MeasurementViewModel) {
         measurementRepository.insert(measurement)
     }
@@ -38,6 +39,7 @@ class LocalDatabaseManager(activity: Activity) {
      * Updates an existing measurement in the database.
      * @param [measurement] measurement to update
      */
+    @Synchronized
     fun updateMeasurement(measurement: MeasurementViewModel) {
         measurementRepository.update(measurement)
     }
@@ -46,7 +48,7 @@ class LocalDatabaseManager(activity: Activity) {
      * Adds an new measurement to the datebase. If the entry already exists, it will be updated.
      * @param [measurement] measurement to add or update
      */
-
+    @Synchronized
     fun addOrUpdateMeasurement(measurement: MeasurementViewModel) {
         if (db.isClosed) {
             return
@@ -67,6 +69,7 @@ class LocalDatabaseManager(activity: Activity) {
      * @param [size] number of Measurements
      * @return List<Measurement>
      */
+    @Synchronized
     fun getLatestMeasurements(offset: Int = 0, size: Int = 10): List<MeasurementViewModel> {
         val cursor = measurementRepository.find(
             FindOptions
@@ -79,6 +82,7 @@ class LocalDatabaseManager(activity: Activity) {
     /**
      * closes the database connection.
      */
+    @Synchronized
     fun close() {
         if (!db.isClosed) {
             db.close()
