@@ -11,7 +11,7 @@ import java.io.IOException
 import java.time.Instant
 import java.util.*
 
-class RemoteSite : Syncer {
+class RemoteSite : RemoteSync {
     private val server : String = "https://lively.craftam.app/"
     private val client = OkHttpClient()
     private val gson = Gson()
