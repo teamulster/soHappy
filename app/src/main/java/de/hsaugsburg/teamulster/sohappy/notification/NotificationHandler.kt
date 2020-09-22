@@ -80,7 +80,7 @@ class NotificationHandler(private val context: Context) {
             context,
             0,
             scheduleIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_CANCEL_CURRENT
         )
     }
 
