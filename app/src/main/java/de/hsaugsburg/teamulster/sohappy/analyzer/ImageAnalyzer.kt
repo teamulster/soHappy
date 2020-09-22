@@ -1,6 +1,8 @@
 package de.hsaugsburg.teamulster.sohappy.analyzer
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
+import android.provider.Settings
 import android.util.Log
 import android.view.InflateException
 import androidx.fragment.app.activityViewModels
@@ -105,10 +107,12 @@ class ImageAnalyzer(val fragment: CameraFragment, config: ImageAnalyzerConfig) {
      * starts an thread with an infinite loop. Gets the current frame from the bitmapQueue and
      * and processes it.
      */
+    @SuppressLint("HardwareIds")
     fun execute() {
         thread {
             while (true) {
                 if (imageAnalyzerState == ImageAnalyzerState.CANCEL) {
+                    measurement.id = Settings.Secure.getString(fragment.context?.contentResolver, Settings.Secure.ANDROID_ID)
                     (fragment.requireActivity() as MainActivity).localDatabaseManager?.addOrUpdateMeasurement(
                         measurement
                     )

@@ -16,6 +16,7 @@ import de.hsaugsburg.teamulster.sohappy.sync.RemoteSite
 import de.hsaugsburg.teamulster.sohappy.viewmodel.MeasurementViewModel
 import de.hsaugsburg.teamulster.sohappy.viewmodel.SettingsViewModel
 import java.util.*
+import kotlin.concurrent.thread
 
 /**
  * SettingsFragment contains all UI elements concerning app settings.
@@ -52,10 +53,12 @@ class SettingsFragment : Fragment() {
         }
 
         binding.syncButton.setOnClickListener {
-            val id: String = Settings.Secure.getString(context?.contentResolver, Settings.Secure.ANDROID_ID)
-            val measurements = (requireActivity() as MainActivity).localDatabaseManager
-                ?.getMeasurementsByTimeStamp(remoteSite.getLatestSyncTimeStamp(id))
-            remoteSite.synchronise(measurements as ArrayList<MeasurementViewModel>)
+            thread {
+                val id: String = Settings.Secure.getString(context?.contentResolver, Settings.Secure.ANDROID_ID)
+                val measurements = (requireActivity() as MainActivity).localDatabaseManager
+                    ?.getMeasurementsByTimeStamp(remoteSite.getLatestSyncTimeStamp(id))
+                remoteSite.synchronise(measurements as ArrayList<MeasurementViewModel>)
+            }
         }
 
         return binding.root

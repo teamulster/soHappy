@@ -17,29 +17,32 @@ class RemoteSite : Syncer {
     private val gson = Gson()
 
     override fun synchronise(measurements: ArrayList<MeasurementViewModel>) {
-        val postJsonObject = gson.toJson(measurements)
-        val json: MediaType? = "application/json; charset=utf-8".toMediaTypeOrNull()
-        val requestBody = postJsonObject.toRequestBody(json)
-        val request = Request.Builder()
-            .url("${server}insert")
-            .post(requestBody)
-            .build()
-        val response = client.newCall(request).execute()
-        if (!response.isSuccessful) {
-            throw IOException("Unexpected code $response")
+        for (measurement in measurements) {
+            val postJsonObject = gson.toJson(measurement)
+            val json: MediaType? = "application/json; charset=utf-8".toMediaTypeOrNull()
+            val requestBody = postJsonObject.toRequestBody(json)
+            val request = Request.Builder()
+                .url("${server}insert")
+                .post(requestBody)
+                .build()
+            val response = client.newCall(request).execute()
+            if (!response.isSuccessful) {
+                throw IOException("Unexpected code $response")
+            }
+            response.close()
         }
     }
 
     override fun getLatestSyncTimeStamp(id: String): Date {
         val request = Request.Builder()
-            .url("${server}latest?$id")
+            .url("${server}latest?userId=${id}")
             .get()
             .build()
         val response = client.newCall(request).execute()
         if (!response.isSuccessful) {
             throw IOException("Unexpected code $response")
         }
-        return Date.from(Instant.parse(response.body?.string()))
+        return Date.from(Instant.parse(gson.fromJson(response.body?.string(), String::class.java)))
     }
 
 }

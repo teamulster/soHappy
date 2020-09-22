@@ -1,7 +1,9 @@
 package de.hsaugsburg.teamulster.sohappy.fragment
 
+import android.annotation.SuppressLint
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.provider.Settings
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -17,8 +19,10 @@ import de.hsaugsburg.teamulster.sohappy.databinding.FragmentResultsBinding
 import de.hsaugsburg.teamulster.sohappy.stateMachine.Action
 import de.hsaugsburg.teamulster.sohappy.stateMachine.StateMachine
 import de.hsaugsburg.teamulster.sohappy.stateMachine.states.Start
+import de.hsaugsburg.teamulster.sohappy.sync.RemoteSite
 import de.hsaugsburg.teamulster.sohappy.viewmodel.MeasurementViewModel
 import de.hsaugsburg.teamulster.sohappy.viewmodel.SettingsViewModel
+import java.util.*
 import kotlin.concurrent.thread
 
 /**
@@ -30,6 +34,7 @@ class ResultsFragment : Fragment() {
     private lateinit var binding: FragmentResultsBinding
     private val measurement: MeasurementViewModel by activityViewModels()
     private val settings: SettingsViewModel by activityViewModels()
+    private val remoteSite = RemoteSite()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -75,9 +80,18 @@ class ResultsFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("HardwareIds")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         thread {
+            // local store
             (this.requireActivity() as MainActivity).localDatabaseManager?.updateMeasurement(measurement)
+
+            // TODO: Exception handling
+            // remote sync
+            val id: String = Settings.Secure.getString(context?.contentResolver, Settings.Secure.ANDROID_ID)
+            val measurements = (requireActivity() as MainActivity).localDatabaseManager
+                ?.getMeasurementsByTimeStamp(remoteSite.getLatestSyncTimeStamp(id))
+            remoteSite.synchronise(measurements as ArrayList<MeasurementViewModel>)
 
             requireView().post {
                 val color = resources.getColor(R.color.colorPrimary, null)
