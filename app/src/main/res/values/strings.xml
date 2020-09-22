@@ -122,4 +122,12 @@
 
     <string name="config_exception_close_app">Close App</string>
     <string name="config_exception_restore_defaults">Restore Defaults</string>
+
+    <string name="yes">Yes</string>
+    <string name="close_app">Close App</string>
+
+    <string name="load_config_activity_new_config">New configuration</string>
+    <string name="load_config_activity_new_config_message">This looks like a soHappy configuration file - do you want to apply it?</string>
+    <string name="load_config_activity_invalid_config">invalid configuration</string>
+    <string name="load_config_activity_invalid_config_message">This does not look like a valid configuration file. Your configuration will reset back to the last working state.</string>
 </resources>
