@@ -51,7 +51,8 @@ class ConfigManagerTest {
                         "https://github.com/teamulster/soHappy"
                     ),
                     TimerConfig(3000, 2500, 10_000, 10_000, 30_000),
-                    NotificationConfig(3 * 60 * 60 * 1000)
+                    NotificationConfig(3 * 60 * 60 * 1000),
+                    RemoteConfig("https://lively.craftam.app/")
                 ),
                 SettingsConfig(notifications = true, databaseSync = true)
             )
@@ -78,6 +79,9 @@ class ConfigManagerTest {
                     TimerConfig(3000, 2500, 10_000, 10_000, 30_000),
                     NotificationConfig.Builder()
                         .setAlarmDelay(3 * 60 * 60 * 1000)
+                        .build(),
+                    RemoteConfig.Builder()
+                        .setURL("https://lively.craftam.app/")
                         .build()
                 )
             )
@@ -115,7 +119,8 @@ class ConfigManagerTest {
                         .setWaitingForFaceTimer(10_000)
                         .setSmileTimer(30_000)
                         .build(),
-                    NotificationConfig(3 * 60 * 60 * 1000)
+                    NotificationConfig(3 * 60 * 60 * 1000),
+                    RemoteConfig("https://lively.craftam.app/")
                 ),
                 SettingsConfig(notifications = true, databaseSync = true)
             )
@@ -136,7 +141,8 @@ class ConfigManagerTest {
                     "https://github.com/teamulster/soHappy"
                 ),
                 TimerConfig(3000, 2500, 10_000, 10_000, 30_000),
-                NotificationConfig(3 * 60 * 60 * 1000)
+                NotificationConfig(3 * 60 * 60 * 1000),
+                RemoteConfig("https://lively.craftam.app/")
             )
             assertEquals(assertValue, loadObject)
         }
@@ -167,6 +173,7 @@ class ConfigManagerTest {
                     )
                     .setTimerConfig(TimerConfig(3000, 2500, 10_000, 10_000, 30_000))
                     .setNotificationConfig(NotificationConfig(3 * 60 * 60 * 1000))
+                    .setRemoteConfig(RemoteConfig("https://lively.craftam.app/"))
                     .build(),
                 SettingsConfig(notifications = true, databaseSync = true)
             )
@@ -197,7 +204,8 @@ class ConfigManagerTest {
                         "https://github.com/teamulster/soHappy"
                     ),
                     TimerConfig(3000, 2500, 10_000, 10_000, 30_000),
-                    NotificationConfig(3 * 60 * 60 * 1000)
+                    NotificationConfig(3 * 60 * 60 * 1000),
+                    RemoteConfig("lively.craftam.app/")
                 ),
                 SettingsConfig(notifications = true, databaseSync = true)
             )
