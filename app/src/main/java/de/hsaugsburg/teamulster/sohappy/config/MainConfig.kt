@@ -81,6 +81,12 @@ data class MainConfig(
          *
          * @return [MainConfig] instance
          * */
-        fun build() = MainConfig(imageAnalyzerConfig!!, aboutConfig!!, timerConfig!!, notificationConfig!!, remoteConfig!!)
+        fun build() = MainConfig(
+            imageAnalyzerConfig!!,
+            aboutConfig!!,
+            timerConfig!!,
+            notificationConfig!!,
+            remoteConfig!!
+        )
     }
 }

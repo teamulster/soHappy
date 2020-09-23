@@ -285,10 +285,12 @@ object ConfigManager {
      * @throws [MalformedURLException]
      */
     private fun checkRemoteConfig(remoteConfig: RemoteConfig) {
-            val optRecommendation = "Make sure http:// or https:// is prepended."
-            if (!isURLValid(remoteConfig.url)) {
-                throw MalformedURLException("remoteConfig.url is not properly formatted"
-                        + "\n" + optRecommendation)
-            }
+        val optRecommendation = "Make sure http:// or https:// is prepended."
+        if (!isURLValid(remoteConfig.url)) {
+            throw MalformedURLException(
+                "remoteConfig.url is not properly formatted" +
+                    "\n" + optRecommendation
+            )
+        }
     }
 }
