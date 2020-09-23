@@ -14,7 +14,7 @@ import java.util.*
 
 /**
  * This class represents a sample implementation for a remote site.
- * */
+ */
 class RemoteSite : RemoteSync {
     private val server: String = ConfigManager.remoteConfig.url
     private val client = OkHttpClient()

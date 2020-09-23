@@ -54,7 +54,6 @@ class HaarCascadeFaceDetector(private val activity: Activity) : FaceDetector {
         return CascadeClassifier(mCascadeFile.absolutePath)
     }
 
-    @Suppress("UnusedPrivateMember")
     override fun detect(img: Bitmap): FaceDetector.Companion.FaceDetectionResult? {
         val mat = Mat()
         Utils.bitmapToMat(img, mat)

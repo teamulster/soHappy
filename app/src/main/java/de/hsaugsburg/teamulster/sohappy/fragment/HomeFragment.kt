@@ -93,7 +93,6 @@ class HomeFragment : Fragment() {
         circleAnimation.doOnEnd {
             stateMachine.consumeAction(Action.StartButtonPressed)
         }
-
         circleAnimation.start()
     }
 }

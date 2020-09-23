@@ -10,7 +10,7 @@ import kotlin.collections.ArrayList
  * This class hold a list of DetectionResults.
  *
  * @property [timeStamp] a Date object
- * */
+ */
 class MeasurementViewModel : ViewModel() {
     @Id
     val timeStamp: Date = Date()
@@ -22,7 +22,7 @@ class MeasurementViewModel : ViewModel() {
      * This function adds a DetectionResult to the results list.
      *
      * @param [detectionResult] a DetectionResult object which will be stored
-     * */
+     */
     fun addDetectionResult(detectionResult: DetectionResult) {
         results.add(detectionResult)
     }

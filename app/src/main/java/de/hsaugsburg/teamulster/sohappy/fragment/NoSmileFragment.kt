@@ -37,7 +37,6 @@ class NoSmileFragment : Fragment() {
             container,
             false
         )
-
         stateMachine.addStateChangeListener { _, new ->
             if (this.isResumed) {
                 when (new) {

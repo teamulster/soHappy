@@ -1,6 +1,7 @@
 package de.hsaugsburg.teamulster.sohappy
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -99,7 +100,7 @@ class LoadConfigActivity : AppCompatActivity() {
      */
     private fun getInputStreamFromIntent(): String {
         val intent = intent
-        val intentData = intent.data
+        val intentData: Uri? = intent.data
         return when (intentData!!.scheme) {
             "content", "file " -> {
                 val inputStream = contentResolver.openInputStream(intentData)
@@ -111,7 +112,7 @@ class LoadConfigActivity : AppCompatActivity() {
                 thread {
                     val okHttpClient = OkHttpClient()
                     val r = Request.Builder()
-                        .url(intentData.toString())
+                        .url("$intentData")
                         .build()
                     response = okHttpClient.newCall(r).execute()
                 }.join()

@@ -1,7 +1,6 @@
 package de.hsaugsburg.teamulster.sohappy.fragment
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -80,13 +79,14 @@ class CameraFragment : Fragment() {
         return binding.root
     }
 
-    @SuppressLint("UnsafeExperimentalUsageError")
+    /**
+     * We need to build an ImageAnalysis, which will get bind to the cameraProvider.
+     * We can register an Analyzer for the analysis, which is a callback.
+     * This callback will convert the image provided by the analyzer to an Bitmap, and  will
+     * send the image onto the gpuImageView.
+     * Then, we can use the bitmap for further processing.
+     */
     private fun startCameraIfReady() {
-        // We need to build an ImageAnalysis, which will get binded to the cameraProvider.
-        // We can register an Analyzer for the analysis, which is a callback.
-        // This callback will convert the image provided by the analyzer to an Bitmap, and  will
-        // send the image onto the gpuImageView
-        // Then, we can use the bitmap for further processing
         if (!isPermissionsGranted() || cameraProvider == null) {
             return
         }
@@ -136,9 +136,7 @@ class CameraFragment : Fragment() {
         permissions: Array<String?>,
         grantResults: IntArray
     ) {
-        if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            // startCameraIfReady()
-        }
+        // NO-OP
     }
 
     private fun isPermissionsGranted(): Boolean = ContextCompat

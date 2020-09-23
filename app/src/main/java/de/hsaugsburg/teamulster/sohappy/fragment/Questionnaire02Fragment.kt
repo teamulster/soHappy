@@ -64,7 +64,7 @@ class Questionnaire02Fragment : Fragment() {
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
-                // no-op
+                // NO-OP
             }
         }
 

@@ -24,11 +24,9 @@ class JokesFragment : Fragment() {
             container,
             false
         )
-
         binding.searchView.setOnClickListener {
             binding.searchView.isIconified = false
         }
-
         return binding.root
     }
 }
