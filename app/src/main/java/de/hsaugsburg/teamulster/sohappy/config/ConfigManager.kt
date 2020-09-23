@@ -96,7 +96,7 @@ object ConfigManager {
      * @throws [ClassNotFoundException]
      * @return [SettingsConfig]
      * */
-    fun loadSettings(context: Context) : SettingsConfig {
+    fun loadSettings(context: Context): SettingsConfig {
         val settingsJsonString: String
         try {
             val settingsFile = getFile(context)[0]
