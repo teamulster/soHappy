@@ -32,7 +32,7 @@ object ConfigManager {
         .setImageAnalyzerConfig(
             ImageAnalyzerConfig(
                 "de.hsaugsburg.teamulster.sohappy.analyzer.detector.facedetectorimpl.HaarCascadeFaceDetector",
-                "de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl.FerTFLiteSmileDetector"
+                "de.hsaugsburg.teamulster.sohappy.analyzer.detector.smiledetectorimpl.SoHappyTFLiteSmileDetector"
             )
         )
         .setAboutConfig(
