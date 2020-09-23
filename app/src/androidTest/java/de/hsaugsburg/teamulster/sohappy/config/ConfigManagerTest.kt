@@ -124,8 +124,8 @@ class ConfigManagerTest {
                 ),
                 SettingsConfig(notifications = true, databaseSync = true)
             )
-            val loadObject = ConfigManager.load(it)
-            val assertValue = MainConfig(
+            val loadObjectMain = ConfigManager.loadMain(it)
+            val assertValueMain = MainConfig(
                 ImageAnalyzerConfig(
                     "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
                         ".facedetectorimpl.HaarCascadeFaceDetector",
@@ -144,7 +144,10 @@ class ConfigManagerTest {
                 NotificationConfig(3 * 60 * 60 * 1000),
                 RemoteConfig("https://lively.craftam.app/")
             )
-            assertEquals(assertValue, loadObject)
+            val loadObjectSettings = ConfigManager.loadSettings(it)
+            val assertValueSettings = SettingsConfig(notifications = true, databaseSync = true)
+            assertEquals(assertValueSettings, loadObjectSettings)
+            assertEquals(assertValueMain, loadObjectMain)
         }
     }
 
@@ -178,7 +181,7 @@ class ConfigManagerTest {
                 SettingsConfig(notifications = true, databaseSync = true)
             )
             assertFailsWith(ClassNotFoundException::class) {
-                ConfigManager.load(it)
+                ConfigManager.loadMain(it)
             }
         }
     }
@@ -210,7 +213,7 @@ class ConfigManagerTest {
                 SettingsConfig(notifications = true, databaseSync = true)
             )
             assertFailsWith(MalformedURLException::class) {
-                ConfigManager.load(it)
+                ConfigManager.loadMain(it)
             }
         }
     }
@@ -224,12 +227,12 @@ class ConfigManagerTest {
             val mainFile = File(configDirectory, "config.json")
             mainFile.writeText("No JSON", Charset.defaultCharset())
             assertFailsWith(MalformedJsonException::class) {
-                ConfigManager.load(activity).toString()
+                ConfigManager.loadMain(activity).toString()
             }
             val settingsFile = File(configDirectory, "settingsConfig.json")
             settingsFile.writeText("No JSON", Charset.defaultCharset())
             assertFailsWith(MalformedJsonException::class) {
-                ConfigManager.load(activity).toString()
+                ConfigManager.loadMain(activity).toString()
             }
         }
     }

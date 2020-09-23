@@ -21,7 +21,8 @@ object ExceptionHandler {
             }
             .setPositiveButton(resources.getString(R.string.config_exception_restore_defaults)) { dialog, _ ->
                 ConfigManager.restoreDefaults(activity)
-                ConfigManager.load(activity)
+                ConfigManager.loadMain(activity)
+                ConfigManager.loadSettings(activity)
                 dialog.dismiss()
                 activity.finish()
                 activity.startActivity(activity.intent)

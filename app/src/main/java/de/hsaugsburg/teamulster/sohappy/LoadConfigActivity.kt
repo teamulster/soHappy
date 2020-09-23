@@ -47,6 +47,8 @@ class LoadConfigActivity : AppCompatActivity() {
 
     /**
      * Creates the dialog shown when a config could be created.
+     *
+     * @param [newMainConfig]
      */
     private fun buildDialog(newMainConfig: MainConfig) {
         MaterialAlertDialogBuilder(this)
@@ -54,22 +56,23 @@ class LoadConfigActivity : AppCompatActivity() {
             .setMessage(R.string.load_config_activity_new_config_message)
             .setPositiveButton(R.string.yes) { _, _ ->
                 // Load old config
-                val oldMainConfig = ConfigManager.load(this)
+                val oldMainConfig = ConfigManager.loadMain(this)
+                val oldSettingsConfig = ConfigManager.loadSettings(this)
                 // And overwrite it
                 ConfigManager.store(
                     this,
                     newMainConfig,
-                    ConfigManager.settingsConfig
+                    oldSettingsConfig
                 )
                 // And load it again for the check
                 try {
-                    ConfigManager.load(this)
+                    ConfigManager.loadMain(this)
                 } catch (e: IOException) {
                     // If it does not work, restore old config and show different dialog
                     ConfigManager.store(
                         this,
                         oldMainConfig,
-                        ConfigManager.settingsConfig
+                        oldSettingsConfig
                     )
                     val t = Toast(this)
                     t.setText("Old config restored")
@@ -79,7 +82,7 @@ class LoadConfigActivity : AppCompatActivity() {
                     ConfigManager.store(
                         this,
                         oldMainConfig,
-                        ConfigManager.settingsConfig
+                        oldSettingsConfig
                     )
                     val t = Toast(this)
                     t.setText("Old config restored")
@@ -97,6 +100,8 @@ class LoadConfigActivity : AppCompatActivity() {
 
     /**
      * Tries to read the Intent and looks for an file or an web url.
+     *
+     * @return String
      */
     private fun getInputStreamFromIntent(): String {
         val intent = intent
