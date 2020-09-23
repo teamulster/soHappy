@@ -62,11 +62,11 @@ class Questionnaire01Fragment : Fragment() {
                 }
 
                 override fun onStartTrackingTouch(p0: SeekBar?) {
-// no-op
+                    // NO-OP
                 }
 
                 override fun onStopTrackingTouch(p0: SeekBar?) {
-// no-op
+                    // NO-OP
                 }
             }
         )

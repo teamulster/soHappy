@@ -5,14 +5,14 @@ import java.util.*
 
 /**
  * This interface defines functions for remote database implementations.
- * */
+ */
 interface RemoteSync {
     // TODO: Add RemoteSync config (URL to remote site, String: class which implements RemoteSync)
     /**
      * This function sends latest measurements to the remote site.
      *
      * @param [measurements] List of [MeasurementViewModel]
-     * */
+     */
     fun synchronise(measurements: List<MeasurementViewModel>)
 
     /**
@@ -20,6 +20,6 @@ interface RemoteSync {
      *
      * @param [id] deviceId as String
      * @return [Date] object of latest synced [MeasurementViewModel]
-     * */
+     */
     fun getLatestSyncTimeStamp(id: String): Date
 }

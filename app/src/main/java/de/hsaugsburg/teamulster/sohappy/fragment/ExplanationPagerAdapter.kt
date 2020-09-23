@@ -11,7 +11,7 @@ import androidx.viewpager.widget.PagerAdapter
  */
 class ExplanationPagerAdapter(private val context: Context, val pages: List<Int>) : PagerAdapter() {
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val page = pages.get(position)
+        val page = pages[position]
         val inflater = LayoutInflater.from(context)
         val viewGroup = inflater.inflate(page, container, false)
         container.addView(viewGroup)

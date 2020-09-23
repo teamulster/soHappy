@@ -88,8 +88,6 @@ class NotificationHandler(private val context: Context) {
      * Starting from Android 8.0, all notifications must be associated with a Notification
      * Channel. This function's purpose is to create a Notification Channel for this app
      * if it does not already exist.
-     *
-     * @param [context] Activity that requests the creation of a new Notification Channel.
      */
     fun createNotificationChannel() {
         // Run the code only if Android version is at least 8.0

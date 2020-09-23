@@ -13,7 +13,7 @@ import java.util.*
 
 /**
  * This class represents a sample implementation for a remote site.
- * */
+ */
 class RemoteSite : RemoteSync {
     private val server: String = "https://lively.craftam.app/"
     private val client = OkHttpClient()
