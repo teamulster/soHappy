@@ -1,6 +1,7 @@
 package de.hsaugsburg.teamulster.sohappy.sync
 
 import com.google.gson.Gson
+import de.hsaugsburg.teamulster.sohappy.config.ConfigManager
 import de.hsaugsburg.teamulster.sohappy.viewmodel.MeasurementViewModel
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -15,7 +16,7 @@ import java.util.*
  * This class represents a sample implementation for a remote site.
  * */
 class RemoteSite : RemoteSync {
-    private val server: String = "https://lively.craftam.app/"
+    private val server: String = ConfigManager.remoteConfig.url
     private val client = OkHttpClient()
     private val gson = Gson()
 

@@ -23,6 +23,7 @@ object ConfigManager {
     lateinit var aboutConfig: AboutConfig
     lateinit var timerConfig: TimerConfig
     lateinit var notificationConfig: NotificationConfig
+    lateinit var remoteConfig: RemoteConfig
     lateinit var mainConfig: MainConfig
     lateinit var settingsConfig: SettingsConfig
     private val gson = Gson()
@@ -47,6 +48,7 @@ object ConfigManager {
         )
         .setTimerConfig(TimerConfig(3000, 2500, 10_000, 10_000, 30_000))
         .setNotificationConfig(NotificationConfig(3 * 60 * 60 * 1000))
+        .setRemoteConfig(RemoteConfig("https://lively.craftam.app/"))
         .build()
     private val defaultSettingsConfig = SettingsConfig.Builder()
         .setNotifications(true)
@@ -78,11 +80,13 @@ object ConfigManager {
             val parsedMainJson = fromJsonToMain(mainJsonString)
             checkAboutConfig(parsedMainJson.aboutConfig)
             checkImageAnalyzerConfig(parsedMainJson.imageAnalyzerConfig)
+            checkRemoteConfig(parsedMainJson.remoteConfig)
             mainConfig = parsedMainJson
             imageAnalyzerConfig = parsedMainJson.imageAnalyzerConfig
             aboutConfig = parsedMainJson.aboutConfig
             timerConfig = parsedMainJson.timerConfig
             notificationConfig = parsedMainJson.notificationConfig
+            remoteConfig = parsedMainJson.remoteConfig
         } catch (e: IOException) {
             throw e
         } catch (e: ClassNotFoundException) {
@@ -235,23 +239,23 @@ object ConfigManager {
                 "\n" + optRecommendation
         }
         if (!isURLValid(aboutConfig.privacyURL)) {
-            errorString = "aboutConfig.privacyURL is not properly formatted" +
+            errorString = "aboutConfig.privacyURL is not properly formatted." +
                 "\n" + optRecommendation
         }
         if (!isURLValid(aboutConfig.imprintURL)) {
-            errorString = "aboutConfig.imprintURL is not properly formatted" +
+            errorString = "aboutConfig.imprintURL is not properly formatted." +
                 "\n" + optRecommendation
         }
         if (!isURLValid(aboutConfig.licenseURL)) {
-            errorString = "aboutConfig.licenseURL is not properly formatted" +
+            errorString = "aboutConfig.licenseURL is not properly formatted." +
                 "\n" + optRecommendation
         }
         if (!isURLValid(aboutConfig.feedbackURL)) {
-            errorString = "aboutConfig.feedbackURL is not properly formatted" +
+            errorString = "aboutConfig.feedbackURL is not properly formatted." +
                 "\n" + optRecommendation
         }
         if (!isURLValid(aboutConfig.issueURL)) {
-            errorString = "aboutConfig.issueURL is not properly formatted" +
+            errorString = "aboutConfig.issueURL is not properly formatted." +
                 "\n" + optRecommendation
         }
         if (errorString != "") {
@@ -272,5 +276,19 @@ object ConfigManager {
         } catch (e: ClassNotFoundException) {
             throw ClassNotFoundException("Invalid package path name : " + e.message)
         }
+    }
+
+    /**
+     * This private function checks a given RemoteConfig object for its property value compliance.
+     *
+     * @param [remoteConfig] a given RemoteConfig object which will be checked
+     * @throws [MalformedURLException]
+     */
+    private fun checkRemoteConfig(remoteConfig: RemoteConfig) {
+            val optRecommendation = "Make sure http:// or https:// is prepended."
+            if (!isURLValid(remoteConfig.url)) {
+                throw MalformedURLException("remoteConfig.url is not properly formatted"
+                        + "\n" + optRecommendation)
+            }
     }
 }

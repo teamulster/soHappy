@@ -7,7 +7,6 @@ import java.util.*
  * This interface defines functions for remote database implementations.
  * */
 interface RemoteSync {
-    // TODO: Add RemoteSync config (URL to remote site, String: class which implements RemoteSync)
     /**
      * This function sends latest measurements to the remote site.
      *

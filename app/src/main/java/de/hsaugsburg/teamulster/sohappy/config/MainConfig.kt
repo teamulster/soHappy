@@ -6,18 +6,22 @@ package de.hsaugsburg.teamulster.sohappy.config
  * @property [imageAnalyzerConfig]
  * @property [aboutConfig]
  * @property [timerConfig]
+ * @property [notificationConfig]
+ * @property [remoteConfig]
  */
 data class MainConfig(
     val imageAnalyzerConfig: ImageAnalyzerConfig,
     val aboutConfig: AboutConfig,
     val timerConfig: TimerConfig,
-    val notificationConfig: NotificationConfig
+    val notificationConfig: NotificationConfig,
+    val remoteConfig: RemoteConfig
 ) {
     constructor(builder: Builder) : this(
         builder.imageAnalyzerConfig!!,
         builder.aboutConfig!!,
         builder.timerConfig!!,
-        builder.notificationConfig!!
+        builder.notificationConfig!!,
+        builder.remoteConfig!!
     )
 
     /**
@@ -27,7 +31,8 @@ data class MainConfig(
         var imageAnalyzerConfig: ImageAnalyzerConfig? = null,
         var aboutConfig: AboutConfig? = null,
         var timerConfig: TimerConfig? = null,
-        var notificationConfig: NotificationConfig? = null
+        var notificationConfig: NotificationConfig? = null,
+        var remoteConfig: RemoteConfig? = null
     ) {
         /**
          * This function sets a value for [imageAnalyzerConfig].
@@ -64,10 +69,18 @@ data class MainConfig(
             apply { this.notificationConfig = notificationConfig }
 
         /**
+         * This function sets a value for [remoteConfig].
+         * It is mandatory to call this function before building.
+         *
+         * @param [remoteConfig]
+         * */
+        fun setRemoteConfig(remoteConfig: RemoteConfig) = apply { this.remoteConfig = remoteConfig }
+
+        /**
          * This function calls the [MainConfig] constructor.
          *
          * @return [MainConfig] instance
          * */
-        fun build() = MainConfig(imageAnalyzerConfig!!, aboutConfig!!, timerConfig!!, notificationConfig!!)
+        fun build() = MainConfig(imageAnalyzerConfig!!, aboutConfig!!, timerConfig!!, notificationConfig!!, remoteConfig!!)
     }
 }
