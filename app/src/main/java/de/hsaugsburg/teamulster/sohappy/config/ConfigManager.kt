@@ -57,25 +57,18 @@ object ConfigManager {
 
     /**
      * This function loads config from the config file and parses the JSON string to MainConfig(
-     * ImageAnalyzerConfig) objects.
+     * ImageAnalyzerConfig, AboutConfig, TimerConfig, NotificationConfig, RemoteConfig) objects.
      *
      * @param [context] current context describing from where the method was invoked
      * @throws [IOException]
      * @throws [ClassNotFoundException]
      * @return [MainConfig]
      * */
-    fun load(context: Context): MainConfig {
+    fun loadMain(context: Context): MainConfig {
         val mainJsonString: String
-        val settingsJsonString: String
         try {
-            val settingsFile = getFile(context)[0]
-            settingsJsonString =
-                FileInputStream(settingsFile).bufferedReader().use { it.readText() }
             val mainFile = getFile(context)[1]
             mainJsonString = FileInputStream(mainFile).bufferedReader().use { it.readText() }
-
-            val parsedSettingsJson = fromJsonToSettings(settingsJsonString)
-            settingsConfig = parsedSettingsJson
 
             val parsedMainJson = fromJsonToMain(mainJsonString)
             checkAboutConfig(parsedMainJson.aboutConfig)
@@ -93,6 +86,30 @@ object ConfigManager {
             throw e
         }
         return mainConfig
+    }
+
+    /**
+     * This function loads config from the config file and parses the JSON string to a SettingsConfig object.
+     *
+     * @param [context] current context describing from where the method was invoked
+     * @throws [IOException]
+     * @throws [ClassNotFoundException]
+     * @return [SettingsConfig]
+     * */
+    fun loadSettings(context: Context) : SettingsConfig {
+        val settingsJsonString: String
+        try {
+            val settingsFile = getFile(context)[0]
+            settingsJsonString =
+                FileInputStream(settingsFile).bufferedReader().use { it.readText() }
+            val parsedSettingsJson = fromJsonToSettings(settingsJsonString)
+            settingsConfig = parsedSettingsJson
+        } catch (e: IOException) {
+            throw e
+        } catch (e: ClassNotFoundException) {
+            throw e
+        }
+        return settingsConfig
     }
 
     /**
