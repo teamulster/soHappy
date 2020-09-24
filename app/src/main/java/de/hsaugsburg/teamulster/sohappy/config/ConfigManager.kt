@@ -17,6 +17,7 @@ import java.nio.charset.Charset
  * storage.
  * */
 @Suppress("TooManyFunctions")
+// TODO: Check if it's useful to make check functions public, so they can be used for validation in [LoadConfigActivity]
 object ConfigManager {
     // Init variables
     lateinit var imageAnalyzerConfig: ImageAnalyzerConfig

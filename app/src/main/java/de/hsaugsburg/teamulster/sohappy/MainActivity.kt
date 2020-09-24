@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     internal lateinit var notificationHandler: NotificationHandler
     internal var localDatabaseManager: LocalDatabaseManager? = null
 
+    @Suppress("ReturnCount", "TooGenericExceptionCaught")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         try {
@@ -32,6 +33,9 @@ class MainActivity : AppCompatActivity() {
             ExceptionHandler.callExceptionDialog(this, resources, e)
             return
         } catch (e: ClassNotFoundException) {
+            ExceptionHandler.callExceptionDialog(this, resources, e)
+            return
+        } catch (e: NullPointerException) {
             ExceptionHandler.callExceptionDialog(this, resources, e)
             return
         }
