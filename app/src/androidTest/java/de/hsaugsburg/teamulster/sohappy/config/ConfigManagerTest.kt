@@ -29,7 +29,7 @@ class ConfigManagerTest {
     @Suppress("LongMethod")
     fun useStore() {
         scenario.onActivity { cameraActivity ->
-            ConfigManager.store(
+            ConfigManager.storeMain(
                 cameraActivity,
                 MainConfig(
                     ImageAnalyzerConfig.Builder()
@@ -53,8 +53,9 @@ class ConfigManagerTest {
                     TimerConfig(3000, 2500, 10_000, 10_000, 30_000),
                     NotificationConfig(3 * 60 * 60 * 1000),
                     RemoteConfig("https://lively.craftam.app/")
-                ),
-                SettingsConfig(notifications = true, databaseSync = true)
+                )
+            )
+            ConfigManager.storeSettings(cameraActivity, SettingsConfig(notifications = true, databaseSync = true)
             )
             val dirPath = cameraActivity.filesDir
             val configDirectory = File(dirPath, "config")
@@ -95,7 +96,7 @@ class ConfigManagerTest {
     @Test
     fun useLoad() {
         scenario.onActivity {
-            ConfigManager.store(
+            ConfigManager.storeMain(
                 it,
                 MainConfig(
                     ImageAnalyzerConfig(
@@ -121,8 +122,9 @@ class ConfigManagerTest {
                         .build(),
                     NotificationConfig(3 * 60 * 60 * 1000),
                     RemoteConfig("https://lively.craftam.app/")
-                ),
-                SettingsConfig(notifications = true, databaseSync = true)
+                )
+            )
+            ConfigManager.storeSettings(it, SettingsConfig(notifications = true, databaseSync = true)
             )
             val loadObjectMain = ConfigManager.loadMain(it)
             val assertValueMain = MainConfig(
@@ -154,7 +156,7 @@ class ConfigManagerTest {
     @Test
     fun useLoadClassNotFoundException() {
         scenario.onActivity {
-            ConfigManager.store(
+            ConfigManager.storeMain(
                 it,
                 MainConfig.Builder()
                     .setImageAnalyzerConfig(
@@ -177,8 +179,9 @@ class ConfigManagerTest {
                     .setTimerConfig(TimerConfig(3000, 2500, 10_000, 10_000, 30_000))
                     .setNotificationConfig(NotificationConfig(3 * 60 * 60 * 1000))
                     .setRemoteConfig(RemoteConfig("https://lively.craftam.app/"))
-                    .build(),
-                SettingsConfig(notifications = true, databaseSync = true)
+                    .build()
+            )
+            ConfigManager.storeSettings(it, SettingsConfig(notifications = true, databaseSync = true)
             )
             assertFailsWith(ClassNotFoundException::class) {
                 ConfigManager.loadMain(it)
@@ -189,7 +192,7 @@ class ConfigManagerTest {
     @Test
     fun useLoadMalformedURLExceptionLoad() {
         scenario.onActivity {
-            ConfigManager.store(
+            ConfigManager.storeMain(
                 it,
                 MainConfig(
                     ImageAnalyzerConfig(
@@ -209,8 +212,9 @@ class ConfigManagerTest {
                     TimerConfig(3000, 2500, 10_000, 10_000, 30_000),
                     NotificationConfig(3 * 60 * 60 * 1000),
                     RemoteConfig("lively.craftam.app/")
-                ),
-                SettingsConfig(notifications = true, databaseSync = true)
+                )
+            )
+                ConfigManager.storeSettings(it, SettingsConfig(notifications = true, databaseSync = true)
             )
             assertFailsWith(MalformedURLException::class) {
                 ConfigManager.loadMain(it)
