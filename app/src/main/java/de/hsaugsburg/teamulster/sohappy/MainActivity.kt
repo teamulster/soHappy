@@ -34,6 +34,9 @@ class MainActivity : AppCompatActivity() {
         } catch (e: ClassNotFoundException) {
             ExceptionHandler.callExceptionDialog(this, resources, e)
             return
+        } catch (e: NullPointerException) {
+            ExceptionHandler.callExceptionDialog(this, resources, e)
+            return
         }
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
