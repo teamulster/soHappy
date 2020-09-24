@@ -96,9 +96,11 @@ class ResultsFragment : Fragment() {
                     ?.getMeasurementsByTimeStamp(remoteSite.getLatestSyncTimeStamp(id))
                 remoteSite.synchronise(measurements as ArrayList<MeasurementViewModel>)
             } catch (e: IOException) {
-                val toast = Toast(context)
-                toast.setText(e.message)
-                toast.show()
+                requireView().post {
+                    val toast = Toast(context)
+                    toast.setText(e.message)
+                    toast.show()
+                }
             }
 
             requireView().post {
