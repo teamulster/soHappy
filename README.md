@@ -33,3 +33,9 @@ as an important factor to an individual's overall health.
 ## Docs
 
 For further information, check out the app's [report](https://github.com/teamulster/report.git).
+
+## Known issues
+
+1. If the app is running while scanning a new QR code, it sometimes crashes due to database conflicts.
+
+1. If the app is running while clicking a notification of soHappy, it sometimes crashes or behaves weird.
