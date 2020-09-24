@@ -59,19 +59,21 @@ class LoadConfigActivity : AppCompatActivity() {
                 val oldMainConfig = ConfigManager.loadMain(this)
                 val oldSettingsConfig = ConfigManager.loadSettings(this)
                 // And overwrite it
-                ConfigManager.store(
+                ConfigManager.storeMain(
                     this,
-                    newMainConfig,
-                    oldSettingsConfig
+                    newMainConfig
                 )
                 // And load it again for the check
                 try {
                     ConfigManager.loadMain(this)
                 } catch (e: IOException) {
                     // If it does not work, restore old config and show different dialog
-                    ConfigManager.store(
+                    ConfigManager.storeMain(
                         this,
-                        oldMainConfig,
+                        oldMainConfig
+                    )
+                    ConfigManager.storeSettings(
+                        this,
                         oldSettingsConfig
                     )
                     val t = Toast(this)
@@ -79,9 +81,12 @@ class LoadConfigActivity : AppCompatActivity() {
                     t.show()
                 } catch (e: ClassNotFoundException) {
                     // If it does not work, restore old config and show different dialog
-                    ConfigManager.store(
+                    ConfigManager.storeMain(
                         this,
-                        oldMainConfig,
+                        oldMainConfig
+                    )
+                    ConfigManager.storeSettings(
+                        this,
                         oldSettingsConfig
                     )
                     val t = Toast(this)

@@ -11,9 +11,8 @@ import kotlin.properties.Delegates.observable
  */
 class SettingsViewModel(application: Application) : AndroidViewModel(application) {
     var notificationsEnabled: Boolean by observable(ConfigManager.settingsConfig.notifications) { _, _, new ->
-        ConfigManager.store(
+        ConfigManager.storeSettings(
             application,
-            ConfigManager.mainConfig,
             SettingsConfig(
                 new,
                 databaseEnabled
@@ -21,9 +20,8 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         )
     }
     var databaseEnabled: Boolean by observable(ConfigManager.settingsConfig.databaseSync) { _, _, new ->
-        ConfigManager.store(
+        ConfigManager.storeSettings(
             application,
-            ConfigManager.mainConfig,
             SettingsConfig(
                 notificationsEnabled,
                 new
