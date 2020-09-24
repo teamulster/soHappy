@@ -119,7 +119,7 @@ object ConfigManager {
      * @param [mainConfig] MainConfig object which contents will be stored
      * @throws [IOException]
      * */
-    fun store(context: Context, mainConfig: MainConfig, settingsConfig: SettingsConfig) {
+    fun storeMain(context: Context, mainConfig: MainConfig) {
         val mainJsonString = toJson(mainConfig)
         val settingsJsonString = toJson(settingsConfig)
         try {
@@ -127,6 +127,23 @@ object ConfigManager {
             settingsFile.writeText(settingsJsonString, Charset.defaultCharset())
             val mainFile = getFile(context)[1]
             mainFile.writeText(mainJsonString, Charset.defaultCharset())
+        } catch (e: IOException) {
+            throw e
+        }
+    }
+
+    /**
+     * This function stores the SettingsConfig object it is handed into the settingsConfig.json file.
+     *
+     * @param [context] current context describing from where the method was invoked
+     * @param [settingsConfig] SettingsConfig object which contents will be stored
+     * @throws [IOException]
+     * */
+    fun storeSettings(context: Context, settingsConfig: SettingsConfig) {
+        val settingsJsonString = toJson(settingsConfig)
+        try {
+            val settingsFile = getFile(context)[0]
+            settingsFile.writeText(settingsJsonString, Charset.defaultCharset())
         } catch (e: IOException) {
             throw e
         }
