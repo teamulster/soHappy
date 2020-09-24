@@ -26,7 +26,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         try {
-            ConfigManager.load(this)
+            ConfigManager.loadMain(this)
+            ConfigManager.loadSettings(this)
         } catch (e: IOException) {
             ExceptionHandler.callExceptionDialog(this, resources, e)
             return

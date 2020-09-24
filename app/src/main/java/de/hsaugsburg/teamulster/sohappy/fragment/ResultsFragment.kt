@@ -1,5 +1,6 @@
 package de.hsaugsburg.teamulster.sohappy.fragment
 
+import android.annotation.SuppressLint
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.provider.Settings
@@ -82,6 +83,7 @@ class ResultsFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("HardwareIds")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         thread {
             // local store
@@ -94,9 +96,11 @@ class ResultsFragment : Fragment() {
                     ?.getMeasurementsByTimeStamp(remoteSite.getLatestSyncTimeStamp(id))
                 remoteSite.synchronise(measurements as ArrayList<MeasurementViewModel>)
             } catch (e: IOException) {
-                val toast = Toast(context)
-                toast.setText(e.message)
-                toast.show()
+                requireView().post {
+                    val toast = Toast(context)
+                    toast.setText(e.message)
+                    toast.show()
+                }
             }
 
             requireView().post {
@@ -118,6 +122,7 @@ class ResultsFragment : Fragment() {
                         null
                     )
                 )
+                binding.finishButton.isClickable = true
                 binding.updateProgressBar.visibility = View.GONE
             }
         }

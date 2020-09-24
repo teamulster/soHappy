@@ -16,6 +16,7 @@ import java.net.MalformedURLException
 import java.nio.charset.Charset
 import kotlin.test.assertFailsWith
 
+@Suppress("LongMethod")
 @RunWith(AndroidJUnit4::class)
 class ConfigManagerTest {
     private lateinit var scenario: ActivityScenario<MainActivity>
@@ -29,7 +30,7 @@ class ConfigManagerTest {
     @Suppress("LongMethod")
     fun useStore() {
         scenario.onActivity { cameraActivity ->
-            ConfigManager.store(
+            ConfigManager.storeMain(
                 cameraActivity,
                 MainConfig(
                     ImageAnalyzerConfig.Builder()
@@ -53,7 +54,10 @@ class ConfigManagerTest {
                     TimerConfig(3000, 2500, 10_000, 10_000, 30_000),
                     NotificationConfig(3 * 60 * 60 * 1000),
                     RemoteConfig("https://lively.craftam.app/")
-                ),
+                )
+            )
+            ConfigManager.storeSettings(
+                cameraActivity,
                 SettingsConfig(notifications = true, databaseSync = true)
             )
             val dirPath = cameraActivity.filesDir
@@ -95,7 +99,7 @@ class ConfigManagerTest {
     @Test
     fun useLoad() {
         scenario.onActivity {
-            ConfigManager.store(
+            ConfigManager.storeMain(
                 it,
                 MainConfig(
                     ImageAnalyzerConfig(
@@ -121,11 +125,14 @@ class ConfigManagerTest {
                         .build(),
                     NotificationConfig(3 * 60 * 60 * 1000),
                     RemoteConfig("https://lively.craftam.app/")
-                ),
+                )
+            )
+            ConfigManager.storeSettings(
+                it,
                 SettingsConfig(notifications = true, databaseSync = true)
             )
-            val loadObject = ConfigManager.load(it)
-            val assertValue = MainConfig(
+            val loadObjectMain = ConfigManager.loadMain(it)
+            val assertValueMain = MainConfig(
                 ImageAnalyzerConfig(
                     "de.hsaugsburg.teamulster.sohappy.analyzer.detector" +
                         ".facedetectorimpl.HaarCascadeFaceDetector",
@@ -144,14 +151,17 @@ class ConfigManagerTest {
                 NotificationConfig(3 * 60 * 60 * 1000),
                 RemoteConfig("https://lively.craftam.app/")
             )
-            assertEquals(assertValue, loadObject)
+            val loadObjectSettings = ConfigManager.loadSettings(it)
+            val assertValueSettings = SettingsConfig(notifications = true, databaseSync = true)
+            assertEquals(assertValueSettings, loadObjectSettings)
+            assertEquals(assertValueMain, loadObjectMain)
         }
     }
 
     @Test
     fun useLoadClassNotFoundException() {
         scenario.onActivity {
-            ConfigManager.store(
+            ConfigManager.storeMain(
                 it,
                 MainConfig.Builder()
                     .setImageAnalyzerConfig(
@@ -174,11 +184,14 @@ class ConfigManagerTest {
                     .setTimerConfig(TimerConfig(3000, 2500, 10_000, 10_000, 30_000))
                     .setNotificationConfig(NotificationConfig(3 * 60 * 60 * 1000))
                     .setRemoteConfig(RemoteConfig("https://lively.craftam.app/"))
-                    .build(),
+                    .build()
+            )
+            ConfigManager.storeSettings(
+                it,
                 SettingsConfig(notifications = true, databaseSync = true)
             )
             assertFailsWith(ClassNotFoundException::class) {
-                ConfigManager.load(it)
+                ConfigManager.loadMain(it)
             }
         }
     }
@@ -186,7 +199,7 @@ class ConfigManagerTest {
     @Test
     fun useLoadMalformedURLExceptionLoad() {
         scenario.onActivity {
-            ConfigManager.store(
+            ConfigManager.storeMain(
                 it,
                 MainConfig(
                     ImageAnalyzerConfig(
@@ -206,11 +219,14 @@ class ConfigManagerTest {
                     TimerConfig(3000, 2500, 10_000, 10_000, 30_000),
                     NotificationConfig(3 * 60 * 60 * 1000),
                     RemoteConfig("lively.craftam.app/")
-                ),
+                )
+            )
+            ConfigManager.storeSettings(
+                it,
                 SettingsConfig(notifications = true, databaseSync = true)
             )
             assertFailsWith(MalformedURLException::class) {
-                ConfigManager.load(it)
+                ConfigManager.loadMain(it)
             }
         }
     }
@@ -224,12 +240,12 @@ class ConfigManagerTest {
             val mainFile = File(configDirectory, "config.json")
             mainFile.writeText("No JSON", Charset.defaultCharset())
             assertFailsWith(MalformedJsonException::class) {
-                ConfigManager.load(activity).toString()
+                ConfigManager.loadMain(activity).toString()
             }
             val settingsFile = File(configDirectory, "settingsConfig.json")
             settingsFile.writeText("No JSON", Charset.defaultCharset())
             assertFailsWith(MalformedJsonException::class) {
-                ConfigManager.load(activity).toString()
+                ConfigManager.loadMain(activity).toString()
             }
         }
     }
