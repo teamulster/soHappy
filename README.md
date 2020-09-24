@@ -39,3 +39,6 @@ For further information, check out the app's [report](https://github.com/teamuls
 1. If the app is running while scanning a new QR code, it sometimes crashes due to database conflicts.
 
 1. If the app is running while clicking a notification of soHappy, it sometimes crashes or behaves weird.
+
+1. If the app's config has not been updated and you are trying to scan a new QR code, it might crash.
+   This depends on whether or not new config entries have been added in the meantime.
