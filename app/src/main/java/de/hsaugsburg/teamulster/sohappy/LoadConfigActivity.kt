@@ -72,7 +72,10 @@ class LoadConfigActivity : AppCompatActivity() {
                         this,
                         oldMainConfig
                     )
-                    ConfigManager.storeSettings(this, oldSettingsConfig)
+                    ConfigManager.storeSettings(
+                        this,
+                        oldSettingsConfig
+                    )
                     val t = Toast(this)
                     t.setText("Old config restored")
                     t.show()

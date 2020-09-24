@@ -16,6 +16,7 @@ import java.net.MalformedURLException
 import java.nio.charset.Charset
 import kotlin.test.assertFailsWith
 
+@Suppress("LongMethod")
 @RunWith(AndroidJUnit4::class)
 class ConfigManagerTest {
     private lateinit var scenario: ActivityScenario<MainActivity>
@@ -55,7 +56,9 @@ class ConfigManagerTest {
                     RemoteConfig("https://lively.craftam.app/")
                 )
             )
-            ConfigManager.storeSettings(cameraActivity, SettingsConfig(notifications = true, databaseSync = true)
+            ConfigManager.storeSettings(
+                cameraActivity,
+                SettingsConfig(notifications = true, databaseSync = true)
             )
             val dirPath = cameraActivity.filesDir
             val configDirectory = File(dirPath, "config")
@@ -124,7 +127,9 @@ class ConfigManagerTest {
                     RemoteConfig("https://lively.craftam.app/")
                 )
             )
-            ConfigManager.storeSettings(it, SettingsConfig(notifications = true, databaseSync = true)
+            ConfigManager.storeSettings(
+                it,
+                SettingsConfig(notifications = true, databaseSync = true)
             )
             val loadObjectMain = ConfigManager.loadMain(it)
             val assertValueMain = MainConfig(
@@ -181,7 +186,9 @@ class ConfigManagerTest {
                     .setRemoteConfig(RemoteConfig("https://lively.craftam.app/"))
                     .build()
             )
-            ConfigManager.storeSettings(it, SettingsConfig(notifications = true, databaseSync = true)
+            ConfigManager.storeSettings(
+                it,
+                SettingsConfig(notifications = true, databaseSync = true)
             )
             assertFailsWith(ClassNotFoundException::class) {
                 ConfigManager.loadMain(it)
@@ -214,7 +221,9 @@ class ConfigManagerTest {
                     RemoteConfig("lively.craftam.app/")
                 )
             )
-                ConfigManager.storeSettings(it, SettingsConfig(notifications = true, databaseSync = true)
+            ConfigManager.storeSettings(
+                it,
+                SettingsConfig(notifications = true, databaseSync = true)
             )
             assertFailsWith(MalformedURLException::class) {
                 ConfigManager.loadMain(it)
