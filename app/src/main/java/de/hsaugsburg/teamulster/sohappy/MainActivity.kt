@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     internal lateinit var notificationHandler: NotificationHandler
     internal var localDatabaseManager: LocalDatabaseManager? = null
 
+    @Suppress("ReturnCount", "TooGenericExceptionCaught")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         try {
