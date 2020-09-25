@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         binding = DataBindingUtil.setContentView(this, R.layout.activity_camera)
-        localDatabaseManager = LocalDatabaseManager(this)
+        localDatabaseManager = LocalDatabaseManager.getInstance(this)
 
         notificationHandler = NotificationHandler(this)
         notificationHandler.createNotificationChannel()
