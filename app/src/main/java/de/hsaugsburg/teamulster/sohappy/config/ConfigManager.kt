@@ -2,13 +2,11 @@ package de.hsaugsburg.teamulster.sohappy.config
 
 import android.content.Context
 import android.util.MalformedJsonException
-import android.webkit.URLUtil
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
 import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
-import java.net.MalformedURLException
 import java.nio.charset.Charset
 
 /**
@@ -16,8 +14,6 @@ import java.nio.charset.Charset
  * config.json is placed in internal storage and is only accessible from within the app (app-specific)
  * storage.
  * */
-@Suppress("TooManyFunctions")
-// TODO: Check if it's useful to make check functions public, so they can be used for validation in [LoadConfigActivity]
 object ConfigManager {
     // Init variables
     lateinit var imageAnalyzerConfig: ImageAnalyzerConfig
@@ -72,9 +68,9 @@ object ConfigManager {
             mainJsonString = FileInputStream(mainFile).bufferedReader().use { it.readText() }
 
             val parsedMainJson = fromJsonToMain(mainJsonString)
-            checkAboutConfig(parsedMainJson.aboutConfig)
-            checkImageAnalyzerConfig(parsedMainJson.imageAnalyzerConfig)
-            checkRemoteConfig(parsedMainJson.remoteConfig)
+            ConfigUtils.checkAboutConfig(parsedMainJson.aboutConfig)
+            ConfigUtils.checkImageAnalyzerConfig(parsedMainJson.imageAnalyzerConfig)
+            ConfigUtils.checkRemoteConfig(parsedMainJson.remoteConfig)
             mainConfig = parsedMainJson
             imageAnalyzerConfig = parsedMainJson.imageAnalyzerConfig
             aboutConfig = parsedMainJson.aboutConfig
@@ -250,82 +246,4 @@ object ConfigManager {
      * @return [String]
      * */
     private fun toJson(config: SettingsConfig): String = gson.toJson(config)
-
-    /**
-     * This private function checks a given URL compliance.
-     *
-     * @param [url] a String which will be checked
-     * @return [Boolean]
-     * */
-    private fun isURLValid(url: String): Boolean = URLUtil.isValidUrl(url) &&
-        (URLUtil.isHttpUrl(url) || URLUtil.isHttpsUrl(url))
-
-    /**
-     * This private function checks a given AboutConfig object for its property value compliance.
-     *
-     * @param [aboutConfig] a given AboutConfig object which will be checked
-     * @throws [MalformedURLException]
-     */
-    private fun checkAboutConfig(aboutConfig: AboutConfig) {
-        val optRecommendation = "Make sure http:// or https:// is prepended."
-        var errorString = ""
-        if (!isURLValid(aboutConfig.creditsURL)) {
-            errorString = "aboutConfig.creditsURL is not properly formatted." +
-                "\n" + optRecommendation
-        }
-        if (!isURLValid(aboutConfig.privacyURL)) {
-            errorString = "aboutConfig.privacyURL is not properly formatted." +
-                "\n" + optRecommendation
-        }
-        if (!isURLValid(aboutConfig.imprintURL)) {
-            errorString = "aboutConfig.imprintURL is not properly formatted." +
-                "\n" + optRecommendation
-        }
-        if (!isURLValid(aboutConfig.licenseURL)) {
-            errorString = "aboutConfig.licenseURL is not properly formatted." +
-                "\n" + optRecommendation
-        }
-        if (!isURLValid(aboutConfig.feedbackURL)) {
-            errorString = "aboutConfig.feedbackURL is not properly formatted." +
-                "\n" + optRecommendation
-        }
-        if (!isURLValid(aboutConfig.issueURL)) {
-            errorString = "aboutConfig.issueURL is not properly formatted." +
-                "\n" + optRecommendation
-        }
-        if (errorString != "") {
-            throw MalformedURLException(errorString)
-        }
-    }
-
-    /**
-     * This private function checks a given ImageAnalyzerConfig object for its property value compliance.
-     *
-     * @param [imageAnalyzerConfig]
-     * @throws [ClassNotFoundException]
-     * */
-    private fun checkImageAnalyzerConfig(imageAnalyzerConfig: ImageAnalyzerConfig) {
-        try {
-            Class.forName(imageAnalyzerConfig.faceDetector)
-            Class.forName(imageAnalyzerConfig.smileDetector)
-        } catch (e: ClassNotFoundException) {
-            throw ClassNotFoundException("Invalid package path name : " + e.message)
-        }
-    }
-
-    /**
-     * This private function checks a given RemoteConfig object for its property value compliance.
-     *
-     * @param [remoteConfig] a given RemoteConfig object which will be checked
-     * @throws [MalformedURLException]
-     */
-    private fun checkRemoteConfig(remoteConfig: RemoteConfig) {
-        val optRecommendation = "Make sure http:// or https:// is prepended."
-        if (!isURLValid(remoteConfig.url)) {
-            throw MalformedURLException(
-                "remoteConfig.url is not properly formatted" +
-                    "\n" + optRecommendation
-            )
-        }
-    }
 }
