@@ -28,14 +28,6 @@ class LocalDatabaseManager private constructor(activity: Activity) {
          * */
         @InternalCoroutinesApi
         fun getInstance(activity: Activity): LocalDatabaseManager {
-//            return when (localDatabaseManagerInstance != null) {
-//                true -> localDatabaseManagerInstance!!
-//                false -> {
-//                    synchronized(this) {
-//                        LocalDatabaseManager(activity)
-//                    }
-//                }
-//            }
             return localDatabaseManagerInstance ?: synchronized(this) {
                 val newInstance = localDatabaseManagerInstance
                     ?: LocalDatabaseManager(activity).also { localDatabaseManagerInstance = it }
