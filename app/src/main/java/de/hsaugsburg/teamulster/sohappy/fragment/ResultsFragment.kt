@@ -97,8 +97,7 @@ class ResultsFragment : Fragment() {
                 remoteSite.synchronise(measurements as ArrayList<MeasurementViewModel>)
             } catch (e: IOException) {
                 requireView().post {
-                    val toast = Toast(context)
-                    toast.setText(e.message)
+                    val toast = Toast.makeText(context, e.message, Toast.LENGTH_LONG)
                     toast.show()
                 }
             }

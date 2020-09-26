@@ -7,11 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
-import de.hsaugsburg.teamulster.sohappy.config.ConfigManager
+import de.hsaugsburg.teamulster.sohappy.config.*
 import de.hsaugsburg.teamulster.sohappy.database.LocalDatabaseManager
 import de.hsaugsburg.teamulster.sohappy.databinding.ActivityCameraBinding
 import de.hsaugsburg.teamulster.sohappy.exceptions.ExceptionHandler
 import de.hsaugsburg.teamulster.sohappy.notification.NotificationHandler
+import kotlinx.coroutines.InternalCoroutinesApi
 import java.io.IOException
 
 /**
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     internal lateinit var notificationHandler: NotificationHandler
     internal var localDatabaseManager: LocalDatabaseManager? = null
 
+    @InternalCoroutinesApi
     @Suppress("ReturnCount", "TooGenericExceptionCaught")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         binding = DataBindingUtil.setContentView(this, R.layout.activity_camera)
-        localDatabaseManager = LocalDatabaseManager(this)
+        localDatabaseManager = LocalDatabaseManager.getInstance(this)
 
         notificationHandler = NotificationHandler(this)
         notificationHandler.createNotificationChannel()

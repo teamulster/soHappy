@@ -1,31 +1,54 @@
 package de.hsaugsburg.teamulster.sohappy.database
 
 import android.app.Activity
+import android.content.Context
 import de.hsaugsburg.teamulster.sohappy.viewmodel.MeasurementViewModel
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.internal.synchronized
 import org.dizitart.kno2.getRepository
-import org.dizitart.kno2.nitrite
 import org.dizitart.no2.FindOptions
+import org.dizitart.no2.Nitrite
 import org.dizitart.no2.SortOrder
 import org.dizitart.no2.objects.ObjectRepository
 import org.dizitart.no2.objects.filters.ObjectFilters
-import java.io.File
 import java.util.*
 
 /**
  * This LocalDatabaseManager manages the database stored in a local file.
  */
-class LocalDatabaseManager(activity: Activity) {
-    private val db = nitrite {
-        file = File(activity.filesDir, "results.db")
-        autoCommitBufferSize = 2048
-        compress = true
-        autoCompact = false
+class LocalDatabaseManager private constructor(activity: Activity) {
+    companion object {
+        @Volatile private var localDatabaseManagerInstance: LocalDatabaseManager? = null
+
+        /**
+         * This function implements the Singleton design pattern.
+         *
+         * @param [activity]
+         * @return [LocalDatabaseManager]
+         * */
+        @InternalCoroutinesApi
+        fun getInstance(activity: Activity): LocalDatabaseManager {
+            return localDatabaseManagerInstance ?: synchronized(this) {
+                val newInstance = localDatabaseManagerInstance
+                    ?: LocalDatabaseManager(activity).also { localDatabaseManagerInstance = it }
+                newInstance
+            }
+        }
+
+        private fun buildNitriteDB(context: Context): Nitrite {
+            return Nitrite.builder()
+                .compressed()
+                .filePath(context.filesDir.path + "results.db")
+                .openOrCreate()
+        }
     }
+    private var db: Nitrite? = null
     private val measurementRepository: ObjectRepository<MeasurementViewModel>
     private val timeStampFilter = "timeStamp"
 
     init {
-        measurementRepository = db.getRepository()
+        db = buildNitriteDB(activity)
+        measurementRepository = db!!.getRepository()
     }
 
     /**
@@ -52,7 +75,7 @@ class LocalDatabaseManager(activity: Activity) {
      */
     @Synchronized
     fun addOrUpdateMeasurement(measurement: MeasurementViewModel) {
-        if (db.isClosed) {
+        if (db?.isClosed!!) {
             return
         }
         val cursor =
@@ -98,8 +121,9 @@ class LocalDatabaseManager(activity: Activity) {
      */
     @Synchronized
     fun close() {
-        if (!db.isClosed) {
-            db.close()
+        if (!db?.isClosed!!) {
+            db!!.close()
+            localDatabaseManagerInstance = null
         }
     }
 }

@@ -1,6 +1,7 @@
 package de.hsaugsburg.teamulster.sohappy.fragment
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -86,6 +87,7 @@ class CameraFragment : Fragment() {
      * send the image onto the gpuImageView.
      * Then, we can use the bitmap for further processing.
      */
+    @SuppressLint("UnsafeExperimentalUsageError")
     private fun startCameraIfReady() {
         if (!isPermissionsGranted() || cameraProvider == null) {
             return
