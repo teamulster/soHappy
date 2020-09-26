@@ -33,3 +33,8 @@ as an important factor to an individual's overall health.
 ## Docs
 
 For further information, check out the app's [report](https://github.com/teamulster/report.git).
+
+## Known issues
+
+1. If the app's config has not been updated and you are trying to scan a new QR code, it might crash.
+   This depends on whether or not new config entries have been added in the meantime.
