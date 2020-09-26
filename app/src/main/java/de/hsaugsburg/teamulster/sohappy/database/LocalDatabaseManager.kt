@@ -3,6 +3,8 @@ package de.hsaugsburg.teamulster.sohappy.database
 import android.app.Activity
 import android.content.Context
 import de.hsaugsburg.teamulster.sohappy.viewmodel.MeasurementViewModel
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.internal.synchronized
 import org.dizitart.kno2.getRepository
 import org.dizitart.no2.FindOptions
 import org.dizitart.no2.Nitrite
@@ -16,7 +18,7 @@ import java.util.*
  */
 class LocalDatabaseManager private constructor(activity: Activity) {
     companion object {
-        private var localDatabaseManagerInstance: LocalDatabaseManager? = null
+        @Volatile private var localDatabaseManagerInstance: LocalDatabaseManager? = null
 
         /**
          * This function implements the Singleton design pattern.
@@ -24,10 +26,20 @@ class LocalDatabaseManager private constructor(activity: Activity) {
          * @param [activity]
          * @return [LocalDatabaseManager]
          * */
+        @InternalCoroutinesApi
         fun getInstance(activity: Activity): LocalDatabaseManager {
-            return when (localDatabaseManagerInstance != null) {
-                true -> localDatabaseManagerInstance!!
-                false -> LocalDatabaseManager(activity)
+//            return when (localDatabaseManagerInstance != null) {
+//                true -> localDatabaseManagerInstance!!
+//                false -> {
+//                    synchronized(this) {
+//                        LocalDatabaseManager(activity)
+//                    }
+//                }
+//            }
+            return localDatabaseManagerInstance ?: synchronized(this) {
+                val newInstance = localDatabaseManagerInstance
+                    ?: LocalDatabaseManager(activity).also { localDatabaseManagerInstance = it }
+                newInstance
             }
         }
 
